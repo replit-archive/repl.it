@@ -1,0 +1,133 @@
+html {
+  background: url(images/bg.jpg) repeat 50%;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+#main_logo, #lang_logo {
+  position: absolute;
+  top: 1em;
+}
+
+#main_logo {
+  left: 15px;
+}
+
+#lang_logo {
+  right: 15px;
+}
+
+#content {
+  border: 1px solid #AAA;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top: none;
+  height: 90%;
+  margin: 0 auto;
+  opacity: 0.9;
+  overflow-x: hidden;
+  padding: 0;
+  padding-top: 1.5em;
+  position: relative;
+  width: 69%;
+}
+
+#languages, #examples {
+  float: left;
+}
+
+#new {
+  float: right;
+}
+
+#toolbar {
+  background: #101030;
+  height: 3.5%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+#console {
+  bottom: 0;
+  height: 96.6%;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.jqconsole {
+  background-color: #181A3A;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  bottom: 0;
+  color: white;
+  display: block;
+  font-family: Monaco, Consolas, "Lucida Console", Monospace;
+  font-size: 14px;
+  left: 0;
+  margin: 0;
+  margin-bottom: 2px;
+  overflow: auto;
+  padding: 0;
+  padding-left: 5px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  /* Force word wrap on all browsers. */
+  white-space: -moz-pre-wrap; /* Mozilla, supported since 1999 */
+  white-space: -o-pre-wrap; /* Opera */
+  white-space: -pre-wrap; /* Opera */
+  white-space: pre-wrap; /* CSS3 (Candidate) */
+  word-wrap: break-word; /* IE 5.5+ */
+}
+
+.jqconsole-header {
+  display: block;
+  padding-bottom: 15px;
+}
+
+.jqconsole-cursor {
+  background: #999;
+  line-height: 100%;
+}
+
+.jqconsole-blurred .jqconsole-cursor {
+  background: #777;
+}
+
+.jqconsole-blurred .jqconsole-prompt {
+  color: #CCC;
+}
+
+.jqconsole-prompt, .jqconsole-old-prompt {
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+  display: block;
+}
+
+.result {
+  color: #22dd22;
+  display: block;
+  font-weight: bold;
+}
+
+.matching-1 {
+  color: #00FFFF;
+}
+.matching-2 {
+  color: #FF00FF;
+}
+.matching-3 {
+  color: #FFFF00;
+}

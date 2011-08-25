@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>jsREPL</title>
+    <!-- Cache preventer for use during development. TODO(max99x): remove. -->
+    <meta http-equiv="pragma" content="no-cache" />
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <script src="jsrepl/loader.js" id="jsrepl_loader"></script>
+    <script src="lib/jquery-1.6.2.js" type="text/javascript"></script>
+    <script src="lib/jqconsole-2.4.1.js" type="text/javascript"></script>
+    <script src="lib/jquery.tmpl-1.0.0pre.js" type="text/javascript"></script>
+    <script src="util/jq.hashchange.js" type="text/javascript"></script>
+    <script src="util/polyfills.js" type="text/javascript"></script>
+    <script src="util/mtwister.js" type="text/javascript"></script>
+    <script src="jsrepl/repl.js" type="text/javascript"></script>
+    <script src="jsrepl/languages.js" type="text/javascript"></script>
+    <script src="app.js"></script>
+    <link type="text/css" rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="img/favicon.png" type="image/png" />
+  </head>
+  <body>
+    <img id="main_logo" src="img/logo.png" />
+    <img id="lang_logo" />
+    <div id="content">
+      <div id="toolbar">
+        <select id="languages"></select>
+        <!-- TODO(amasad): Rethink examples dropdown.
+                           Maybe a list is more appropriate. -->
+        <select id="examples">
+          <option value="">Select Example</option>
+        </select>
+        <button id="new">New Session</button>
+      </div> 
+      <div id="console"></div>
+    </div>
+  </body>
+</html>
