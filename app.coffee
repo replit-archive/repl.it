@@ -1,28 +1,73 @@
 $ = jQuery
+
+# Global REPLIT container.
+@REPLIT = {}
+
+# Module global variables.
 jqconsole = null
 jsrepl = null
+current_lang = null
+$doc = null
+templates = {}
+Languages = {}
+examples = []
 
-# Defines global jQuery templates used by the various functions interacting
-# with the UI.
-DefineTemplates = ->
-  $.template 'optgroup', '''
-                         {{each(cat, names_arr) data}}
-                           <optgroup label="${cat}">
-                             {{each names_arr}}
-                               <option value="${$value.value}">
-                                 ${$value.display}
-                               </option>
-                             {{/each}}
-                           </optgroup>
-                         {{/each}}
-                         '''
-  $.template 'option', '<option>${value}</option>'
-
-# Initializes the behaviour of the command prompt and the expand and eval
-# buttons.
-SetupConsole = (header='') ->
-  jqconsole = $('#console').jqconsole header
-
+Init = ->
+  # Module global jQuery document object.
+  $doc = $(document)
+  
+  # Define language selection templates
+  templates.category = '''
+    <h3>{{name}}</h3>
+    <ul>
+      {{#languages}}
+        <li><a data-langname="{{jsrepl_name}}">{{{display}}}</a></li>
+      {{/languages}}
+    </ul>
+  '''
+  templates.languages = '''
+    <h2>Please Select Your Language</h2>
+    <div class="cat-list">
+      {{#categories}}
+        <div class="category">
+          {{>category}}
+        </div>
+      {{/categories}}
+    </div>
+  '''
+  
+  # Define example template
+  templates.examples = '''
+    <ul>
+    {{#examples}}
+      <li><a href="#" data-index={{index}}>{{title}}</a></li>
+    {{/examples}}
+    </ul>
+  '''
+  
+  # Instantiate jqconsole
+  jqconsole = $('#console').jqconsole ''
+  
+  # Load replit language settings
+  categories = []
+  for name, languages of @REPLIT.Languages
+    for lang in languages
+      Languages[lang.jsrepl_name] = lang
+      lang.display = ()->
+        index = this.name.indexOf this.shortcut
+        # Warning slicing strings.
+        return this.name[...index] + 
+                "<span>#{this.name.charAt(index)}</span>" + 
+                this.name[index+1...]
+    categories.push {
+      name
+      languages
+    }
+    
+  # Render language selection templates
+  lang_sel_html = Mustache.to_html templates.languages, {categories}, templates
+  $('#language-selector').append lang_sel_html
+  
 # Shows a command prompt in the console and waits for input.
 StartPrompt = ->
   Evaluate = (command)->
@@ -33,92 +78,100 @@ StartPrompt = ->
       StartPrompt()
   jqconsole.Prompt true, Evaluate, $.proxy(jsrepl.CheckLineEnd, jsrepl)
 
-# Populates the languages dropdown from JSREPL::Languages and triggers the
-# loading of the default language.
-LoadLanguageDropdown= ->
-  # Sort languages into categories.
-  categories = {}
-  for system_name, lang_def of JSREPL::Languages::
-    if not categories[lang_def.category]?
-      categories[lang_def.category] = []
-    categories[lang_def.category].push
-      display: lang_def.name
-      value: system_name
-
-  # Fill the dropdown.
-  $languages = $('#languages')
-  $languages.empty().append $.tmpl 'optgroup', data: categories
-
-  # Link dropbox to language loading.
-  $languages.change =>
-    
-    # TODO(amasad): Create a loading effect.
-    $('body').toggleClass 'loading'
-    lang = $languages.val()
-    # Load logo.
-    $('#lang_logo').attr 'src', lang.logo
-    current_lang = JSREPL::Languages::[lang]
-    # Register charecter matchings in jqconsole for the current language
-    i = 0
-    for [open, close] in current_lang.matchings
-      jqconsole.RegisterMatching open, close, 'matching-' + (++i)
-    
-    # Load examples.  
-    $.get current_lang.example_file, (raw_examples) =>
-      # Clear the existing examples.
-      examples = {}
-      $examples = $('#examples')
-      $examples.unbind 'change'
-      $(':not(:first)', $examples).remove()
-
-      # Parse out the new examples.
-      example_parts = raw_examples.split /\*{80}/
-      title = null
-      for part in example_parts
-        part = part.replace /^\s+|\s*$/g, ''
-        if not part then continue
-        if title
-          code = part
-          examples[title] = code
-          title = null
-        else
-          title = part
-          $examples.append $.tmpl 'option', value: title
-      # Set up response to example selection.
-      $examples.change =>
-        code = examples[$examples.val()]
-        jqconsole.SetPromptText code
-        jqconsole.Focus()
-
-    # Empty out the history, prompt and example selection.
-    jqconsole.Reset()
-    jqconsole.RegisterShortcut 'Z', =>
-      jqconsole.AbortPrompt()
-      StartPrompt()
-    $('#examples').val ''
-    jsrepl.LoadLanguage lang, =>
-      $('body').toggleClass 'loading'
-      StartPrompt()
-      window.location.hash = lang.toLowerCase()
-
-  # Load the default language by manually triggering change.
-  $languages.change()
+# Load a given language by name.
+LoadLanguage = (lang_name) ->
+  $.nav.pushState "/#{lang_name.toLowerCase()}"
+  
+  # Do the actual language loading.
 
 # Sets up the HashChange event handler. Handles cases were user is not
 # entering language in correct case.
 SetupURLHashChange = ->
-  proper_case_langs = {}
-  $.each Object.keys(JSREPL::Languages::), (i, lang) ->
-    proper_case_langs[lang.toLowerCase()] = lang;
+  langs = {}
+  for lang_name, lang of Languages
+    langs[lang_name.toLowerCase()] = lang;
+  jQuery.nav (lang_name, link) ->
+    if langs[lang_name]?
+      lang_name = langs[lang_name].jsrepl_name
+      # TODO(amasad): Create a loading effect.
+      $('body').toggleClass 'loading'
 
-  $languages = $('#languages')
+      # Module global current language
+      current_lang = JSREPL::Languages::[lang_name]
 
-  $.hashchange (lang) ->
-    lang = proper_case_langs[lang.toLowerCase()]
-    if ($languages.find "[value=#{lang}]").length
-      $languages.val lang
-      $languages.change()
+      # Register charecter matchings in jqconsole for the current language
+      i = 0
+      for [open, close] in current_lang.matchings
+        jqconsole.RegisterMatching open, close, 'matching-' + (++i)
 
+      # Load examples.  
+      $.get Languages[lang_name].example_file, (raw_examples) =>
+        # Clear the existing examples.
+        examples = []
+        # Parse out the new examples.
+        example_parts = raw_examples.split /\*{80}/
+        title = null
+        for part in example_parts
+          part = part.replace /^\s+|\s*$/g, ''
+          if not part then continue
+          if title
+            code = part
+            examples.push {
+              title
+              code
+              index: examples.length
+            }
+            title = null
+          else
+            title = part
+
+        # Render examples.
+        examples_sel_html = Mustache.to_html templates.examples, {examples}
+        $('#examples-selector').empty().append examples_sel_html
+        # Set up response to example selection.
+
+      # Empty out the history, prompt and example selection.
+      jqconsole.Reset()
+      jqconsole.RegisterShortcut 'Z', =>
+        jqconsole.AbortPrompt()
+        StartPrompt()
+      jsrepl.LoadLanguage lang_name, =>
+        $('body').toggleClass 'loading'
+        StartPrompt()
+
+# Overlays container.
+# Methods responsible for UI and behavior of overlays.
+Overlays =
+  # Langauge selection overlay method.
+  languages: ()->
+    selected = false
+    jQuery.facebox {div: '#language-selector'}, 'languages'
+    $('#facebox .content.languages .cat-list span').each (i, elem)->
+      $elem = $(elem)
+      $doc.bind 'keyup.languages', (e)->
+        upperCaseCode = $elem.text().toUpperCase().charCodeAt(0)
+        lowerCaseCode = $elem.text().toLowerCase().charCodeAt(0)
+        if e.keyCode == upperCaseCode or e.keyCode == lowerCaseCode
+          $doc.trigger 'close.facebox'
+          selected = true
+          LoadLanguage $elem.parent().data 'langname'
+    
+    $doc.bind 'close.facebox.languages', ()=>
+      $doc.unbind 'keypress.languages'
+      $doc.unbind 'close.facebox.languages'
+      StartPrompt() if not selected
+      
+    jqconsole.AbortPrompt() if jqconsole.state == 2
+    
+  examples: ()->
+    jQuery.facebox {div: '#examples-selector'}, 'examples'
+    $('#facebox .content.examples ul a').click (e)->
+      e.preventDefault()
+      example = examples[$(this).data 'index']
+      $doc.trigger 'close.facebox'
+      jqconsole.SetPromptText example.code
+      jqconsole.Focus()
+      
 $ ->
   config = 
     # Receives the result of a command evaluation.
@@ -155,11 +208,19 @@ $ ->
       return undefined
     
   jsrepl = new JSREPL config
-  SetupConsole()
-  DefineTemplates()
-  LoadLanguageDropdown()
-  
-    
-  
+  Init()
+  $(window).load () ->
+    setTimeout SetupURLHashChange, 0
+  $doc.keyup (e)->
+    # Escape key
+    if e.keyCode == 27 and not $('#facebox').is(':visible')
+      Overlays.languages()
       
-  
+  $('#examples-button').click (e)->
+    e.preventDefault()
+    Overlays.examples()
+    
+  $('#languages-button').click (e)->
+    e.preventDefault()
+    Overlays.languages()
+      

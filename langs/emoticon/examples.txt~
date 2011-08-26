@@ -1,0 +1,41 @@
+Hello World
+********************************************************************************
+:-O Hello World :-Q S:-P :-Q
+********************************************************************************
+Reverse
+********************************************************************************
+:-O hello world
+)]:-O :-C :~# :-7
+:-O
+:-(   [:]o<    8=\ 8-E    :-)
+[:]oO
+:-(   [:]oQ    8=\ 8-E    :-)
+********************************************************************************
+Loop
+********************************************************************************
+** Ensure that lists to be used is empty **
+    E-O
+    |8-D
+    =|8-D
+    ()=D
+** first set up some useful values **
+    |8-O   5               ** this is the counter for the loop          **
+    =|8-O  1               ** this is the decrement value               **
+    ()=O   0               ** this is the comparison value for stopping **
+
+** now do the actual looping **
+    :-(
+       |8-P                ** print the current inner loop value        **
+       =|8-O               ** select the decrement value                **
+       |8-[                ** copy the decrement value to the counter   **
+       |8-}                ** decrement the counter                     **
+       |8-O                ** select the counter                        **
+       ()=\                ** is the counter equal to the stop value?   **
+       :-E                 ** if so break the loop                      **
+       :-O - :-Q           ** print a divider                           **
+    :-)
+********************************************************************************
+Input
+********************************************************************************
+:-O Enter your name: Your name is: :-Q S:-P :-Q S:-P :-Q :-* :-Q S:-P :-Q S:-P :-Q S:-P :-Q
+********************************************************************************

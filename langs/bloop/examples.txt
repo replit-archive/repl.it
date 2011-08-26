@@ -1,0 +1,334 @@
+HELLO WORLD
+********************************************************************************
+define procedure ''hello-world'' [n]:
+block 0: begin
+     print['Hello World']
+     output<=42;
+block 0: end.
+
+hello-world[1];
+********************************************************************************
+MINUS
+********************************************************************************
+define procedure ''minus'' [m,n]:
+block 0: begin
+	if m < n, then:
+	quit block 0;
+	loop at most m + 1 times:
+	block 1: begin
+		if output + n = m, then:
+		abort loop 1;
+		output <= output + 1;
+	block 1: end;
+block 0: end.
+
+minus[4,2];
+********************************************************************************
+DIVIDE
+********************************************************************************
+define procedure ''minus'' [m,n]:
+block 0: begin
+	if m < n, then:
+	quit block 0;
+	loop at most m + 1 times:
+	block 1: begin
+		if output + n = m, then:
+		abort loop 1;
+		output <= output + 1;
+	block 1: end;
+block 0: end.
+
+define procedure ''divide''[dividend, divisor]:
+block 0: begin
+	if divisor < 1, then:
+	quit block 0;
+	cell(0) <= dividend;
+	output <= 0;
+	loop at most dividend times:
+	block 1: begin
+		if cell(0) < divisor, then:
+		quit block 0;
+		cell(0) <= minus[cell(0), divisor];
+		output <= output + 1;
+	block 1:end;
+block 0:end.
+
+divide[100, 4];
+********************************************************************************
+TWO TO THE THREE TO THE
+********************************************************************************
+define procedure ''two-to-the-three-to-the'' [n]:
+block 0: begin
+	cell(0) <= 1;
+	loop n times:
+	block 1: begin
+		cell(0) <= 3 * cell(0);
+	block 1: end;
+	cell(1) <= 1;
+	loop cell(0) times:
+	block 2: begin
+		cell(1) <= 2 * cell(1);
+	block 2: end;
+	output <= cell(1);
+block 0: end.
+
+two-to-the-three-to-the[2];
+********************************************************************************
+POWER
+********************************************************************************
+define procedure ''power''[base,exp]:
+block 0: begin
+	output <= 1;
+	loop exp times:
+	output <= output * base;
+block 0: end.
+
+power[2,3];
+********************************************************************************
+REMAINDER
+********************************************************************************
+define procedure ''minus'' [m,n]:
+block 0: begin
+	if m < n, then:
+	quit block 0;
+	loop at most m + 1 times:
+	block 1: begin
+		if output + n = m, then:
+		abort loop 1;
+		output <= output + 1;
+	block 1: end;
+block 0: end.
+
+define procedure ''remainder''[dividend, divisor]:
+block 0: begin
+	if divisor < 1, then:
+	quit block 0;
+	output <= dividend;
+	loop at most dividend times:
+	block 1: begin
+		if output < divisor, then:
+		quit block 0;
+		output <= minus[output, divisor];
+	block 1:end;
+block 0:end.
+
+remainder[5,2];
+********************************************************************************
+EVEN?
+********************************************************************************
+define procedure ''minus'' [m,n]:
+block 0: begin
+	if m < n, then:
+	quit block 0;
+	loop at most m + 1 times:
+	block 1: begin
+		if output + n = m, then:
+		abort loop 1;
+		output <= output + 1;
+	block 1: end;
+block 0: end.
+
+define procedure ''remainder''[dividend, divisor]:
+block 0: begin
+	if divisor < 1, then:
+	quit block 0;
+	output <= dividend;
+	loop at most dividend times:
+	block 1: begin
+		if output < divisor, then:
+		quit block 0;
+		output <= minus[output, divisor];
+	block 1:end;
+block 0:end.
+
+define procedure ''even?''[n]:
+block 0: begin
+	if remainder[n,2] = 0, then:
+	output <= yes;
+block 0: end.
+
+even?[3];
+********************************************************************************
+ODD?
+********************************************************************************
+define procedure ''minus'' [m,n]:
+block 0: begin
+	if m < n, then:
+	quit block 0;
+	loop at most m + 1 times:
+	block 1: begin
+		if output + n = m, then:
+		abort loop 1;
+		output <= output + 1;
+	block 1: end;
+block 0: end.
+
+define procedure ''remainder''[dividend, divisor]:
+block 0: begin
+	if divisor < 1, then:
+	quit block 0;
+	output <= dividend;
+	loop at most dividend times:
+	block 1: begin
+		if output < divisor, then:
+		quit block 0;
+		output <= minus[output, divisor];
+	block 1:end;
+block 0:end.
+
+define procedure ''odd?''[n]:
+block 0: begin
+	if remainder[n,2] = 1, then:
+	output <= yes;
+block 0: end.
+
+odd?[5];
+********************************************************************************
+FACTORIAL
+********************************************************************************
+define procedure ''factorial''[N]:
+block 0: begin
+	if N < 0, then:
+	quit block 0;
+	output <= 1;
+	cell(0) <= 0;
+	loop N times:
+	block 1: begin
+		cell(0) <= cell(0) + 1;
+		output <= output * cell(0);
+	block 1: end;
+block 0: end.
+
+factorial[9];
+********************************************************************************
+FIBONACCI
+********************************************************************************
+define procedure ''minus'' [m,n]:
+block 0: begin
+	if m < n, then:
+	quit block 0;
+	loop at most m + 1 times:
+	block 1: begin
+		if output + n = m, then:
+		abort loop 1;
+		output <= output + 1;
+	block 1: end;
+block 0: end.
+
+define procedure ''fibo''[N]:
+block 0: begin
+	if n < 1, then:
+	quit block 0;
+	output <= 1;
+	if n < 3, then:
+	quit block 0;
+	output <= fibo[minus[n,1]] + fibo[minus[n,2]];
+block 0: end.
+
+fibo[10];
+********************************************************************************
+PRIME?
+********************************************************************************
+define procedure ''minus'' [m,n]:
+block 0: begin
+	if m < n, then:
+	quit block 0;
+	loop at most m + 1 times:
+	block 1: begin
+		if output + n = m, then:
+		abort loop 1;
+		output <= output + 1;
+	block 1: end;
+block 0: end.
+  
+define procedure ''remainder''[dividend, divisor]:
+block 0: begin
+	if divisor < 1, then:
+	quit block 0;
+	output <= dividend;
+	loop at most dividend times:
+	block 1: begin
+		if output < divisor, then:
+		quit block 0;
+		output <= minus[output, divisor];
+	block 1:end;
+block 0:end.
+
+define procedure ''prime?'' [n]:
+block 0: begin
+	if n < 2, then:
+	quit block 0;
+	cell(0) <= 2;
+	loop at most minus[n,2] times:
+	block 1: begin
+		if remainder[n, cell(0)] = 0, then:
+		quit block 0;
+		cell(0) <= cell(0) + 1;
+	block 1: end;
+	output <= yes;
+block 0: end.
+********************************************************************************
+GOLDBACH?
+********************************************************************************
+define procedure ''minus'' [m,n]:
+block 0: begin
+	if m < n, then:
+	quit block 0;
+	loop at most m + 1 times:
+	block 1: begin
+		if output + n = m, then:
+		abort loop 1;
+		output <= output + 1;
+	block 1: end;
+block 0: end.
+  
+define procedure ''remainder''[dividend, divisor]:
+block 0: begin
+	if divisor < 1, then:
+	quit block 0;
+	output <= dividend;
+	loop at most dividend times:
+	block 1: begin
+		if output < divisor, then:
+		quit block 0;
+		output <= minus[output, divisor];
+	block 1:end;
+block 0:end.
+
+define procedure ''prime?'' [n]:
+block 0: begin
+	if n < 2, then:
+	quit block 0;
+	cell(0) <= 2;
+	loop at most minus[n,2] times:
+	block 1: begin
+		if remainder[n, cell(0)] = 0, then:
+		quit block 0;
+		cell(0) <= cell(0) + 1;
+	block 1: end;
+	output <= yes;
+block 0: end.
+
+define procedure ''goldbach?''[n]:
+block 0: begin
+	cell(0) <= 2;
+	loop at most n times:
+	block 1: begin
+		if {prime?[cell(0)]
+		   and prime?[minus[n, cell(0)]]}, then:
+		block 2: begin
+			output <= yes;
+			quit block 0;
+		block 2: end
+		cell(0) <= cell(0) + 1;
+	block 1: end;
+block 0: end.
+
+goldbach?[529]
+********************************************************************************
+
+
+
+
+
+
