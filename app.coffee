@@ -210,6 +210,7 @@ $ ->
   jsrepl = new JSREPL config
   Init()
   $(window).load () ->
+    # Hack for chrome and FF 4 fires an additional popstate on window load.
     setTimeout SetupURLHashChange, 0
   $doc.keyup (e)->
     # Escape key
