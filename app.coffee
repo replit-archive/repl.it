@@ -70,8 +70,8 @@ Init = ->
   
 # Shows a command prompt in the console and waits for input.
 StartPrompt = ->
+  console.log jqconsole.input_queue
   Evaluate = (command)->
-    $('#examples').val ''
     if command
       jsrepl.Evaluate command
     else
@@ -157,7 +157,7 @@ Overlays =
           LoadLanguage $elem.parent().data 'langname'
     
     $doc.bind 'close.facebox.languages', ()=>
-      $doc.unbind 'keypress.languages'
+      $doc.unbind 'keyup.languages'
       $doc.unbind 'close.facebox.languages'
       StartPrompt() if not selected
       
@@ -174,6 +174,7 @@ Overlays =
       
 $ ->
   config = 
+    JSREPL_dir: 'jsrepl/'
     # Receives the result of a command evaluation.
     #   @arg result: The user-readable string form of the result of an evaluation.
     ResultCallback: (result) ->
@@ -208,7 +209,9 @@ $ ->
       return undefined
     
   jsrepl = new JSREPL config
+  window.jsrepl = jsrepl
   Init()
+
   $(window).load () ->
     # Hack for chrome and FF 4 fires an additional popstate on window load.
     setTimeout SetupURLHashChange, 0
