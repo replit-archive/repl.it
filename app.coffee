@@ -29,7 +29,7 @@ LANG_CATEGORIES =
   Classic: ['QBasic', 'Forth', 'Smalltalk']
   Esoteric: ['LOLCODE', 'Brainfuck', 'Emoticon', 'Bloop', 'Unlambda']
   Web: ['JavaScript', 'Traceur', 'CoffeeScript', 'Kaffeine', 'Move']
-  Practical: ['Scheme', 'Lua']
+  Practical: ['Scheme', 'Lua', 'Python']
 
 REPLIT =
   Init: ->

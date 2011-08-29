@@ -94,3 +94,9 @@
     category: 'Practical'
     example_file: 'langs/lua/examples.txt'
     help_link: 'http://en.wikipedia.org/wiki/Lua_(programming_language)'
+  Python:
+    name: 'Python'
+    shortcut: 'P'
+    category: 'Practical'
+    example_file: 'langs/python/examples.txt'
+    help_link: 'http://en.wikipedia.org/wiki/Python_(programming_language)'
