@@ -148,12 +148,13 @@ REPLIT =
 
   ShowExamplesOverlay: ->
     jQuery.facebox {div: '#examples-selector'}, 'examples'
+    that = @
     $('#facebox .content.examples ul a').click (e) ->
       e.preventDefault()
-      example = @examples[$(this).data 'index']
+      example = that.examples[$(this).data 'index']
       $(document).trigger 'close.facebox'
-      @jqconsole.SetPromptText example.code
-      @jqconsole.Focus()
+      that.jqconsole.SetPromptText example.code
+      that.jqconsole.Focus()
 
   # Receives the result of a command evaluation.
   #   @arg result: The user-readable string form of the result of an evaluation.
