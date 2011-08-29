@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>jsREPL</title>
+    <!-- Cache preventer for use during development. TODO(max99x): remove. -->
+    <meta http-equiv="pragma" content="no-cache" />
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <script src="lib/ace/ace.js"  type="text/javascript" charset="utf-8"></script>
+    <script src="lib/ace/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lib/markdown.js"></script>
+    <script src="langs/coffee-script/coffee-script.js"></script>
+    <script src="jsrepl/loader.js" id="jsrepl_loader"></script>
+    <script src="lib/jquery-1.6.2.js" type="text/javascript"></script>
+    <script src="lib/jqconsole-2.4.2.js" type="text/javascript"></script>
+    <script src="lib/mustache.js" type="text/javascript"></script>
+    <script src="lib/history.js" type="text/javascript"></script>
+    <script src="jsrepl/repl.js" type="text/javascript"></script>
+    <script src="jsrepl/languages.js" type="text/javascript"></script>
+    <script src="learn.js"></script>
+    <script src="languages.js"></script>
+    <script src="lib/facebox.js"></script>
+    
+    <link type="text/css" rel="stylesheet" href="css/learn.css" />
+    <link type="text/css" rel="stylesheet" href="css/facebox.css" />
+    <link rel="shortcut icon" href="img/favicon.png" type="image/png" />
+  </head>
+  <body>
+      <div id="course">
+        
+      </div>
+      <div id="user-area">
+        <div id="editor"></div>
+        <div id="console"></div>
+      </div id="user-area">
+    <div id="course-selector" style="display:none"></div>
+  </body>
+</html>

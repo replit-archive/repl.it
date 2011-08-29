@@ -90,8 +90,17 @@
         jsrepl_name: 'CoffeeScript'
         shortcut: 'C'
         example_file: 'langs/coffee-script/examples.txt'
+        courses: [
+          {
+            title: 'Introduction to coffeescript'
+            file: 'langs/coffee-script/introduction.coffee'
+          }
+        ]
         help_link: 'http://jashkenas.github.com/coffee-script/'
         logo: 'langs/coffee-script/logo.png'
+        ace_mode:
+          script: 'lib/ace/mode-coffee'
+          module: 'ace/mode/coffee-script'
       }
       {
         name: 'Kaffeine'
