@@ -163,7 +163,7 @@ background: -webkit-linear-gradient(top,#CB4B16,#964B16); color: white; text-dec
   height:30px;
   background:gray;
 }
-.button.save{
+#control ul a.button{
   height:10px;
   padding:7px;
   float:left;
@@ -179,5 +179,5 @@ background: -webkit-linear-gradient(top,#CB4B16,#964B16); color: white; text-dec
   position: absolute;
   top: -5px;
   left: 0;
-  background: url(../img/handle-v.png) 3px 50% no-repeat;
+  background: yellow;
 }

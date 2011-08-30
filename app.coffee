@@ -201,10 +201,26 @@ REPLIT =
         @ErrorCallback e
     return undefined
   
+  InitResizer: ->
+    $('div').disableSelection()
+    $body = $('body')
+    mousemove = (e) =>
+      left = e.pageX
+      @$resizer.css 'left', left
+    
+    @$resizer.mousedown (e) =>
+      $body.mousemove mousemove
+      
+
+    @$resizer.mouseup =>
+      $body.unbind 'mousemove'
+      console.log 'stop drag'
+  
   # Resize containers on each window resize.
   OnResize: ->
     width = document.documentElement.clientWidth
     height = document.documentElement.clientHeight - 50
+    @$resizer.css 'left', width / 2
     @$container.css 
       width: width
       height: height
@@ -235,6 +251,8 @@ $ ->
   REPLIT.$container = $('#content')
   REPLIT.$editorContainer = $('#editor-container')
   REPLIT.$consoleContainer = $('#console')
+  REPLIT.$resizer = $('#resize')
+  REPLIT.InitResizer()
   REPLIT.OnResize()
   $(window).bind 'resize', ()-> REPLIT.OnResize()
   
@@ -259,3 +277,20 @@ $ ->
 
 # Export globally.
 @REPLIT = REPLIT
+
+$.fn.disableSelection = () ->
+  ###
+    this.each ()->  
+    console.log this       
+        $(this).attr('unselectable', 'on')
+               .css({
+                   '-moz-user-select':'none',
+                   '-webkit-user-select':'none',
+                   'user-select':'none'
+               })
+               .each(function() {
+                   this.onselectstart = function() { return false; };
+               });
+    });
+};
+  ###
