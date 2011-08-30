@@ -32,6 +32,14 @@ LANG_CATEGORIES =
   Practical: ['Scheme', 'Lua', 'Python']
 
 REPLIT =
+  # jQuery elems.
+  $container: null
+  $consoleContainer: null
+  $editorContainer: null
+  $console: null
+  $editor: null
+  $resizer: null
+  
   Init: ->
     @jsrepl = new JSREPL {
       InputCallback: $.proxy @InputCallback, @
@@ -39,7 +47,13 @@ REPLIT =
       ResultCallback: $.proxy @ResultCallback, @
       ErrorCallback: $.proxy @ErrorCallback, @
     }
-    @jqconsole = $('#console').jqconsole ''
+    @jqconsole = @$consoleContainer.jqconsole ''
+    @$console = @$consoleContainer.find '.jqconsole'
+    
+    @editor = ace.edit 'editor'
+    @editor.setTheme 'ace/theme/solarized_light'
+    @$editor = @$editorContainer.find '#editor'
+    
     @examples = []
     @current_lang = null
 
@@ -56,7 +70,8 @@ REPLIT =
       templateCategories.push {name: categoryName, languages: templateLanguages}
     lang_sel_html = Mustache.to_html TEMPLATES.languageMenu, {categories: templateCategories}, TEMPLATES
     $('#language-selector').append lang_sel_html
-
+    @inited = true
+    
   # Shows a command prompt in the console and waits for input.
   StartPrompt: ->
     Evaluate = (command) =>
@@ -185,11 +200,47 @@ REPLIT =
       catch e
         @ErrorCallback e
     return undefined
-
+  
+  # Resize containers on each window resize.
+  OnResize: ->
+    width = document.documentElement.clientWidth
+    height = document.documentElement.clientHeight - 50
+    @$container.css 
+      width: width
+      height: height
+    @$editorContainer.css
+      width: width / 2
+      height: height
+    @$consoleContainer.css
+      width: width / 2
+      height: height
+    # Call to resize environment if the app has already initialized.
+    REPLIT.EnvResize() if @inited
+    
+  EnvResize: ->
+    # Calculate real height.
+    console_hpadding = @$console.innerWidth() - @$console.width()
+    console_vpadding = @$console.innerHeight() - @$console.height()
+    editor_hpadding = @$editor.innerWidth() - @$editor.width()
+    # + 30 for the control menu above the editor.
+    editor_vpadding = @$editor.innerHeight() - @$editor.height() + 30
+    
+    @$console.css 'width', @$consoleContainer.width() - console_hpadding
+    @$console.css 'height', @$consoleContainer.height() - console_vpadding
+    @$editor.css 'width', @$editorContainer.innerWidth() - editor_hpadding
+    @$editor.css 'height', @$editorContainer.innerHeight() - editor_vpadding 
+    @editor.resize()
+    
 $ ->
+  REPLIT.$container = $('#content')
+  REPLIT.$editorContainer = $('#editor-container')
+  REPLIT.$consoleContainer = $('#console')
+  REPLIT.OnResize()
+  $(window).bind 'resize', ()-> REPLIT.OnResize()
+  
   JSREPLLoader.onload ->
     REPLIT.Init()
-
+    REPLIT.EnvResize()
     $(window).load ->
       # Hack for chrome and FF 4 fires an additional popstate on window load.
       setTimeout (-> REPLIT.SetupURLHashChange()), 0

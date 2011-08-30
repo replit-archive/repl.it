@@ -7,21 +7,34 @@
     <script src="lib/mustache.js"></script>
     <script src="lib/history.js"></script>
     <script src="lib/facebox.js"></script>
-
+    <script src="lib/ace/ace.js"></script>
+    <script src="lib/ace/theme-solarized_light.js"></script>
     <script src="jsrepl/loader.js" id="jsrepl_loader"></script>
 
     <script src="app.js"></script>
     <script src="languages.js"></script>
-
+    
+    <link type="text/css" rel="stylesheet" href="css/reset.css" />
     <link type="text/css" rel="stylesheet" href="css/style.css" />
     <link type="text/css" rel="stylesheet" href="css/facebox.css" />
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
   </head>
   <body>
+    <div id="header">
+      <a id="logo" href="/">REPL it</a>
+      <div class="actions">
+        <ul>
+          <li><a href="#language-selector" id="languages-button" class="button"><span>Languages<></a></li>
+          <li><a href="#examples-selector" id="examples-button" class="button"><span>Examples</a></li>
+      </div>
+    </div>
     <div id="content">
-      <a href="#language-selector" rel="facebox" id="languages-button">Languages</a>
-      <a href="#examples-selector" rel="facebox" id="examples-button">Examples</a>
       <div id="console"></div>
+      <!-- To be implemented <div id="resize"></div> -->
+      <div id="editor-container">
+        <div id="control"> <a class="save button">save</a></div>
+        <div id="editor">
+        </div>
     </div>
     <div id="language-selector" style="display:none"></div>
     <div id="examples-selector" style="display:none"></div>

@@ -1,7 +1,6 @@
 html, body {
   height: 100%;
   margin: 0;
-  overflow: hidden;
   padding: 0;
 }
 
@@ -19,17 +18,7 @@ html, body {
 }
 
 #content {
-  border: 1px solid #AAA;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top: none;
-  height: 90%;
-  margin: 0 auto;
-  opacity: 0.9;
-  overflow-x: hidden;
-  padding: 0;
-  padding-top: 1.5em;
-  width: 69%;
+  position: relative;
 }
 
 #languages, #examples {
@@ -40,27 +29,26 @@ html, body {
   float: right;
 }
 #console {
-  width: 100%;
-  
+  position: absolute;
+  bottom:0;
+  right:0;
 }
 
 .jqconsole {
-  position:relative;
-  background-color: #181A3A;
+  padding:15px;
+  position: absolute;
+  bottom:0;
+  right:0;
+  background-color: #195F91;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   bottom: 0;
-  color: white;
+  color: #CB4B16;
   display: block;
-  font-family: Monaco, Consolas, "Lucida Console", Monospace;
+  font-family: monospace;
   font-size: 14px;
-  left: 0;
   margin: 0;
-  margin-bottom: 2px;
   overflow: auto;
-  padding: 0;
-  padding-left: 5px;
-  height: 500px;
   /* Force word wrap on all browsers. */
   white-space: -moz-pre-wrap; /* Mozilla, supported since 1999 */
   white-space: -o-pre-wrap; /* Opera */
@@ -84,7 +72,7 @@ html, body {
 }
 
 .jqconsole-blurred .jqconsole-prompt {
-  color: #CCC;
+  color: #93A1A1  ;
 }
 
 .jqconsole-prompt, .jqconsole-old-prompt {
@@ -97,7 +85,7 @@ html, body {
 }
 
 .result {
-  color: #22dd22;
+  color: black;
   display: block;
   font-weight: bold;
 }
@@ -126,4 +114,70 @@ html, body {
 #facebox .content.languages .category span{
   color: red;
   text-decoration: underline;
+}
+
+#editor-container {
+  position: absolute;
+  bottom:0;
+  left:0;
+  margin-top:10px;
+}
+
+#editor{
+  position: relative;
+  width: 10px;
+  height: 10px;
+}
+
+#header{
+  background: -webkit-linear-gradient(top,#45484D 0,black 100%);
+  height:50px;
+}
+#logo{
+  float:left;
+  background: url(../images/g40.png) no-repeat 0 25%;
+  width: 200px;
+  height: 50px;
+  display: block;
+  text-indent: -9999px;
+  margin-left: 14px;
+  padding-top: 6px;
+  padding-right:30px;
+}
+.button{
+  display:block;
+  padding:15px;
+  
+background: -webkit-linear-gradient(top,#CB4B16,#964B16); color: white; text-decoration: none; font: bold 13px "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif; border: 1px solid #964B16; border-bottom: 1px solid #964B16; -webkit-border-radius: 12px; height: 11px; margin-top: 2px; text-align: center; line-height: 11px; }
+.actions{
+  float:left;
+}
+.actions ul{
+  list-style:none;
+}
+.actions ul li{
+  float:left;
+  padding-right:10px;
+}
+#control {
+  height:30px;
+  background:gray;
+}
+.button.save{
+  height:10px;
+  padding:7px;
+  float:left;
+  background: -webkit-gradient(linear,left top,left bottom,from(#dd4b39),to(#d14836));
+  -webkit-border-radius:2px;
+  margin-left:10px;
+}
+#resize{
+  width: 8px;
+  height: 100%;
+  padding: 5px 0;
+  cursor: col-resize;
+  position: absolute;
+  top: -5px;
+  left: 0;
+  background: url(../img/handle-v.png) 3px 50% no-repeat;
 }
