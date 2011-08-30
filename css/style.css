@@ -173,11 +173,10 @@ background: -webkit-linear-gradient(top,#CB4B16,#964B16); color: white; text-dec
 }
 #resize{
   width: 8px;
-  height: 100%;
+  height: 97%;
   padding: 5px 0;
   cursor: col-resize;
   position: absolute;
-  top: -5px;
   left: 0;
   background: yellow;
 }

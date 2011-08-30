@@ -39,6 +39,8 @@ REPLIT =
   $console: null
   $editor: null
   $resizer: null
+  # Editor to console
+  split_ratio: .5
   
   Init: ->
     @jsrepl = new JSREPL {
@@ -201,38 +203,69 @@ REPLIT =
         @ErrorCallback e
     return undefined
   
+  # Attatches the resizer behavior.
   InitResizer: ->
-    $('div').disableSelection()
+    
+    $.fn.disableSelection = () ->
+      @each () ->
+        $this = $(this)
+        $this.attr 'unselectable', 'on'
+        $this.css
+          '-moz-user-select':'none'
+          '-webkit-user-select':'none'
+          'user-select':'none'
+        $this.each () -> this.onselectstart = () -> return false
+    
+    $.fn.enableSelection = () ->
+      @each () ->
+        $this = $(this)
+        $this.attr 'unselectable', ''
+        $this.css
+          '-moz-user-select': ''
+          '-webkit-user-select': ''
+          'user-select': ''
+        $this.each () -> this.onselectstart = null
+               
     $body = $('body')
+    
     mousemove = (e) =>
       left = e.pageX
       @$resizer.css 'left', left
-    
-    @$resizer.mousedown (e) =>
-      $body.mousemove mousemove
+      @split_ratio = left / document.documentElement.clientWidth
+      @OnResize()
       
-
+    @$resizer.mousedown (e) =>
+      if e.button == 0
+        @$container.disableSelection()
+        $body.mousemove mousemove
+      
     @$resizer.mouseup =>
+      @$container.enableSelection()
       $body.unbind 'mousemove'
-      console.log 'stop drag'
   
   # Resize containers on each window resize.
   OnResize: ->
     width = document.documentElement.clientWidth
+    # 50 for header.
     height = document.documentElement.clientHeight - 50
-    @$resizer.css 'left', width / 2
+    editor_width = @split_ratio * width
+    console_width = width - editor_width
+    
+    @$resizer.css 'left', editor_width
     @$container.css 
       width: width
       height: height
     @$editorContainer.css
-      width: width / 2
+      width: editor_width
       height: height
     @$consoleContainer.css
-      width: width / 2
+      width: console_width
       height: height
     # Call to resize environment if the app has already initialized.
     REPLIT.EnvResize() if @inited
-    
+  
+  # Calculates editor and console dimensions according to their parents and
+  # neighboring elements (if any).
   EnvResize: ->
     # Calculate real height.
     console_hpadding = @$console.innerWidth() - @$console.width()
@@ -248,20 +281,26 @@ REPLIT =
     @editor.resize()
     
 $ ->
+  # Get container elements.
   REPLIT.$container = $('#content')
   REPLIT.$editorContainer = $('#editor-container')
   REPLIT.$consoleContainer = $('#console')
   REPLIT.$resizer = $('#resize')
+  
+  # Initialaize the column resizer.
   REPLIT.InitResizer()
+  # Fire the onresize method to do initial resizing
   REPLIT.OnResize()
   $(window).bind 'resize', ()-> REPLIT.OnResize()
   
   JSREPLLoader.onload ->
     REPLIT.Init()
+    # At this stage the actual environment elements are available, resize them.
     REPLIT.EnvResize()
     $(window).load ->
       # Hack for chrome and FF 4 fires an additional popstate on window load.
       setTimeout (-> REPLIT.SetupURLHashChange()), 0
+    
     $(document).keyup (e)->
       # Escape key
       if e.keyCode == 27 and not $('#facebox').is(':visible')
@@ -277,20 +316,4 @@ $ ->
 
 # Export globally.
 @REPLIT = REPLIT
-
-$.fn.disableSelection = () ->
-  ###
-    this.each ()->  
-    console.log this       
-        $(this).attr('unselectable', 'on')
-               .css({
-                   '-moz-user-select':'none',
-                   '-webkit-user-select':'none',
-                   'user-select':'none'
-               })
-               .each(function() {
-                   this.onselectstart = function() { return false; };
-               });
-    });
-};
-  ###
+           
