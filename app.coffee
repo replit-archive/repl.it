@@ -182,6 +182,8 @@ REPLIT =
   # Receives an error message resulting from a command evaluation.
   #   @arg error: A message describing the error.
   ErrorCallback: (error) ->
+    if typeof error == 'object'
+      error = error.message
     @jqconsole.Write String(error), 'error'
     @StartPrompt()
   # Receives any output from a language engine. Acts as a low-level output
@@ -279,7 +281,7 @@ REPLIT =
     @$editor.css 'width', @$editorContainer.innerWidth() - editor_hpadding
     @$editor.css 'height', @$editorContainer.innerHeight() - editor_vpadding 
     @editor.resize()
-    
+
 $ ->
   # Get container elements.
   REPLIT.$container = $('#content')
@@ -297,9 +299,6 @@ $ ->
     REPLIT.Init()
     # At this stage the actual environment elements are available, resize them.
     REPLIT.EnvResize()
-    $(window).load ->
-      # Hack for chrome and FF 4 fires an additional popstate on window load.
-      setTimeout (-> REPLIT.SetupURLHashChange()), 0
     
     $(document).keyup (e)->
       # Escape key
@@ -317,3 +316,6 @@ $ ->
 # Export globally.
 @REPLIT = REPLIT
            
+$(window).load ->
+  # Hack for chrome and FF 4 fires an additional popstate on window load.
+  setTimeout (-> REPLIT.SetupURLHashChange()), 0
