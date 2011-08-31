@@ -39,11 +39,11 @@ html, body {
   position: absolute;
   bottom:0;
   right:0;
-  background-color: #195F91;
+  background-color: #0E1628;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   bottom: 0;
-  color: #CB4B16;
+  color: #EFF;
   display: block;
   font-family: monospace;
   font-size: 14px;
@@ -62,36 +62,42 @@ html, body {
   padding-bottom: 15px;
 }
 
+.jqconsole-prompt {
+  font-weight: bold;
+  color: #FC0;
+}
+
+.jqconsole-old-prompt {
+  font-weight: bold;
+  color: #F60;
+}
+
+.jqconsole-blurred .jqconsole-prompt {
+  color: #B91;
+  font-weight: bold;
+}
+
 .jqconsole-cursor {
-  background: #999;
+  background: #666;
   line-height: 100%;
 }
 
 .jqconsole-blurred .jqconsole-cursor {
-  background: #777;
-}
-
-.jqconsole-blurred .jqconsole-prompt {
-  color: #93A1A1  ;
-}
-
-.jqconsole-prompt, .jqconsole-old-prompt {
-  font-weight: bold;
+  background: #333;
 }
 
 .error {
-  color: red;
+  color: #F06;
   display: block;
 }
 
 .result {
-  color: black;
+  color: #6F0;
   display: block;
-  font-weight: bold;
 }
 
 .matching-1 {
-  color: #00FFFF;
+  color: #00FFFF;  /* #0BD */
 }
 .matching-2 {
   color: #FF00FF;
@@ -178,5 +184,5 @@ background: -webkit-linear-gradient(top,#CB4B16,#964B16); color: white; text-dec
   cursor: col-resize;
   position: absolute;
   left: 0;
-  background: yellow;
+  background: #222;
 }
