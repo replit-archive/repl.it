@@ -56,7 +56,7 @@
     category: 'Web'
     example_file: 'langs/traceur/examples.txt'
   CoffeeScript:
-    name: 'CofeeScript'
+    name: 'CoffeeScript'
     shortcut: 'C'
     category: 'Web'
     example_file: 'langs/coffee-script/examples.txt'
