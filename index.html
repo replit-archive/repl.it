@@ -8,7 +8,7 @@
     <script src="lib/history.js"></script>
     <script src="lib/facebox.js"></script>
     <script src="lib/ace/ace.js"></script>
-    <script src="lib/ace/theme-solarized_light.js"></script>
+    <script src="lib/ace/theme-textmate.js"></script>
     <script src="jsrepl/loader.js" id="jsrepl_loader"></script>
 
 
@@ -22,22 +22,103 @@
   </head>
   <body>
     <div id="header">
-      <a id="logo" href="/">repl.it</a>
-      <div class="actions">
-        <ul>
-          <li><a href="#language-selector" id="languages-button" class="button"><span>Languages</a></li>
-          <li><a href="#examples-selector" id="examples-button" class="button"><span>Examples</a></li>
+      <a id="logo" href="/"><img src="images/logo-small.png" width="173" height="60" /></a>
+      <div id="buttons">
+        <div id="button-languages" class="button left"></div><div id="button-examples" class="button middle"></div><div id="button-save" class="button middle"></div><div id="button-help" class="button right"></div>
+      </div>
+      <div id="language">Select a Language</div>
+    </div>
+    <table id="content">
+      <tr>
+        <td id="resize-left"></td>
+        <td id="editor">
+          <div id="editor-run" class="button"></div>
+          <div id="editor-widget"></div>
+        </td>
+        <td id="resize-center"></td>
+        <td id="console">
+          <div id="throbber"></div>
+          <div id="console-widget"></div>
+        </td>
+        <td id="resize-right"></td>
+      </tr>
+    </table>
+    <div id="footer">
+      <div id="social">
+        <div id="social-buttons-container">
+          <!-- Google+ -->
+          <div class="social_button" type="google">
+            <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+            <g:plusone size="medium"></g:plusone>
+          </div>
+          <!-- Facebook -->
+          <div class="social_button" type="facebook"> 
+            <fb:like
+              href="http:/localhost"
+              height="20"
+              layout="button_count"
+              show_faces="false"
+              send="false"
+              font="">
+            </fb:like>
+          </div>
+          <div id="fb-root"></div>
+          <script src="http://connect.facebook.net/en_US/all.js#appId=123&amp;xfbml=1"></script>
+          <!-- Twitter -->
+          <div class="social_button" type="twitter"> 
+            <a href="http://twitter.com/share" class="twitter-share-button" data-text="Testing out the twitter button." data-url="http://localhost" data-count="horizontal" data-via="Localhost">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
+          </div>
+          <!-- Hacker News -->
+          <a href="http://news.ycombinator.com/submitlink?u=&amp;t=http://localhost/" class="social_button">
+            <img src="images/hnlike.png" />
+          </a>
+        </div>
+      </div>
+      <div id="links">
+        <a href="/">about us</a>
+        <a href="https://github.com/replit/jsrepl">source code</a>
+        <a href="/" id="language-engine-link">language engine</a>
       </div>
     </div>
-    <div id="content">
-      <div id="console"></div>
-      <div id="resize"></div>
-      <div id="editor-container">
-        <a class="button run">run</a>
-        <div id="editor">
-        </div>
+    <div id="language-selector" class="overlay">
+      <div class="overlay-header">Supported Languages</div>
+      <div class="language-group">
+        <div class="language-group-header">Esoteric</div>
+        <ul>
+          <li>L<em>O</em>LCODE</li>
+          <li>Brain<em>f</em>uck</li>
+          <li><em>E</em>moticon</li>
+          <li><em>B</em>loop</li>
+          <li><em>U</em>nlmabda</li>
+        </ul>
+      </div>
+      <div class="language-group">
+        <div class="language-group-header">Web</div>
+        <ul>
+          <li><em>J</em>avaScript</li>
+          <li>JavaScript.<em>n</em>ext</li>
+          <li><em>C</em>offeeScript</li>
+          <li><em>K</em>affeine</li>
+          <li><em>M</em>ove</li>
+        </ul>
+      </div>
+      <div class="language-group">
+        <div class="language-group-header">Classic</div>
+        <ul>
+          <li><em>Q</em>Basic</li>
+          <li>Small<em>t</em>alk</li>
+          <li><em>F</em>orth</li>
+        </ul>
+      </div>
+      <div class="language-group">
+        <div class="language-group-header">Practical</div>
+        <ul>
+          <li><em>P</em>ython</li>
+          <li><em>S</em>cheme</li>
+          <li><em>L</em>ua</li>
+        </ul>
+      </div>
     </div>
-    <div id="language-selector" style="display:none"></div>
-    <div id="examples-selector" style="display:none"></div>
+    <div id="examples-selector" class="overlay"></div>
   </body>
 </html>
