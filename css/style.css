@@ -109,15 +109,15 @@ html, body {
   margin: 0 auto;
   height: 672px;
   width: 1200px;
-}
+position: relative;}
 
 /* Editor */
 
 #editor {
   background: #FFF;
   width: 591px;
-  position: relative;
-}
+  position: absolute;
+height: 100%; left: 8px;}
 
 #editor-widget {
   position: relative;
@@ -136,20 +136,20 @@ html, body {
   background: -webkit-linear-gradient(left, white, #EEE 100%);
   width: 8px;
   cursor: w-resize;
-}
+position: absolute; height: 100%; left: 0;}
 
 #resize-center {
   width: 8px;
   cursor: col-resize;
   background: -webkit-linear-gradient(left, black, #0E1628 100%);
-}
+position: absolute; height: 100%; left: 600px;}
 
 #resize-right {
   border-left: 1px solid #E4E4E4;
   background: -webkit-linear-gradient(left, #EEE, white 100%);
   width: 6px;
   cursor: e-resize;
-}
+position: absolute; height: 100%; right: 0;}
 
 /* Console */
 
@@ -157,8 +157,8 @@ html, body {
   background: green;
   background: #0E1628;
   width: 591px;
-  position: relative;
-}
+  position: absolute;
+right: 6px; bottom: 0; height: 100%;}
 
 #console *::selection, #console *::-moz-selection, #console *::-webkit-selection {
   background: #94A2BB;
@@ -440,5 +440,5 @@ html, body {
 /* Debug */
 
 #language-selector {
-  display: block;
+  display: none;
 }
