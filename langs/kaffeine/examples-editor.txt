@@ -1,0 +1,10 @@
+Conditionals
+********************************************************************************
+console.log 'Enter an integer: '
+str = console.read!()
+number = parseInt str, 10
+if number % 2
+  console.log "#{number} is odd."
+else
+  console.log "#{number} is even."
+********************************************************************************

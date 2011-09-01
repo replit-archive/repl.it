@@ -8,37 +8,3 @@ Input
 GIMMEH NAEM
 VISIBLE "Your name is :{NAEM}!"
 ********************************************************************************
-
-Conditionals
-********************************************************************************
-VISIBLE "Enter two numbers:: "!
-
-GIMMEH X
-X IS NOW A NUMBR
-GIMMEH Y
-Y IS NOW A NUMBR
-
-VISIBLE "X = :{X}:>Y = :{Y}"
-DIFFRINT X AN SMALLR OF X AN Y, O RLY?
-  YA RLY
-    VISIBLE "X is more than Y!"
-  MEBBE DIFFRINT X AN BIGGR OF X AN Y
-    VISIBLE "X is less than Y!"
-  NO WAI
-    VISIBLE "X and Y are equal!"
-OIC
-********************************************************************************
-
-Subroutine
-********************************************************************************
-I HAS A CHZBRGR ITZ "HOT"
-
-HOW DUZ I NOM YR FUD
-  VISIBLE "I NOMD YR " FUD
-  VISIBLE "I CAN HAZ :{CHZBRGR} BRGR NAO"
-IF U SAY SO
-
-NOM "COOKIE"
-CHZBRGR R "COLD"
-NOM "CHOKLET"
-********************************************************************************
