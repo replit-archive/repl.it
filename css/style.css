@@ -19,6 +19,8 @@ html, body {
 
 #content {
   position: relative;
+  margin: 0 auto;
+
 }
 
 #languages, #examples {
@@ -136,8 +138,9 @@ html, body {
 }
 
 #header{
-  background: -webkit-linear-gradient(top,#45484D 0,black 100%);
+  background: -webkit-linear-gradient(top,gray,white 100%);
   height:50px;
+  border-bottom: 3px solid gray;
 }
 #logo{
   float:left;
@@ -151,10 +154,11 @@ html, body {
   padding-right:30px;
 }
 .button{
+  cursor:pointer;
   display:block;
   padding:15px;
   
-background: -webkit-linear-gradient(top,#CB4B16,#964B16); color: white; text-decoration: none; font: bold 13px "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif; border: 1px solid #964B16; border-bottom: 1px solid #964B16; -webkit-border-radius: 12px; height: 11px; margin-top: 2px; text-align: center; line-height: 11px; }
+background: -webkit-linear-gradient(top,#7fbf4d,#63a62f); color: white; text-decoration: none; font: bold 13px "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif; border: 1px solid white; border-bottom: 1px solid #749A02; -webkit-border-radius: 1px; height: 11px; margin-top: 2px; text-align: center; line-height: 11px; }
 .actions{
   float:left;
 }
@@ -185,4 +189,20 @@ background: -webkit-linear-gradient(top,#CB4B16,#964B16); color: white; text-dec
   position: absolute;
   left: 0;
   background: #222;
+}
+.button.run {
+  display:none;
+  position:absolute;
+  right:0;
+  top:0;
+  z-index:9;
+  margin-right: 12px;
+}
+
+.content.examples ul {
+  clear:both;
+}
+
+.titles .button {
+  float:left;
 }
