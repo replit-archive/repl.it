@@ -1,3 +1,4 @@
+CONTENT_PADDING = 200
 $ = jQuery
 TEMPLATES =
   category: '''
@@ -19,10 +20,19 @@ TEMPLATES =
     </div>
   '''
   examples: '''
-    <ul>
-    {{#examples}}
-      <li><a href="#" data-index={{index}}>{{title}}</a></li>
-    {{/examples}}
+    <div class="titles">
+      <a class="button selected" data-which="editor"> Editor Examples </a>
+      <a class="button" data-which="console"> Console Examples </a>
+    </div>
+    <ul class="editor">
+    {{#editor}}
+      <li><a href="#" class="example-button">{{title}}</a></li>
+    {{/editor}}
+    </ul>
+    <ul class="console" style="display:none;">
+    {{#console}}
+      <li><a href="#" class="example-button">{{title}}</a></li>
+    {{/console}}
     </ul>
   '''
 LANG_CATEGORIES =
@@ -42,6 +52,10 @@ REPLIT =
   # Editor to console
   split_ratio: .5
   
+  examples:
+    editor: []
+    console: []
+    
   Init: ->
     @jsrepl = new JSREPL {
       InputCallback: $.proxy @InputCallback, @
@@ -49,14 +63,25 @@ REPLIT =
       ResultCallback: $.proxy @ResultCallback, @
       ErrorCallback: $.proxy @ErrorCallback, @
     }
+    # Ïnit console.
     @jqconsole = @$consoleContainer.jqconsole ''
     @$console = @$consoleContainer.find '.jqconsole'
     
+    # Init editor.
     @editor = ace.edit 'editor'
     @editor.setTheme 'ace/theme/solarized_light'
     @$editor = @$editorContainer.find '#editor'
-    
-    @examples = []
+    $run = $('.button.run');
+    $run.click () =>
+      @jqconsole.AbortPrompt()
+      @jsrepl.Evaluate REPLIT.editor.getSession().getValue()
+    @$editorContainer.hover () ->
+      $run.toggle()
+    @$editorContainer.mousemove () ->
+      $run.show()
+    @$editorContainer.keydown () ->
+      $run.hide()
+      
     @current_lang = null
 
     # Render language selection templates.
@@ -105,11 +130,27 @@ REPLIT =
         i = 0
         for [open, close] in @current_lang.matchings
           @jqconsole.RegisterMatching open, close, 'matching-' + (++i)
-
+        
+        
+        #Load ace mode.
+        EditSession = require("ace/edit_session").EditSession;
+        session = new EditSession('')
+        ace_mode = @Languages[lang_name].ace_mode
+        if ace_mode?
+          $.getScript ace_mode.script, () =>
+            mode = require(ace_mode.module).Mode
+            session.setMode new mode
+            @editor.setSession session
+            #@editor.getSession().setMode new mode
+        else
+          textMode = require("ace/mode/text").Mode;
+          session.setMode new textMode
+          @editor.setSession session
+            
         # Load examples.
-        $.get @Languages[lang_name].example_file, (raw_examples) =>
+        parseExamples = (raw_examples)->
           # Clear the existing examples.
-          @examples = []
+          examples = []
           # Parse out the new examples.
           example_parts = raw_examples.split /\*{80}/
           title = null
@@ -118,19 +159,23 @@ REPLIT =
             if not part then continue
             if title
               code = part
-              @examples.push {
+              examples.push {
                 title
                 code
-                index: @examples.length
               }
               title = null
             else
               title = part
+          return examples
 
-          # Render examples.
-          examples_sel_html = Mustache.to_html TEMPLATES.examples, {examples: @examples}
+        examples_config = @Languages[lang_name].examples
+        $.when($.get(examples_config.console), 
+        $.get(examples_config.editor)).done (consoleArgs, editorArgs) =>
+          @examples.console = parseExamples consoleArgs[0]
+          @examples.editor = parseExamples editorArgs[0]
+          examples_sel_html = Mustache.to_html TEMPLATES.examples, @examples
           $('#examples-selector').empty().append examples_sel_html
-          # Set up response to example selection.
+          
 
         # Empty out the history, prompt and example selection.
         @jqconsole.Reset()
@@ -166,11 +211,25 @@ REPLIT =
   ShowExamplesOverlay: ->
     jQuery.facebox {div: '#examples-selector'}, 'examples'
     that = @
-    $('#facebox .content.examples ul a').click (e) ->
+    $examples = $('#facebox .content.examples');
+    $examples.find('.titles .button').click (e) ->
+      $this = $(this)
+      $selected = $examples.find('.selected')
+      return if $this == $selected
+      $selected.removeClass 'selected'
+      $this.addClass 'selected'
+      $examples.find("ul.#{$selected.data('which')}").hide()
+      $examples.find("ul.#{$this.data('which')}").show()
+      
+    $examples.delegate 'ul a.example-button', 'click', (e) ->
       e.preventDefault()
-      example = that.examples[$(this).data 'index']
+      $this = $(this)
+      if $this.parents('ul').is('.editor')
+        that.editor.getSession().setValue that.examples['editor'][$this.parent().index()].code
+      else
+        that.jqconsole.SetPromptText that.examples['console'][$this.parent().index()].code
       $(document).trigger 'close.facebox'
-      that.jqconsole.SetPromptText example.code
+
       that.jqconsole.Focus()
 
   # Receives the result of a command evaluation.
@@ -228,26 +287,29 @@ REPLIT =
           'user-select': ''
         $this.each () -> this.onselectstart = null
                
-    $body = $('body')
     
     mousemove = (e) =>
-      left = e.pageX
+      left = e.pageX - (CONTENT_PADDING / 2)
+      
       @$resizer.css 'left', left
-      @split_ratio = left / document.documentElement.clientWidth
+      @split_ratio = left / @$container.width()
       @OnResize()
       
     @$resizer.mousedown (e) =>
       if e.button == 0
         @$container.disableSelection()
-        $body.mousemove mousemove
-      
-    @$resizer.mouseup =>
+      @$container.mousemove mousemove
+    
+    release = =>
       @$container.enableSelection()
-      $body.unbind 'mousemove'
-  
+      @$container.unbind 'mousemove'
+      
+    @$resizer.mouseup release
+    @$container.mouseleave release
+    
   # Resize containers on each window resize.
   OnResize: ->
-    width = document.documentElement.clientWidth
+    width = document.documentElement.clientWidth - CONTENT_PADDING
     # 50 for header.
     height = document.documentElement.clientHeight - 50
     editor_width = @split_ratio * width
@@ -274,7 +336,7 @@ REPLIT =
     console_vpadding = @$console.innerHeight() - @$console.height()
     editor_hpadding = @$editor.innerWidth() - @$editor.width()
     # + 30 for the control menu above the editor.
-    editor_vpadding = @$editor.innerHeight() - @$editor.height() + 30
+    editor_vpadding = @$editor.innerHeight() - @$editor.height()
     
     @$console.css 'width', @$consoleContainer.width() - console_hpadding
     @$console.css 'height', @$consoleContainer.height() - console_vpadding
@@ -295,7 +357,7 @@ $ ->
   REPLIT.OnResize()
   $(window).bind 'resize', ()-> REPLIT.OnResize()
   
-  JSREPLLoader.onload ->
+  JSREPLLoader.onload =>
     REPLIT.Init()
     # At this stage the actual environment elements are available, resize them.
     REPLIT.EnvResize()
@@ -313,9 +375,11 @@ $ ->
       e.preventDefault()
       REPLIT.ShowLanguagesOverlay()
 
+
 # Export globally.
 @REPLIT = REPLIT
            
 $(window).load ->
   # Hack for chrome and FF 4 fires an additional popstate on window load.
   setTimeout (-> REPLIT.SetupURLHashChange()), 0
+
