@@ -2,28 +2,28 @@ CONTENT_PADDING = 200
 $ = jQuery
 TEMPLATES =
   category: '''
-    <h3>{{name}}</h3>
-    <ul>
+  <div class="language-group">
+     <div class="language-group-header">{{name}}</div>
+     <ul>
       {{#languages}}
-        <li><a data-langname="{{name}}">{{{formatted}}}</a></li>
+       <li><a data-langname="{{name}}">{{{formatted}}}</a></li>
       {{/languages}}
-    </ul>
+     </ul>
+  </div>
   '''
   languageMenu: '''
-    <h2>Please Select Your Language</h2>
-    <div class="cat-list">
-      {{#categories}}
-        <div class="category">
-          {{>category}}
-        </div>
-      {{/categories}}
-    </div>
+  <div class="overlay-header">Supported Languages</div>
+     {{#categories}}
+      {{>category}}
+    {{/categories}}
+
   '''
   examples: '''
     <div class="titles">
       <a class="button selected" data-which="editor"> Editor Examples </a>
       <a class="button" data-which="console"> Console Examples </a>
     </div>
+    <div class="layer"></div>
     <ul class="editor">
     {{#editor}}
       <li><a href="#" class="example-button">{{title}}</a></li>
@@ -36,9 +36,9 @@ TEMPLATES =
     </ul>
   '''
 LANG_CATEGORIES =
-  Classic: ['QBasic', 'Forth', 'Smalltalk']
-  Esoteric: ['LOLCODE', 'Brainfuck', 'Emoticon', 'Bloop', 'Unlambda']
   Web: ['JavaScript', 'Traceur', 'CoffeeScript', 'Kaffeine', 'Move']
+  Esoteric: ['LOLCODE', 'Brainfuck', 'Emoticon', 'Bloop', 'Unlambda']
+  Classic: ['QBasic', 'Forth', 'Smalltalk']
   Practical: ['Scheme', 'Lua', 'Python']
 
 REPLIT =
@@ -55,7 +55,156 @@ REPLIT =
   examples:
     editor: []
     console: []
+  
+  InitDOM: ->
+    @$container = $('#content')
+    @$editorContainer = $('#editor')
+    @$consoleContainer = $('#console')
+    @$resizer =
+      l: $('#resize-left')
+      c: $('#resize-center')
+      r: $('#resize-right')
+    @$throbber = $('#throbber')
+    # Initialaize the column resizer.
+    REPLIT.InitResizer()
+    # Fire the onresize method to do initial resizing
+    REPLIT.OnResize()
+    $(window).bind 'resize', ()-> REPLIT.OnResize()
+  
+    # Attatches the resizer behavior.
+  InitResizer: ->
+
+    $.fn.disableSelection = () ->
+      @each () ->
+        $this = $(this)
+        $this.attr 'unselectable', 'on'
+        $this.css
+          '-moz-user-select':'none'
+          '-webkit-user-select':'none'
+          'user-select':'none'
+        $this.each () -> this.onselectstart = () -> return false
+
+    $.fn.enableSelection = () ->
+      @each () ->
+        $this = $(this)
+        $this.attr 'unselectable', ''
+        $this.css
+          '-moz-user-select': ''
+          '-webkit-user-select': ''
+          'user-select': ''
+        $this.each () -> this.onselectstart = null
     
+    mousemove = (e) =>
+      left = e.pageX - (CONTENT_PADDING / 2) + 8
+      console.log(left)
+      @split_ratio = left / @$container.width()
+      @OnResize()
+      
+    $body = $('body')
+    mouse_release = ->
+      $body.enableSelection()
+      $body.unbind 'mousemove.replit'
+      
+    @$resizer.l.mousedown (e) =>
+      if e.button == 0
+        $body.disableSelection()
+        # Name space the event so we can safely unbind.
+        $body.bind 'mousemove.replit', (e) =>
+          CONTENT_PADDING = ((e.pageX - 4) * 2)
+          @OnResize()
+      
+    @$resizer.l.mouseup mouse_release
+
+      
+    @$resizer.r.mousedown (e) =>
+      if e.button == 0
+        $body.disableSelection()
+        $body.bind 'mousemove.replit', (e) =>
+          CONTENT_PADDING = ($body.width() - e.pageX - 4) * 2
+          @OnResize()
+    
+    @$resizer.r.mouseup mouse_release
+    
+    @$resizer.c.mousedown (e) =>
+      if e.button == 0
+        @$container.disableSelection()
+      @$container.mousemove mousemove
+
+    release = =>
+      @$container.enableSelection()
+      @$container.unbind 'mousemove'
+
+    @$resizer.c.mouseup release
+    @$container.mouseup release
+    @$container.mouseleave release
+
+  # Resize containers on each window resize.
+  OnResize: ->
+    width = document.documentElement.clientWidth - CONTENT_PADDING 
+    # 50 for header.
+    height = document.documentElement.clientHeight - 61 - 40
+    editor_width = @split_ratio * width
+    console_width = width - editor_width
+
+    @$resizer.c.css 'left', editor_width - 12
+    @$container.css 
+      width: width
+      height: height
+    @$editorContainer.css
+      width: editor_width - 16
+      height: height
+    @$consoleContainer.css
+      width: console_width
+      height: height
+    # Call to resize environment if the app has already initialized.
+    REPLIT.EnvResize() if @inited
+
+  # Calculates editor and console dimensions according to their parents and
+  # neighboring elements (if any).
+  EnvResize: ->
+    # Calculate real height.
+    console_hpadding = @$console.innerWidth() - @$console.width()
+    console_vpadding = @$console.innerHeight() - @$console.height()
+    editor_hpadding = @$editor.innerWidth() - @$editor.width()
+    # + 30 for the control menu above the editor.
+    editor_vpadding = @$editor.innerHeight() - @$editor.height()
+
+    @$console.css 'width', @$consoleContainer.width() - console_hpadding
+    @$console.css 'height', @$consoleContainer.height() - console_vpadding
+    @$editor.css 'width', @$editorContainer.innerWidth() - editor_hpadding
+    @$editor.css 'height', @$editorContainer.innerHeight() - editor_vpadding 
+    @editor.resize()
+  
+  InitButtons: ->
+    $('#button-examples').click (e) =>
+      e.preventDefault()
+      REPLIT.ShowExamplesOverlay()
+
+    $('#button-languages').click (e) =>
+      e.preventDefault()
+      REPLIT.ShowLanguagesOverlay()
+    
+  InjectSocial: ->
+    # Some of this is fucking with Ace's loading so we dynamically inject the
+    # social shit. Facebook doesn't like being injected so it gets a special
+    # treatment.
+    html = """
+    <!-- Google+ -->
+    <div class="social_button" type="google">
+      <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+      <g:plusone size="medium"></g:plusone>
+    </div>
+    <!-- Twitter -->
+    <div class="social_button" type="twitter"> 
+      <a href="http://twitter.com/share" class="twitter-share-button" data-text="Testing out the twitter button." data-url="http://localhost" data-count="horizontal" data-via="Localhost">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
+    </div>
+    <!-- Hacker News -->
+    <a href="http://news.ycombinator.com/submitlink?u=&amp;t=http://localhost/" class="social_button">
+      <img src="images/hnlike.png" />
+    </a>
+    """
+    $('#social-buttons-container').append(html)
+  
   Init: ->
     @jsrepl = new JSREPL {
       InputCallback: $.proxy @InputCallback, @
@@ -68,19 +217,19 @@ REPLIT =
     @$console = @$consoleContainer.find '.jqconsole'
     
     # Init editor.
-    @editor = ace.edit 'editor'
-    @editor.setTheme 'ace/theme/solarized_light'
-    @$editor = @$editorContainer.find '#editor'
-    $run = $('.button.run');
+    @editor = ace.edit 'editor-widget'
+    @editor.setTheme 'ace/theme/textmate'
+    @$editor = @$editorContainer.find '#editor-widget'
+    $run = $('#editor-run');
     $run.click () =>
       @jqconsole.AbortPrompt()
       @jsrepl.Evaluate REPLIT.editor.getSession().getValue()
     @$editorContainer.hover () ->
-      $run.toggle()
+      $run.fadeToggle 'fast'
     @$editorContainer.mousemove () ->
-      $run.show()
+      $run.fadeIn 'fast'
     @$editorContainer.keydown () ->
-      $run.hide()
+      $run.fadeOut 'fast'
       
     @current_lang = null
 
@@ -91,7 +240,7 @@ REPLIT =
       for lang in languages
         name = @Languages[lang].name
         shortcutIndex = name.indexOf @Languages[lang].shortcut
-        formattedShortcut = "<span>#{name.charAt(shortcutIndex)}</span>"
+        formattedShortcut = "<em>#{name.charAt(shortcutIndex)}</em>"
         formatted = name[...shortcutIndex] + formattedShortcut + name[shortcutIndex + 1...]
         templateLanguages.push {name, formatted}
       templateCategories.push {name: categoryName, languages: templateLanguages}
@@ -110,6 +259,7 @@ REPLIT =
 
   # Load a given language by name.
   LoadLanguage: (lang_name) ->
+    @$throbber.show()
     $.nav.pushState "/#{lang_name.toLowerCase()}"
 
   # Sets up the HashChange event handler. Handles cases were user is not
@@ -184,23 +334,30 @@ REPLIT =
           @StartPrompt()
         @jsrepl.LoadLanguage lang_name, =>
           $('body').toggleClass 'loading'
+          @$throbber.hide()
           @StartPrompt()
 
   # Langauge selection overlay method.
   ShowLanguagesOverlay: ->
     $doc = $(document)
     selected = false
-    jQuery.facebox {div: '#language-selector'}, 'languages'
-    $('#facebox .content.languages .cat-list span').each (i, elem) =>
+    jQuery.facebox {div: '#language-selector'}, 'languages overlay'
+    select = ($elem) =>
+      $doc.trigger 'close.facebox'
+      selected = true
+      @LoadLanguage $elem.data 'langname'
+      
+    $('#facebox .content.languages em').each (i, elem) =>
       $elem = $(elem)
       $doc.bind 'keyup.languages', (e) =>
         upperCaseCode = $elem.text().toUpperCase().charCodeAt(0)
         lowerCaseCode = $elem.text().toLowerCase().charCodeAt(0)
         if e.keyCode == upperCaseCode or e.keyCode == lowerCaseCode
-          $doc.trigger 'close.facebox'
-          selected = true
-          @LoadLanguage $elem.parent().data 'langname'
-
+          select $elem.parent()
+          
+    $('#facebox .content.languages a').click () ->
+      select $(this)
+      
     $doc.bind 'close.facebox.languages', =>
       $doc.unbind 'keyup.languages'
       $doc.unbind 'close.facebox.languages'
@@ -209,7 +366,7 @@ REPLIT =
     @jqconsole.AbortPrompt() if @jqconsole.state == 2
 
   ShowExamplesOverlay: ->
-    jQuery.facebox {div: '#examples-selector'}, 'examples'
+    jQuery.facebox {div: '#examples-selector'}, 'examples overlay'
     that = @
     $examples = $('#facebox .content.examples');
     $examples.find('.titles .button').click (e) ->
@@ -264,117 +421,19 @@ REPLIT =
         @ErrorCallback e
     return undefined
   
-  # Attatches the resizer behavior.
-  InitResizer: ->
-    
-    $.fn.disableSelection = () ->
-      @each () ->
-        $this = $(this)
-        $this.attr 'unselectable', 'on'
-        $this.css
-          '-moz-user-select':'none'
-          '-webkit-user-select':'none'
-          'user-select':'none'
-        $this.each () -> this.onselectstart = () -> return false
-    
-    $.fn.enableSelection = () ->
-      @each () ->
-        $this = $(this)
-        $this.attr 'unselectable', ''
-        $this.css
-          '-moz-user-select': ''
-          '-webkit-user-select': ''
-          'user-select': ''
-        $this.each () -> this.onselectstart = null
-               
-    
-    mousemove = (e) =>
-      left = e.pageX - (CONTENT_PADDING / 2)
-      
-      @$resizer.css 'left', left
-      @split_ratio = left / @$container.width()
-      @OnResize()
-      
-    @$resizer.mousedown (e) =>
-      if e.button == 0
-        @$container.disableSelection()
-      @$container.mousemove mousemove
-    
-    release = =>
-      @$container.enableSelection()
-      @$container.unbind 'mousemove'
-      
-    @$resizer.mouseup release
-    @$container.mouseleave release
-    
-  # Resize containers on each window resize.
-  OnResize: ->
-    width = document.documentElement.clientWidth - CONTENT_PADDING
-    # 50 for header.
-    height = document.documentElement.clientHeight - 50
-    editor_width = @split_ratio * width
-    console_width = width - editor_width
-    
-    @$resizer.css 'left', editor_width
-    @$container.css 
-      width: width
-      height: height
-    @$editorContainer.css
-      width: editor_width
-      height: height
-    @$consoleContainer.css
-      width: console_width
-      height: height
-    # Call to resize environment if the app has already initialized.
-    REPLIT.EnvResize() if @inited
-  
-  # Calculates editor and console dimensions according to their parents and
-  # neighboring elements (if any).
-  EnvResize: ->
-    # Calculate real height.
-    console_hpadding = @$console.innerWidth() - @$console.width()
-    console_vpadding = @$console.innerHeight() - @$console.height()
-    editor_hpadding = @$editor.innerWidth() - @$editor.width()
-    # + 30 for the control menu above the editor.
-    editor_vpadding = @$editor.innerHeight() - @$editor.height()
-    
-    @$console.css 'width', @$consoleContainer.width() - console_hpadding
-    @$console.css 'height', @$consoleContainer.height() - console_vpadding
-    @$editor.css 'width', @$editorContainer.innerWidth() - editor_hpadding
-    @$editor.css 'height', @$editorContainer.innerHeight() - editor_vpadding 
-    @editor.resize()
-
 $ ->
-  # Get container elements.
-  REPLIT.$container = $('#content')
-  REPLIT.$editorContainer = $('#editor-container')
-  REPLIT.$consoleContainer = $('#console')
-  REPLIT.$resizer = $('#resize')
-  
-  # Initialaize the column resizer.
-  REPLIT.InitResizer()
-  # Fire the onresize method to do initial resizing
-  REPLIT.OnResize()
-  $(window).bind 'resize', ()-> REPLIT.OnResize()
-  
+  REPLIT.InitDOM()
+
   JSREPLLoader.onload =>
     REPLIT.Init()
     # At this stage the actual environment elements are available, resize them.
     REPLIT.EnvResize()
-    
+    REPLIT.InitButtons()
+    REPLIT.InjectSocial()
     $(document).keyup (e)->
       # Escape key
       if e.keyCode == 27 and not $('#facebox').is(':visible')
         REPLIT.ShowLanguagesOverlay()
-
-    $('#examples-button').click (e) ->
-      e.preventDefault()
-      REPLIT.ShowExamplesOverlay()
-
-    $('#languages-button').click (e) ->
-      e.preventDefault()
-      REPLIT.ShowLanguagesOverlay()
-
 
 # Export globally.
 @REPLIT = REPLIT

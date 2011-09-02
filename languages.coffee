@@ -30,7 +30,7 @@
       console: 'langs/lolcode/examples-console.txt'
     help_link: 'http://lolcode.com/specs/1.2'
   Brainfuck:
-    name: 'Brainf**k'
+    name: 'Brainfuck'
     shortcut: 'r'
     category: 'Esoteric'
     examples:
