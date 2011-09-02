@@ -133,7 +133,11 @@ REPLIT =
         @OnResize()
 
     @$resizer.r.mouseup mouse_release
-
+    
+    release = =>
+      @$container.enableSelection()
+      @$container.unbind 'mousemove.resizer'
+      
     @$resizer.c.mousedown (e) =>
       @$container.disableSelection()
       @$container.bind 'mousemove.resizer', (e) =>
@@ -141,13 +145,11 @@ REPLIT =
         @split_ratio = left / @$container.width()
         if @split_ratio > 0.95
           @split_ratio = 1
+          release()
         else if @split_ratio < 0.05
           @split_ratio = 0
+          release()
         @OnResize()
-
-    release = =>
-      @$container.enableSelection()
-      @$container.unbind 'mousemove.resizer'
 
     @$resizer.c.mouseup release
     @$container.mouseup release
