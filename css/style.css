@@ -387,7 +387,7 @@ html, body {
   transition: border-color .218s;
   background: #f3f3f3;
   background: -webkit-gradient(linear,0% 40%,0% 70%,from(#F5F5F5),to(#F1F1F1));
-  background: -moz-linear-gradient(linear,0% 40%,0% 70%,from(#F5F5F5),to(#F1F1F1));
+  background: -moz-linear-gradient(70% 70% 75deg, #F5F5F5, #F1F1F1);
   background-repeat: no-repeat !important;
   background-position: center center !important;
   border: solid 1px #dcdcdc;
@@ -531,7 +531,7 @@ html, body {
   left: 0;
   top: 38px;
   background: -webkit-gradient(linear,0% 40%,0% 70%,from(whiteSmoke),to(#F1F1F1));
-  background: -moz-linear-gradient(linear,0% 40%,0% 70%,from(#whiteSmoke),to(#F1F1F1));
+  background: -moz-linear-gradient(70% 70% 75deg, #F5F5F5, #F1F1F1);
   border: 1px solid #999;
 }
 
