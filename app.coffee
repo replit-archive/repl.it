@@ -35,11 +35,12 @@ TEMPLATES =
     {{/console}}
     </ul>
   '''
-LANG_CATEGORIES =
-  Web: ['JavaScript', 'Traceur', 'CoffeeScript', 'Kaffeine', 'Move']
-  Esoteric: ['LOLCODE', 'Brainfuck', 'Emoticon', 'Bloop', 'Unlambda']
-  Classic: ['QBasic', 'Forth', 'Smalltalk']
-  Practical: ['Scheme', 'Lua', 'Python']
+LANG_CATEGORIES = [
+  ['Classic', ['QBasic', 'Forth', 'Smalltalk']]
+  ['Practical', ['Scheme', 'Lua', 'Python']]
+  ['Esoteric', ['LOLCODE', 'Brainfuck', 'Emoticon', 'Bloop', 'Unlambda']]
+  ['Web', ['JavaScript', 'Traceur', 'CoffeeScript', 'Kaffeine', 'Move']]
+]
 
 REPLIT =
   # jQuery elems.
@@ -51,11 +52,11 @@ REPLIT =
   $resizer: null
   # Editor to console
   split_ratio: .5
-  
+
   examples:
     editor: []
     console: []
-  
+
   InitDOM: ->
     @$container = $('#content')
     @$editorContainer = $('#editor')
@@ -69,42 +70,41 @@ REPLIT =
     REPLIT.InitResizer()
     # Fire the onresize method to do initial resizing
     REPLIT.OnResize()
-    $(window).bind 'resize', ()-> REPLIT.OnResize()
-  
+    $(window).bind 'resize',-> REPLIT.OnResize()
+
     # Attatches the resizer behavior.
   InitResizer: ->
 
-    $.fn.disableSelection = () ->
-      @each () ->
+    $.fn.disableSelection = ->
+      @each ->
         $this = $(this)
         $this.attr 'unselectable', 'on'
         $this.css
           '-moz-user-select':'none'
           '-webkit-user-select':'none'
           'user-select':'none'
-        $this.each () -> this.onselectstart = () -> return false
+        $this.each -> this.onselectstart = -> return false
 
-    $.fn.enableSelection = () ->
-      @each () ->
+    $.fn.enableSelection = ->
+      @each ->
         $this = $(this)
         $this.attr 'unselectable', ''
         $this.css
           '-moz-user-select': ''
           '-webkit-user-select': ''
           'user-select': ''
-        $this.each () -> this.onselectstart = null
-    
+        $this.each -> this.onselectstart = null
+
     mousemove = (e) =>
       left = e.pageX - (CONTENT_PADDING / 2) + 8
-      console.log(left)
       @split_ratio = left / @$container.width()
       @OnResize()
-      
+
     $body = $('body')
     mouse_release = ->
       $body.enableSelection()
       $body.unbind 'mousemove.replit'
-      
+
     @$resizer.l.mousedown (e) =>
       if e.button == 0
         $body.disableSelection()
@@ -112,19 +112,19 @@ REPLIT =
         $body.bind 'mousemove.replit', (e) =>
           CONTENT_PADDING = ((e.pageX - 4) * 2)
           @OnResize()
-      
+
     @$resizer.l.mouseup mouse_release
 
-      
+
     @$resizer.r.mousedown (e) =>
       if e.button == 0
         $body.disableSelection()
         $body.bind 'mousemove.replit', (e) =>
           CONTENT_PADDING = ($body.width() - e.pageX - 4) * 2
           @OnResize()
-    
+
     @$resizer.r.mouseup mouse_release
-    
+
     @$resizer.c.mousedown (e) =>
       if e.button == 0
         @$container.disableSelection()
@@ -140,14 +140,14 @@ REPLIT =
 
   # Resize containers on each window resize.
   OnResize: ->
-    width = document.documentElement.clientWidth - CONTENT_PADDING 
+    width = document.documentElement.clientWidth - CONTENT_PADDING
     # 50 for header.
     height = document.documentElement.clientHeight - 61 - 40
     editor_width = @split_ratio * width
     console_width = width - editor_width
 
-    @$resizer.c.css 'left', editor_width - 12
-    @$container.css 
+    @$resizer.c.css 'left', editor_width - 8
+    @$container.css
       width: width
       height: height
     @$editorContainer.css
@@ -172,9 +172,9 @@ REPLIT =
     @$console.css 'width', @$consoleContainer.width() - console_hpadding
     @$console.css 'height', @$consoleContainer.height() - console_vpadding
     @$editor.css 'width', @$editorContainer.innerWidth() - editor_hpadding
-    @$editor.css 'height', @$editorContainer.innerHeight() - editor_vpadding 
+    @$editor.css 'height', @$editorContainer.innerHeight() - editor_vpadding
     @editor.resize()
-  
+
   InitButtons: ->
     $('#button-examples').click (e) =>
       e.preventDefault()
@@ -183,11 +183,13 @@ REPLIT =
     $('#button-languages').click (e) =>
       e.preventDefault()
       REPLIT.ShowLanguagesOverlay()
-    
+
   InjectSocial: ->
     # Some of this is fucking with Ace's loading so we dynamically inject the
     # social shit. Facebook doesn't like being injected so it gets a special
     # treatment.
+    # TODO(amasad): Use the actual async scripts provided by Google/FB/Twitter.
+    #               These are just design no-ops.
     html = """
     <!-- Google+ -->
     <div class="social_button" type="google">
@@ -195,8 +197,8 @@ REPLIT =
       <g:plusone size="medium"></g:plusone>
     </div>
     <!-- Twitter -->
-    <div class="social_button" type="twitter"> 
-      <a href="http://twitter.com/share" class="twitter-share-button" data-text="Testing out the twitter button." data-url="http://localhost" data-count="horizontal" data-via="Localhost">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
+    <div class="social_button" type="twitter">
+      <a href="http://twitter.com/share" class="twitter-share-button" data-text="Testing out the twitter button." data-url="http://localhost" data-count="horizontal" data-via="Localhost">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     </div>
     <!-- Hacker News -->
     <a href="http://news.ycombinator.com/submitlink?u=&amp;t=http://localhost/" class="social_button">
@@ -204,7 +206,7 @@ REPLIT =
     </a>
     """
     $('#social-buttons-container').append(html)
-  
+
   Init: ->
     @jsrepl = new JSREPL {
       InputCallback: $.proxy @InputCallback, @
@@ -212,30 +214,31 @@ REPLIT =
       ResultCallback: $.proxy @ResultCallback, @
       ErrorCallback: $.proxy @ErrorCallback, @
     }
-    # Ïnit console.
+    # Init console.
     @jqconsole = @$consoleContainer.jqconsole ''
     @$console = @$consoleContainer.find '.jqconsole'
-    
+
     # Init editor.
     @editor = ace.edit 'editor-widget'
     @editor.setTheme 'ace/theme/textmate'
+    @editor.renderer.setHScrollBarAlwaysVisible false
     @$editor = @$editorContainer.find '#editor-widget'
     $run = $('#editor-run');
-    $run.click () =>
+    $run.click =>
       @jqconsole.AbortPrompt()
       @jsrepl.Evaluate REPLIT.editor.getSession().getValue()
-    @$editorContainer.hover () ->
+    @$editorContainer.hover ->
       $run.fadeToggle 'fast'
-    @$editorContainer.mousemove () ->
+    @$editorContainer.mousemove ->
       $run.fadeIn 'fast'
-    @$editorContainer.keydown () ->
+    @$editorContainer.keydown ->
       $run.fadeOut 'fast'
-      
+
     @current_lang = null
 
     # Render language selection templates.
     templateCategories = []
-    for categoryName, languages of LANG_CATEGORIES
+    for [categoryName, languages] in LANG_CATEGORIES
       templateLanguages = []
       for lang in languages
         name = @Languages[lang].name
@@ -247,7 +250,7 @@ REPLIT =
     lang_sel_html = Mustache.to_html TEMPLATES.languageMenu, {categories: templateCategories}, TEMPLATES
     $('#language-selector').append lang_sel_html
     @inited = true
-    
+
   # Shows a command prompt in the console and waits for input.
   StartPrompt: ->
     Evaluate = (command) =>
@@ -280,23 +283,22 @@ REPLIT =
         i = 0
         for [open, close] in @current_lang.matchings
           @jqconsole.RegisterMatching open, close, 'matching-' + (++i)
-        
-        
+
+
         #Load ace mode.
-        EditSession = require("ace/edit_session").EditSession;
-        session = new EditSession('')
+        EditSession = require("ace/edit_session").EditSession
+        session = new EditSession ''
         ace_mode = @Languages[lang_name].ace_mode
         if ace_mode?
-          $.getScript ace_mode.script, () =>
+          $.getScript ace_mode.script, =>
             mode = require(ace_mode.module).Mode
             session.setMode new mode
             @editor.setSession session
-            #@editor.getSession().setMode new mode
         else
-          textMode = require("ace/mode/text").Mode;
+          textMode = require("ace/mode/text").Mode
           session.setMode new textMode
           @editor.setSession session
-            
+
         # Load examples.
         parseExamples = (raw_examples)->
           # Clear the existing examples.
@@ -319,13 +321,13 @@ REPLIT =
           return examples
 
         examples_config = @Languages[lang_name].examples
-        $.when($.get(examples_config.console), 
+        $.when($.get(examples_config.console),
         $.get(examples_config.editor)).done (consoleArgs, editorArgs) =>
           @examples.console = parseExamples consoleArgs[0]
           @examples.editor = parseExamples editorArgs[0]
           examples_sel_html = Mustache.to_html TEMPLATES.examples, @examples
           $('#examples-selector').empty().append examples_sel_html
-          
+
 
         # Empty out the history, prompt and example selection.
         @jqconsole.Reset()
@@ -346,7 +348,7 @@ REPLIT =
       $doc.trigger 'close.facebox'
       selected = true
       @LoadLanguage $elem.data 'langname'
-      
+
     $('#facebox .content.languages em').each (i, elem) =>
       $elem = $(elem)
       $doc.bind 'keyup.languages', (e) =>
@@ -354,10 +356,10 @@ REPLIT =
         lowerCaseCode = $elem.text().toLowerCase().charCodeAt(0)
         if e.keyCode == upperCaseCode or e.keyCode == lowerCaseCode
           select $elem.parent()
-          
-    $('#facebox .content.languages a').click () ->
+
+    $('#facebox .content.languages a').click ->
       select $(this)
-      
+
     $doc.bind 'close.facebox.languages', =>
       $doc.unbind 'keyup.languages'
       $doc.unbind 'close.facebox.languages'
@@ -377,7 +379,7 @@ REPLIT =
       $this.addClass 'selected'
       $examples.find("ul.#{$selected.data('which')}").hide()
       $examples.find("ul.#{$this.data('which')}").show()
-      
+
     $examples.delegate 'ul a.example-button', 'click', (e) ->
       e.preventDefault()
       $this = $(this)
@@ -420,7 +422,7 @@ REPLIT =
       catch e
         @ErrorCallback e
     return undefined
-  
+
 $ ->
   REPLIT.InitDOM()
 
@@ -437,7 +439,7 @@ $ ->
 
 # Export globally.
 @REPLIT = REPLIT
-           
+
 $(window).load ->
   # Hack for chrome and FF 4 fires an additional popstate on window load.
   setTimeout (-> REPLIT.SetupURLHashChange()), 0
