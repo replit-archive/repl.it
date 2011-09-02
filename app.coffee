@@ -1,4 +1,8 @@
 CONTENT_PADDING = 200
+FOOTER_HEIGHT = 30
+HEADER_HEIGHT = 61
+RESIZER_WIDTH = 8
+
 $ = jQuery
 TEMPLATES =
   category: '''
@@ -94,41 +98,41 @@ REPLIT =
           '-webkit-user-select': ''
           'user-select': ''
         $this.each -> this.onselectstart = null
-
-    mousemove = (e) =>
-      left = e.pageX - (CONTENT_PADDING / 2) + 8
-      @split_ratio = left / @$container.width()
-      @OnResize()
-
+        
+    # Discard right clicks 
+    for n, $elem of @$resizer
+      $elem.mousedown (e) ->
+        return false if e.button != 0
+        
     $body = $('body')
     mouse_release = ->
       $body.enableSelection()
       $body.unbind 'mousemove.replit'
 
     @$resizer.l.mousedown (e) =>
-      if e.button == 0
-        $body.disableSelection()
-        # Name space the event so we can safely unbind.
-        $body.bind 'mousemove.replit', (e) =>
-          CONTENT_PADDING = ((e.pageX - 4) * 2)
-          @OnResize()
+      $body.disableSelection()
+      # Name space the event so we can safely unbind.
+      $body.bind 'mousemove.replit', (e) =>
+        CONTENT_PADDING = ((e.pageX - (RESIZER_WIDTH / 2)) * 2)
+        @OnResize()
 
     @$resizer.l.mouseup mouse_release
 
 
     @$resizer.r.mousedown (e) =>
-      if e.button == 0
-        $body.disableSelection()
-        $body.bind 'mousemove.replit', (e) =>
-          CONTENT_PADDING = ($body.width() - e.pageX - 4) * 2
-          @OnResize()
+      $body.disableSelection()
+      $body.bind 'mousemove.replit', (e) =>
+        CONTENT_PADDING = ($body.width() - e.pageX - (RESIZER_WIDTH / 2)) * 2
+        @OnResize()
 
     @$resizer.r.mouseup mouse_release
 
     @$resizer.c.mousedown (e) =>
-      if e.button == 0
-        @$container.disableSelection()
-      @$container.mousemove mousemove
+      @$container.disableSelection()
+      @$container.mousemove (e) =>
+        left = e.pageX - (CONTENT_PADDING / 2) + (RESIZER_WIDTH / 2)
+        @split_ratio = left / @$container.width()
+        @OnResize()
 
     release = =>
       @$container.enableSelection()
@@ -142,16 +146,16 @@ REPLIT =
   OnResize: ->
     width = document.documentElement.clientWidth - CONTENT_PADDING
     # 50 for header.
-    height = document.documentElement.clientHeight - 61 - 40
+    height = document.documentElement.clientHeight - HEADER_HEIGHT - FOOTER_HEIGHT
     editor_width = @split_ratio * width
     console_width = width - editor_width
 
-    @$resizer.c.css 'left', editor_width - 8
+    @$resizer.c.css 'left', editor_width - RESIZER_WIDTH
     @$container.css
       width: width
       height: height
     @$editorContainer.css
-      width: editor_width - 16
+      width: editor_width - (RESIZER_WIDTH * 2)
       height: height
     @$consoleContainer.css
       width: console_width

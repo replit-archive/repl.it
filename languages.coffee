@@ -91,7 +91,7 @@
     help_link: 'http://jashkenas.github.com/coffee-script/'
     ace_mode:
       script: 'lib/ace/mode-coffee.js'
-      module: 'ace/mode/coffee-script'
+      module: 'ace/mode/coffee'
   Kaffeine:
     name: 'Kaffeine'
     shortcut: 'K'
