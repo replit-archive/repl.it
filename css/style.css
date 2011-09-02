@@ -167,6 +167,25 @@ html, body {
   z-index: 1;
 }
 
+#unhide-left {
+  width: 21px;
+  height: 21px;
+  background: url(../images/arrow-left.png);
+  position: absolute;
+  left: 570px;
+  top: 45%;
+}
+
+#unhide-right {
+  width: 21px;
+  height: 21px;
+  background: url(../images/arrow-right.png);
+  position: absolute;
+  left: 620px;
+  top: 45%;
+  z-index: 3;
+}
+
 /* Console */
 
 #console {
@@ -191,14 +210,6 @@ html, body {
   width: 64px;
   height: 64px;
   display: none;
-}
-
-#console-widget {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 591px;
-  height: 672px;
 }
 
 .jqconsole {
