@@ -286,17 +286,17 @@ html, body {
 #footer {
   bottom: 0;
   width: 100%;
-  height: 40px;
+  height: 30px;
   background: url(../images/footer.png) repeat-x;
   text-align: center;
-  line-height: 40px;
+  line-height: 30px;
 }
 
 #social {
-  height: 29px;
+  height: 24px;
   width: 50%;
   float: left;
-  padding-top: 11px;
+  padding-top: 6px;
   text-align: center;
 }
 
@@ -313,24 +313,25 @@ html, body {
 }
 
 #links {
-  height: 40px;
-  line-height: 40px;
+  height: 30px;
+  line-height: 30px;
   width: 50%;
   float: right;
 }
 
 #links a, #links a:visited {
-  color: #DA0;
+  color: #FFF;
+  font-size: 14px;
   text-decoration: none;
   margin-left: 15px;
   margin-right: 15px;
-  text-shadow: 0em 0em 0.2em #000;
+  text-shadow: 0 -1px 0 #000;
   -webkit-transition: 200ms;
 }
 
 #links a:hover, #links a:active, #links a:focus {
-  color: white;
-  text-shadow: 0em 0em 0.3em #C5C500;
+  color: #FFF;
+  text-shadow: 0 -1px 0.3em #C5C5C5;
 }
 
 /* Button Styles */
