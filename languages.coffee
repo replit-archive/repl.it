@@ -30,7 +30,7 @@
       console: 'langs/lolcode/examples-console.txt'
     help_link: 'http://lolcode.com/specs/1.2'
   Brainfuck:
-    name: 'Brainfuck'
+    name: 'Brainf**k'
     shortcut: 'r'
     category: 'Esoteric'
     examples:
@@ -42,8 +42,8 @@
     shortcut: 'E'
     category: 'Esoteric'
     examples:
-      editor: 'langs/brainfuck/examples-editor.txt'
-      console: 'langs/brainfuck/examples-console.txt'
+      editor: 'langs/emoticon/examples-editor.txt'
+      console: 'langs/emoticon/examples-console.txt'
     help_link: 'http://www.teuton.org/~stranger/code/emoticon/manual.php'
   Bloop:
     name: 'Bloop'
@@ -125,8 +125,8 @@
     example_file: 'langs/lua/examples.txt'
     help_link: 'http://en.wikipedia.org/wiki/Lua_(programming_language)'
     examples:
-      editor: 'langs/brainfuck/examples-editor.txt'
-      console: 'langs/brainfuck/examples-console.txt'
+      editor: 'langs/python/examples-editor.txt'
+      console: 'langs/python/examples-console.txt'
     ace_mode:
       script: 'lib/ace/mode-lua.js'
       module: 'ace/mode/lua'
@@ -135,8 +135,8 @@
     shortcut: 'P'
     category: 'Practical'
     examples:
-      editor: 'langs/brainfuck/examples-editor.txt'
-      console: 'langs/brainfuck/examples-console.txt'
+      editor: 'langs/python/examples-editor.txt'
+      console: 'langs/python/examples-console.txt'
     help_link: 'http://en.wikipedia.org/wiki/Python_(programming_language)'
     ace_mode:
       script: 'lib/ace/mode-python.js'

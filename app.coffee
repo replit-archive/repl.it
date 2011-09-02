@@ -215,7 +215,7 @@ REPLIT =
       ErrorCallback: $.proxy @ErrorCallback, @
     }
     # Init console.
-    @jqconsole = @$consoleContainer.jqconsole ''
+    @jqconsole = @$consoleContainer.jqconsole '', '> '
     @$console = @$consoleContainer.find '.jqconsole'
 
     # Init editor.
@@ -241,11 +241,11 @@ REPLIT =
     for [categoryName, languages] in LANG_CATEGORIES
       templateLanguages = []
       for lang in languages
-        name = @Languages[lang].name
-        shortcutIndex = name.indexOf @Languages[lang].shortcut
-        formattedShortcut = "<em>#{name.charAt(shortcutIndex)}</em>"
-        formatted = name[...shortcutIndex] + formattedShortcut + name[shortcutIndex + 1...]
-        templateLanguages.push {name, formatted}
+        display_name = @Languages[lang].name
+        shortcutIndex = display_name.indexOf @Languages[lang].shortcut
+        formattedShortcut = "<em>#{display_name.charAt(shortcutIndex)}</em>"
+        formatted = display_name[...shortcutIndex] + formattedShortcut + display_name[shortcutIndex + 1...]
+        templateLanguages.push {name:lang, formatted}
       templateCategories.push {name: categoryName, languages: templateLanguages}
     lang_sel_html = Mustache.to_html TEMPLATES.languageMenu, {categories: templateCategories}, TEMPLATES
     $('#language-selector').append lang_sel_html
@@ -278,12 +278,6 @@ REPLIT =
         $('body').toggleClass 'loading'
 
         @current_lang = JSREPL::Languages::[lang_name]
-
-        # Register charecter matchings in jqconsole for the current language
-        i = 0
-        for [open, close] in @current_lang.matchings
-          @jqconsole.RegisterMatching open, close, 'matching-' + (++i)
-
 
         #Load ace mode.
         EditSession = require("ace/edit_session").EditSession
@@ -331,6 +325,11 @@ REPLIT =
 
         # Empty out the history, prompt and example selection.
         @jqconsole.Reset()
+        # Register charecter matchings in jqconsole for the current language
+        i = 0
+        for [open, close] in @current_lang.matchings
+          @jqconsole.RegisterMatching open, close, 'matching-' + (++i)
+        
         @jqconsole.RegisterShortcut 'Z', =>
           @jqconsole.AbortPrompt()
           @StartPrompt()
