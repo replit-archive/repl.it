@@ -2,6 +2,9 @@ CONTENT_PADDING = 200
 FOOTER_HEIGHT = 30
 HEADER_HEIGHT = 61
 RESIZER_WIDTH = 8
+DEFAULT_SPLIT = 0.5
+CONSOLE_HIDDEN = 1
+EDITOR_HIDDEN = 0
 
 $ = jQuery
 TEMPLATES =
@@ -70,10 +73,15 @@ REPLIT =
       c: $('#resize-center')
       r: $('#resize-right')
     @$throbber = $('#throbber')
+    @$unhider = 
+      editor: $('#unhide-right')
+      console: $('#unhide-left')
     # Initialaize the column resizer.
-    REPLIT.InitResizer()
+    @InitResizer()
+    # Attatch unhiders functionality.
+    @InitUnhider()
     # Fire the onresize method to do initial resizing
-    REPLIT.OnResize()
+    @OnResize()
     $(window).bind 'resize',-> REPLIT.OnResize()
 
     # Attatches the resizer behavior.
@@ -103,25 +111,24 @@ REPLIT =
     for n, $elem of @$resizer
       $elem.mousedown (e) ->
         return false if e.button != 0
-        
+    
     $body = $('body')
     mouse_release = ->
       $body.enableSelection()
-      $body.unbind 'mousemove.replit'
+      $body.unbind 'mousemove.resizer'
 
     @$resizer.l.mousedown (e) =>
       $body.disableSelection()
       # Name space the event so we can safely unbind.
-      $body.bind 'mousemove.replit', (e) =>
+      $body.bind 'mousemove.resizer', (e) =>
         CONTENT_PADDING = ((e.pageX - (RESIZER_WIDTH / 2)) * 2)
         @OnResize()
 
     @$resizer.l.mouseup mouse_release
 
-
     @$resizer.r.mousedown (e) =>
       $body.disableSelection()
-      $body.bind 'mousemove.replit', (e) =>
+      $body.bind 'mousemove.resizer', (e) =>
         CONTENT_PADDING = ($body.width() - e.pageX - (RESIZER_WIDTH / 2)) * 2
         @OnResize()
 
@@ -129,19 +136,48 @@ REPLIT =
 
     @$resizer.c.mousedown (e) =>
       @$container.disableSelection()
-      @$container.mousemove (e) =>
+      @$container.bind 'mousemove.resizer', (e) =>
         left = e.pageX - (CONTENT_PADDING / 2) + (RESIZER_WIDTH / 2)
         @split_ratio = left / @$container.width()
+        if @split_ratio > 0.95
+          @split_ratio = 1
+        else if @split_ratio < 0.05
+          @split_ratio = 0
         @OnResize()
 
     release = =>
       @$container.enableSelection()
-      @$container.unbind 'mousemove'
+      @$container.unbind 'mousemove.resizer'
 
     @$resizer.c.mouseup release
     @$container.mouseup release
     @$container.mouseleave release
-
+  
+  InitUnhider: ->
+    # TODO(amasad): When typing and moving mouse the icon will start blinking,
+    # maybe implement debounce.
+    $('body').mousemove =>
+      if @split_ratio == CONSOLE_HIDDEN
+        @$unhider.console.fadeIn 'fast'
+      else if @split_ratio == EDITOR_HIDDEN
+        @$unhider.editor.fadeIn 'fast'
+    @$container.keydown =>
+      if @split_ratio == CONSOLE_HIDDEN
+        @$unhider.console.fadeOut 'fast'
+      else if @split_ratio == EDITOR_HIDDEN
+        @$unhider.editor.fadeOut 'fast'
+    
+    click_helper = ($elem, $elemtoShow) =>
+      $elem.click (e) =>
+        $elem.hide()
+        @split_ratio = DEFAULT_SPLIT
+        $elemtoShow.show()
+        @$resizer.c.show()
+        @OnResize()
+        
+    click_helper @$unhider.editor, @$editorContainer
+    click_helper @$unhider.console, @$consoleContainer
+      
   # Resize containers on each window resize.
   OnResize: ->
     width = document.documentElement.clientWidth - CONTENT_PADDING
@@ -149,7 +185,7 @@ REPLIT =
     height = document.documentElement.clientHeight - HEADER_HEIGHT - FOOTER_HEIGHT
     editor_width = @split_ratio * width
     console_width = width - editor_width
-
+    
     @$resizer.c.css 'left', editor_width - RESIZER_WIDTH
     @$container.css
       width: width
@@ -158,8 +194,17 @@ REPLIT =
       width: editor_width - (RESIZER_WIDTH * 2)
       height: height
     @$consoleContainer.css
-      width: console_width
+      width: console_width - RESIZER_WIDTH
       height: height
+    
+    if @split_ratio == CONSOLE_HIDDEN
+      @$consoleContainer.hide()
+      @$resizer.c.hide()
+      @$unhider.console.show()
+    else if @split_ratio == EDITOR_HIDDEN
+      @$editorContainer.hide()
+      @$resizer.c.hide()
+      @$unhider.editor.show()
     # Call to resize environment if the app has already initialized.
     REPLIT.EnvResize() if @inited
 
@@ -172,7 +217,7 @@ REPLIT =
     editor_hpadding = @$editor.innerWidth() - @$editor.width()
     # + 30 for the control menu above the editor.
     editor_vpadding = @$editor.innerHeight() - @$editor.height()
-
+    
     @$console.css 'width', @$consoleContainer.width() - console_hpadding
     @$console.css 'height', @$consoleContainer.height() - console_vpadding
     @$editor.css 'width', @$editorContainer.innerWidth() - editor_hpadding

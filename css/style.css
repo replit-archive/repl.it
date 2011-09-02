@@ -173,8 +173,11 @@ html, body {
   height: 21px;
   background: url(../images/arrow-left.png);
   position: absolute;
-  left: 570px;
   top: 45%;
+  right: 16px;
+  display: none;
+  z-index: 9;
+  cursor:pointer;
 }
 
 #unhide-right {
@@ -182,9 +185,11 @@ html, body {
   height: 21px;
   background: url(../images/arrow-right.png);
   position: absolute;
-  left: 620px;
+  left: 10px;
   top: 45%;
-  z-index: 3;
+  z-index: 9;
+  display: none;
+  cursor:pointer;
 }
 
 /* Console */
@@ -194,7 +199,7 @@ html, body {
   background: #0E1628;
   width: 591px;
   position: absolute;
-  right: 6px;
+  right: 8px;
   bottom: 0;
   height: 100%;
 }
