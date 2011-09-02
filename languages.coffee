@@ -125,8 +125,8 @@
     example_file: 'langs/lua/examples.txt'
     help_link: 'http://en.wikipedia.org/wiki/Lua_(programming_language)'
     examples:
-      editor: 'langs/python/examples-editor.txt'
-      console: 'langs/python/examples-console.txt'
+      editor: 'langs/lua/examples-editor.txt'
+      console: 'langs/lua/examples-console.txt'
     ace_mode:
       script: 'lib/ace/mode-lua.js'
       module: 'ace/mode/lua'
