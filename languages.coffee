@@ -13,7 +13,7 @@
     category: 'Classic'
     examples:
       editor: 'langs/forth/examples-editor.txt'
-      console: 'langs/qbasic/examples-console.txt'      
+      console: 'langs/forth/examples-console.txt'      
   Smalltalk:
     name: 'Smalltalk'
     shortcut: 't'
