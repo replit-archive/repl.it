@@ -9,7 +9,12 @@ html, body {
 /* Header */
 
 #header {
-  background: -webkit-linear-gradient(top, #FFF, #EEE 100%);
+  background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#EEE));
+  background: -webkit-linear-gradient(top, #FFF, #EEE);
+  background: -moz-linear-gradient(top, #FFF, #EEE);
+  background: -ms-linear-gradient(top, #FFF, #EEE);
+  background: -o-linear-gradient(top, #FFF, #EEE);
+  background: linear-gradient(top, #FFF, #EEE);
   border-bottom: 1px solid #E4E4E4;
   height: 60px;
   text-align: center;
@@ -147,7 +152,12 @@ html, body {
 
 #resize-left {
   border-right: 1px solid #DDD;
-  background: -webkit-linear-gradient(left, white, #E8E8E8 100%);
+  background: -webkit-gradient(linear,left top ,  right top, from(#FFF), to(#E8E8E8));
+  background: -webkit-linear-gradient(left, #FFF, #E8E8E8);
+  background: -moz-linear-gradient(left, #FFF, #E8E8E8);
+  background: -ms-linear-gradient(left, #FFF, #E8E8E8);
+  background: -o-linear-gradient(left, #FFF, #E8E8E8);
+  background: linear-gradient(left, #FFF, #E8E8E8);
   width: 8px;
   cursor: w-resize;
   position: absolute;
@@ -160,7 +170,12 @@ html, body {
   z-index: 1;
   width: 8px;
   cursor: col-resize;
-  background: -webkit-linear-gradient(left, black, #0E1628 100%);
+  background: -webkit-gradient(linear, left top, right top, from(black), to(#0E1628));
+  background: -webkit-linear-gradient(left, black, #0E1628);
+  background: -moz-linear-gradient(left, black, #0E1628);
+  background: -ms-linear-gradient(left, black, #0E1628);
+  background: -o-linear-gradient(left, black, #0E1628);
+  background: linear-gradient(left, black, #0E1628);
   position: absolute;
   height: 100%;
   left: 600px;
@@ -168,7 +183,12 @@ html, body {
 
 #resize-right {
   border-left: 1px solid #DDD;
-  background: -webkit-linear-gradient(left, #CCC, white 100%);
+  background: -webkit-gradient(linear, left top, right top, from(#CCC), to(white));
+  background: -webkit-linear-gradient(left, #CCC, white);
+  background: -moz-linear-gradient(left, #CCC, white);
+  background: -ms-linear-gradient(left, #CCC, white);
+  background: -o-linear-gradient(left, #CCC, white);
+  background: linear-gradient(left, #CCC, white);
   width: 8px;
   cursor: e-resize;
   position: absolute;
@@ -355,6 +375,7 @@ html, body {
   margin-right: 15px;
   text-shadow: 0 -1px 0 #000;
   -webkit-transition: 200ms;
+  -moz-transition-duration:200ms;
 }
 
 #links a:hover, #links a:active, #links a:focus {
@@ -532,7 +553,10 @@ html, body {
   height: 50%;
   position: absolute;
   left: 0;
-  top: 50%;
+  top: 38px;
+  background: -webkit-gradient(linear,0% 40%,0% 70%,from(whiteSmoke),to(#F1F1F1));
+  background: -moz-linear-gradient(linear,0% 40%,0% 70%,from(#whiteSmoke),to(#F1F1F1));
+  border: 1px solid #999;
 }
 .example-r-2-1 {
   margin-top: 6%;
