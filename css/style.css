@@ -44,56 +44,56 @@ html, body {
 }
 
 #button-languages {
-  background-image: url('../images/lambda.png') !important;
+  background-image: url('/images/lambda.png') !important;
 }
 
 #button-languages:hover {
-  background-image: url('../images/lambda-hover.png') !important;
+  background-image: url('/images/lambda-hover.png') !important;
 }
 
 #button-languages:active {
-  background-image: url('../images/lambda-active.png') !important;
+  background-image: url('/images/lambda-active.png') !important;
 }
 
 #button-examples {
-  background-image: url('../images/eg.png') !important;
+  background-image: url('/images/eg.png') !important;
 }
 
 #button-examples:hover {
-  background-image: url('../images/eg-hover.png') !important;
+  background-image: url('/images/eg-hover.png') !important;
 }
 
 #button-examples:active {
-  background-image: url('../images/eg-active.png') !important;
+  background-image: url('/images/eg-active.png') !important;
 }
 
 #button-save {
-  background-image: url('../images/link.png') !important;
+  background-image: url('/images/link.png') !important;
 }
 
 #button-save:hover {
-  background-image: url('../images/link-hover.png') !important;
+  background-image: url('/images/link-hover.png') !important;
 }
 
 #button-save:active {
-  background-image: url('../images/link-active.png') !important;
+  background-image: url('/images/link-active.png') !important;
 }
 
 #button-help {
-  background-image: url('../images/question.png') !important;
+  background-image: url('/images/question.png') !important;
 }
 
 #button-help:hover {
-  background-image: url('../images/question-hover.png') !important;
+  background-image: url('/images/question-hover.png') !important;
 }
 
 #button-help:active {
-  background-image: url('../images/question-active.png') !important;
+  background-image: url('/images/question-active.png') !important;
 }
 
 #editor-run {
   background: white;
-  background-image: url('../images/run.png') !important;
+  background-image: url('/images/run.png') !important;
   position: absolute;
   top: 10px;
   right: 10px;
@@ -101,11 +101,11 @@ html, body {
 }
 
 #editor-run:hover {
-  background-image: url('../images/run-hover.png') !important;
+  background-image: url('/images/run-hover.png') !important;
 }
 
 #editor-run:active {
-  background-image: url('../images/run-active.png') !important;
+  background-image: url('/images/run-active.png') !important;
 }
 
 /* Content */
@@ -159,7 +159,7 @@ html, body {
 
 #resize-center {
   z-index: 1;
-  width: 8px;
+  width: 9px;
   cursor: col-resize;
   background: -webkit-gradient(linear, left top, right top, from(black), to(#0E1628));
   background: -webkit-linear-gradient(left, black, #0E1628);
@@ -191,7 +191,7 @@ html, body {
 #unhide-left {
   width: 21px;
   height: 21px;
-  background: url(../images/arrow-left.png);
+  background: url(/images/arrow-left.png);
   position: absolute;
   top: 45%;
   right: 16px;
@@ -203,7 +203,7 @@ html, body {
 #unhide-right {
   width: 21px;
   height: 21px;
-  background: url(../images/arrow-right.png);
+  background: url(/images/arrow-right.png);
   position: absolute;
   left: 10px;
   top: 45%;
@@ -224,6 +224,15 @@ html, body {
   height: 100%;
 }
 
+#replay-button{
+  display: none;
+  position: absolute;
+  width: 116px;
+  left: 36%;
+  height: 1px;
+  z-index: 9;
+  padding-top: 1px;
+}
 #console *::selection, #console *::-moz-selection, #console *::-webkit-selection {
   background: #94A2BB;
 }
@@ -232,7 +241,7 @@ html, body {
   position: absolute;
   left: 44%;
   top: 44%;
-  background: url(../images/loading.gif);
+  background: url(/images/loading.gif);
   width: 64px;
   height: 64px;
   display: none;
@@ -242,6 +251,7 @@ html, body {
   width: 561px;
   height: 642px;
   padding: 15px;
+  padding-top: 17px;
   position: absolute;
   bottom: 0;
   right: 0;
@@ -322,7 +332,7 @@ html, body {
   bottom: 0;
   width: 100%;
   height: 30px;
-  background: url(../images/footer.png) repeat-x;
+  background: url(/images/footer.png) repeat-x;
   text-align: center;
   line-height: 30px;
 }
