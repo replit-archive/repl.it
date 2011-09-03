@@ -2,26 +2,35 @@
 <html>
   <head>
     <title>repl.it</title>
-    <script src="lib/jquery-1.6.2.js"></script>
-    <script src="lib/jqconsole.js"></script>
-    <script src="lib/mustache.js"></script>
-    <script src="lib/history.js"></script>
-    <script src="lib/facebox.js"></script>
-    <script src="lib/ace/ace.js"></script>
-    <script src="lib/ace/theme-textmate.js"></script>
-    <script src="jsrepl/loader.js" id="jsrepl_loader"></script>
+    <script src="/lib/jquery-1.6.2.js"></script>
+    <script src="/lib/jqconsole.js"></script>
+    <script src="/lib/mustache.js"></script>
+    <script src="/lib/history.js"></script>
+    <script src="/lib/facebox.js"></script>
+    <script src="/lib/ace/ace.js"></script>
+    <script src="/lib/ace/theme-textmate.js"></script>
+    <script src="/jsrepl/loader.js" id="jsrepl_loader"></script>
+    <script src="/jsrepl/repl.js"></script>
+    <script src="/jsrepl/languages.js"></script>
 
-    <script src="app.js"></script>
-    <script src="languages.js"></script>
+    <script src="/base.js"></script>
+    <script src="/dom.js"></script>
+    <script src="/repl.js"></script>
+    <script src="/overlay.js"></script>
+    <script src="/session.js"></script>
+    <script src="/languages.js"></script>
 
-    <link type="text/css" rel="stylesheet" href="css/reset.css" />
-    <link type="text/css" rel="stylesheet" href="css/facebox.css" />
-    <link type="text/css" rel="stylesheet" href="css/style.css" />
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <script>try{
+      {{REPLIT_DATA}}
+      }catch(e){}</script>
+    <link type="text/css" rel="stylesheet" href="/css/reset.css" />
+    <link type="text/css" rel="stylesheet" href="/css/facebox.css" />
+    <link type="text/css" rel="stylesheet" href="/css/style.css" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
   </head>
   <body>
     <div id="header">
-      <a id="logo" href="/"><img src="images/logo-small.png" width="173" height="60" /></a>
+      <a id="logo" href="/"><img src="/images/logo-small.png" width="173" height="60" /></a>
       <div id="buttons">
         <div id="button-languages" class="button left"></div><div id="button-examples" class="button middle"></div><div id="button-save" class="button middle"></div><div id="button-help" class="button right"></div>
       </div>
