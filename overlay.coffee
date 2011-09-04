@@ -6,11 +6,6 @@
 # Note: A little bit messy since all this is probably going to change.
 
 $ = jQuery
-
-$.extend REPLIT,
-  examples:
-    editor: []
-    console: []
     
 TEMPLATES =
   category: '''
@@ -54,70 +49,74 @@ LANG_CATEGORIES = [
   ['Web', ['JavaScript', 'Traceur', 'CoffeeScript', 'Kaffeine', 'Move']]
 ]
 
+$.extend REPLIT,
+  examples:
+    editor: []
+    console: []
+    
+  ShowLanguagesOverlay: ->
+    $doc = $(document)
+    selected = false
+    jQuery.facebox {div: '#language-selector'}, 'languages overlay'
+    select = ($elem) =>
+      $doc.trigger 'close.facebox'
+      selected = true
+      @LoadLanguage $elem.data 'langname'
 
-ShowLanguagesOverlay = ->
-  $doc = $(document)
-  selected = false
-  jQuery.facebox {div: '#language-selector'}, 'languages overlay'
-  select = ($elem) =>
-    $doc.trigger 'close.facebox'
-    selected = true
-    REPLIT.LoadLanguage $elem.data 'langname'
+    $('#facebox .content.languages em').each (i, elem) =>
+      $elem = $(elem)
+      $doc.bind 'keyup.languages', (e) =>
+        upperCaseCode = $elem.text().toUpperCase().charCodeAt(0)
+        lowerCaseCode = $elem.text().toLowerCase().charCodeAt(0)
+        if e.keyCode == upperCaseCode or e.keyCode == lowerCaseCode
+          select $elem.parent()
 
-  $('#facebox .content.languages em').each (i, elem) =>
-    $elem = $(elem)
-    $doc.bind 'keyup.languages', (e) =>
-      upperCaseCode = $elem.text().toUpperCase().charCodeAt(0)
-      lowerCaseCode = $elem.text().toLowerCase().charCodeAt(0)
-      if e.keyCode == upperCaseCode or e.keyCode == lowerCaseCode
-        select $elem.parent()
+    $('#facebox .content.languages a').click ->
+      select $(this)
 
-  $('#facebox .content.languages a').click ->
-    select $(this)
+    $doc.bind 'close.facebox.languages', =>
+      $doc.unbind 'keyup.languages'
+      $doc.unbind 'close.facebox.languages'
+      @StartPrompt() if not selected
 
-  $doc.bind 'close.facebox.languages', =>
-    $doc.unbind 'keyup.languages'
-    $doc.unbind 'close.facebox.languages'
-    REPLIT.StartPrompt() if not selected
+    @jqconsole.AbortPrompt() if @jqconsole.state == 2
 
-  REPLIT.jqconsole.AbortPrompt() if REPLIT.jqconsole.state == 2
+  ShowExamplesOverlay: ->
+    jQuery.facebox {div: '#examples-selector'}, 'examples overlay'
+    $examples = $('#facebox .content.examples');
+    $examples.find('.titles .button').click (e) ->
+      $this = $(this)
+      $selected = $examples.find('.selected')
+      return if $this == $selected
+      $selected.removeClass 'selected'
+      $this.addClass 'selected'
+      $examples.find("ul.#{$selected.data('which')}").hide()
+      $examples.find("ul.#{$this.data('which')}").show()
 
-ShowExamplesOverlay = ->
-  jQuery.facebox {div: '#examples-selector'}, 'examples overlay'
-  $examples = $('#facebox .content.examples');
-  $examples.find('.titles .button').click (e) ->
-    $this = $(this)
-    $selected = $examples.find('.selected')
-    return if $this == $selected
-    $selected.removeClass 'selected'
-    $this.addClass 'selected'
-    $examples.find("ul.#{$selected.data('which')}").hide()
-    $examples.find("ul.#{$this.data('which')}").show()
+    $examples.delegate 'ul a.example-button', 'click', (e) ->
+      e.preventDefault()
+      $this = $(this)
+      if $this.parents('ul').is('.editor')
+        REPLIT.editor.getSession().setValue REPLIT.examples['editor'][$this.parent().index()].code
+      else
+        REPLIT.jqconsole.SetPromptText REPLIT.examples['console'][$this.parent().index()].code
+      $(document).trigger 'close.facebox'
 
-  $examples.delegate 'ul a.example-button', 'click', (e) ->
-    e.preventDefault()
-    $this = $(this)
-    if $this.parents('ul').is('.editor')
-      REPLIT.editor.getSession().setValue REPLIT.examples['editor'][$this.parent().index()].code
-    else
-      REPLIT.jqconsole.SetPromptText REPLIT.examples['console'][$this.parent().index()].code
-    $(document).trigger 'close.facebox'
-
-    REPLIT.jqconsole.Focus()
+      REPLIT.jqconsole.Focus()
 
 $ ->
   $('#button-examples').click (e) =>
     e.preventDefault()
-    ShowExamplesOverlay()
+    REPLIT.ShowExamplesOverlay()
 
   $('#button-languages').click (e) =>
     e.preventDefault()
-    ShowLanguagesOverlay()
+    REPLIT.ShowLanguagesOverlay()
     
   $(document).keyup (e)->
     # Escape key
     if e.keyCode == 27 and not $('#facebox').is(':visible')
-      ShowLanguagesOverlay()
+      REPLIT.ShowLanguagesOverlay()
   
   # Render language selection templates.
   templateCategories = []
