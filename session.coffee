@@ -11,6 +11,7 @@ $.extend REPLIT,
 # Resets application to its initial state (handler for language_loaded event).
 reset_state = (e, lang_name) ->
   localStorage.setItem 'lang_name', lang_name
+  $('#replay-button').hide()
   history.pushState null, null, '/'
   @session = {}
   @session.eval_history = []
