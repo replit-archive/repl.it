@@ -25,7 +25,7 @@ task 'watch', 'Watch all coffee files and compile them live to javascript', ->
 
   reload = ->
     console.log 'Reloading language config.'
-    files_to_watch = ['app.coffee', 'languages.coffee']
+    files_to_watch = ['base.coffee', 'dom.coffee', 'repl.coffee', 'overlay.coffee', 'session.coffee', 'languages.coffee']
 
     compileFile = (filename) ->
       try
