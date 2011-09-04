@@ -23,7 +23,6 @@ TEMPLATES =
      {{#categories}}
       {{>category}}
     {{/categories}}
-
   '''
   examples: '''
     <div class="titles">
@@ -235,29 +234,6 @@ REPLIT =
       e.preventDefault()
       REPLIT.ShowLanguagesOverlay()
 
-  InjectSocial: ->
-    # Some of this is fucking with Ace's loading so we dynamically inject the
-    # social shit. Facebook doesn't like being injected so it gets a special
-    # treatment.
-    # TODO(amasad): Use the actual async scripts provided by Google/FB/Twitter.
-    #               These are just design no-ops.
-    html = """
-    <!-- Google+ -->
-    <div class="social_button" type="google">
-      <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-      <g:plusone size="medium"></g:plusone>
-    </div>
-    <!-- Twitter -->
-    <div class="social_button" type="twitter">
-      <a href="http://twitter.com/share" class="twitter-share-button" data-text="Testing out the twitter button." data-url="http://localhost" data-count="horizontal" data-via="Localhost">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-    </div>
-    <!-- Hacker News -->
-    <a href="http://news.ycombinator.com/submitlink?u=&amp;t=http://localhost/" class="social_button">
-      <img src="images/hnlike.png" />
-    </a>
-    """
-    $('#social-buttons-container').append(html)
-
   Init: ->
     @jsrepl = new JSREPL {
       InputCallback: $.proxy @InputCallback, @
@@ -266,7 +242,7 @@ REPLIT =
       ErrorCallback: $.proxy @ErrorCallback, @
     }
     # Init console.
-    @jqconsole = @$consoleContainer.jqconsole '', '> '
+    @jqconsole = @$consoleContainer.jqconsole '', '   ', '.. '
     @$console = @$consoleContainer.find '.jqconsole'
 
     # Init editor.
@@ -445,7 +421,7 @@ REPLIT =
   #   @arg result: The user-readable string form of the result of an evaluation.
   ResultCallback: (result) ->
     if result
-      @jqconsole.Write '==> ' + result, 'result'
+      @jqconsole.Write '=> ' + result, 'result'
     @StartPrompt()
   # Receives an error message resulting from a command evaluation.
   #   @arg error: A message describing the error.
@@ -481,7 +457,6 @@ $ ->
     # At this stage the actual environment elements are available, resize them.
     REPLIT.EnvResize()
     REPLIT.InitButtons()
-    REPLIT.InjectSocial()
     $(document).keyup (e)->
       # Escape key
       if e.keyCode == 27 and not $('#facebox').is(':visible')

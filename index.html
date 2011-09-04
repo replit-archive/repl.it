@@ -11,7 +11,6 @@
     <script src="lib/ace/theme-textmate.js"></script>
     <script src="jsrepl/loader.js" id="jsrepl_loader"></script>
 
-
     <script src="app.js"></script>
     <script src="languages.js"></script>
 
@@ -26,21 +25,160 @@
       <div id="buttons">
         <div id="button-languages" class="button left"></div><div id="button-examples" class="button middle"></div><div id="button-save" class="button middle"></div><div id="button-help" class="button right"></div>
       </div>
-      <div id="language">Select a Language</div>
+      <div id="title">About Us</div>
     </div>
     <div id="content">
-        <div id="resize-left"></div>
-        <div id="editor">
-          <div id="editor-run" class="button"></div>
-          <div id="editor-widget"></div>
-          <div id="unhide-left"></div>
+      <div id="resize-left"></div>
+      <div id="editor">
+        <div id="editor-run" class="button"></div>
+        <div id="editor-widget"></div>
+        <div id="unhide-left"></div>
+      </div>
+      <div id="resize-center"></div>
+      <div id="console">
+        <div id="throbber"></div>
+        <div id="unhide-right"></div>
+      </div>
+      <div id="resize-right"></div>
+    </div>
+    <div id="content-languages">
+      <div class="language-group">
+        <div class="language-group-header">Classic</div>
+        <ul>
+          <li><b><em>Q</em>uick Basic:</b> Structured programming for beginners.</li>
+          <li><b><em>F</em>orth:</b> An interactive stack-oriented language.</li>
+          <li><b>Small<em>t</em>alk:</b> The grand-daddy of OOP.</li>
+        </ul>
+      </div>
+      <div class="language-group">
+        <div class="language-group-header">Practical</div>
+        <ul>
+          <li><b><em>P</em>ython:</b> A dynamic language emphasizing readabillity.</li>
+          <li><b><em>L</em>ua:</b> A lightweight multi-paradigm scripting language.</li>
+          <li><b><em>S</em>cheme:</b> An elegant dynamic dialect of Lisp.</li>
+        </ul>
+      </div>
+      <div class="language-group">
+        <div class="language-group-header">Esoteric</div>
+        <ul>
+          <li><b><em>E</em>moticon:</b> Programming with an extra dose of smile.</li>
+          <li><b>Brain<em>f</em>uck:</b> A pure Turing machine controller.</li>
+          <li><b>L<em>O</em>LCODE:</b> The BASIC language of lolcats.</li>
+          <li><b><em>U</em>nlambda:</b> Functional purity given form.</li>
+          <li><b><em>B</em>loop:</b> Nothing but bounded loops.</li>
+        </ul>
+      </div>
+      <div class="language-group">
+        <div class="language-group-header">Web</div>
+        <ul>
+          <li><b><em>J</em>avaScript:</b> The de facto language of the Web.</li>
+          <li><b>JavaScript.<em>n</em>ext:</b> The JavaScript of tomorrow.</li>
+          <li><b><em>M</em>ove:</b> The easy way to program the web.</li>
+          <li><b><em>K</em>affeine:</b> Extended JavaScript for pros.</li>
+          <li><b><em>C</em>offeeScript:</b> Unfancy JavaScript.</li>
+        </ul>
+      </div>
+    </div>
+    <div id="content-examples">
+      <div class="example-group example-l-2-1">
+        <div class="example-group-header">Factorial</div>
+        <code><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mi">1</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">factorial</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span></code>
+      </div>
+      <div class="example-group example-l-2-2">
+        <div class="example-group-header">Time</div>
+        <code><span class="kn">import</span> <span class="nn">time</span>
+<span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>
+<span class="n">hour</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">tm_hour</span>
+<span class="k">if</span> <span class="n">hour</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">:</span> <span class="k">print</span> <span class="s">'sleeping'</span>
+<span class="k">elif</span> <span class="n">hour</span> <span class="o">&lt;</span> <span class="mi">9</span><span class="p">:</span> <span class="k">print</span> <span class="s">'commuting'</span>
+<span class="k">elif</span> <span class="n">hour</span> <span class="o">&lt;</span> <span class="mi">17</span><span class="p">:</span> <span class="k">print</span> <span class="s">'working'</span>
+<span class="k">elif</span> <span class="n">hour</span> <span class="o">&lt;</span> <span class="mi">18</span><span class="p">:</span> <span class="k">print</span> <span class="s">'commuting'</span>
+<span class="k">elif</span> <span class="n">hour</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span> <span class="k">print</span> <span class="s">'eating'</span>
+<span class="k">elif</span> <span class="n">hour</span> <span class="o">&lt;</span> <span class="mi">22</span><span class="p">:</span> <span class="k">print</span> <span class="s">'resting'</span>
+<span class="k">else</span><span class="p">:</span> <span class="k">print</span> <span class="s">'sleeping'</span></code>
+      </div>
+      <div class="example-group example-r-3-1">
+        <div class="example-group-header">Hello World</div>
+        <code><span class="k">print</span> <span class="s">'Hello World!'</span></code>
+      </div>
+      <div class="example-group example-r-3-3">
+        <div class="example-group-header">Loop</div>
+        <code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+  <span class="k">print</span> <span class="s">'A number:'</span><span class="p">,</span> <span class="n">i</span></code>
+      </div>
+      <div class="example-group example-r-3-2">
+        <div class="example-group-header">Input</div>
+        <code><span class="n">name</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">'What is your name?</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">'Hi, </span><span class="si">%s</span><span class="s">.'</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">)</span></code>
+      </div>
+      <div id="examples-separator"></div>
+      <div id="examples-back"></div>
+    </div>
+    <div id="content-help">
+      <div id="help-faq">
+        <div id="help-header">Frequently Asked Questions</div>
+        <div id="help-faq-content">
+          <div class="faq-question">What is repl.it?</div>
+          <div class="faq-answer">It is an online environment for interactively exploring programming languages.</div>
+
+          <div class="faq-question">How do I start?</div>
+          <div class="faq-answer">Once you have selected a language, start by typing an expression into the console on the right side of the screen and pressing Enter. Your expression will be evaluated in the selected language and its result will be printed. Repeat until satisfied.</div>
+
+          <div class="faq-question">Can I use variables or other state?</div>
+          <div class="faq-answer">Yes! The repl.it interpreters fully support variables, state and side effects in all the supported languages.</div>
+
+          <div class="faq-question">Can I save my session?</div>
+          <div class="faq-answer">Yes! You can save your session and share it with others by clicking on the chain link icon in the top right corner. Both the editor's content and the REPL session will be preserved and can be executed once again using the created link to continue from where you left off.</div>
+
+          <div class="faq-question">Is repl.it open source?</div>
+          <div class="faq-answer">Yes! You can explore the code and contribute to various parts of repl.it through <a href="https://github.com/replit">our GitHub repositories</a>.</div>
+
+          <div class="faq-question">Can I use repl.it on my phone or tablet?</div>
+          <div class="faq-answer">Yes! As a web application, repl.it can be used on any device that has a web browser. It has been specifically tested on Android and iOS.</div>
+
+          <div class="faq-question">How does repl.it work?</div>
+          <div class="faq-answer">All code processed by repl.it runs entirely on your computer, with no server-side evaluation. It uses language interpreters written in JavaScript to execute your code and keep track of state. Some of the interpreters (like CoffeeScript) are originally implemented in JavaScript, while others (like Python) were compiled automatically from their original lower-level implementations using <a href="http://emscripten.org/">Emscripten</a>.</div>
         </div>
-        <div id="resize-center"></div>
-        <div id="console">
-          <div id="throbber"></div>
-          <div id="unhide-right"></div>
+      </div>
+      <div id="help-shortcuts">
+        <div id="help-header">Console Shortcuts</div>
+        <div id="help-shortcuts-content">
+          <div class="shortcut"><kbd>Enter</kbd></div> Evaluate the entered command.<br />
+          <div class="shortcut"><kbd>Shift<em>+</em>Enter</kbd></div> Continue to the next line.<br />
+          <div class="shortcut"><kbd>Tab</kbd></div> Indent.<br />
+          <div class="shortcut"><kbd>Shift<em>+</em>Tab</kbd></div> Unindent.<br />
+          <div class="shortcut"><kbd>Up</kbd></div> Previous history item.<br />
+          <div class="shortcut"><kbd>Down</kbd></div> Next history item.<br />
+          <div class="shortcut"><kbd>Ctrl<em>+</em>Up</kbd></div> Move to the line above the current one.<br />
+          <div class="shortcut"><kbd>Ctrl<em>+</em>Down</kbd></div> Move to the line below the current one.<br />
+          <div class="shortcut"><kbd>Ctrl<em>+</em>Z</kbd></div> Cancel current prompt.<br />
         </div>
-        <div id="resize-right"></div>
+      </div>
+      <div id="help-back"></div>
+    </div>
+    <div id="content-about">
+      <p>The repl.it project is an attempt to create an online environment for interactively exploring programming languages. It provides a fully-featured terminal emulator and code editor, powered underneath by interpreter engines for more than a dozen languages.</p>
+      <p>All our interpreters are written in (or compiled to) JavaScript, and run completely on the user's device, regardless or whether it's a desktop, laptop or phone.</p>
+      <p>The repl.it code is open source and is available on <a href="https://github.com/replit">GitHub</a>.</p>
+      <p>&nbsp;</p>
+      <p><img src="/images/amjad.jpg" /><a href="http://amasad.github.com/">Amjad Masad</a> is a web developer at Yahoo! Jordan and a JavaScript fanatic. He usually does frontend development, but is also known to dabble in server stuff. He drives fast cars and likes good food.</p>
+      <p><img src="/images/max.jpg" /><a href="http://max99x.com/">Max Shawabkeh</a> is a software engineer at Google and a Python enthusiast. He fancies himself a jack of many programming trades and a master of none. He reads fantasy books and likes good food.</p>
+      <p>&nbsp;</p>
+      <p>This application is a result of their sushi-powered collaboration.</p>
+      <div id="about-back"></div>
+    </div>
+    <div id="save-box">
+      <div id="save-box-handle"></div>
+      <label for="save-box-link">Share on:</label>
+      <img src="/images/facebook.png" id="save-box-facebook" />
+      <img src="/images/twitter.png" id="save-box-twitter" />
+      <img src="/images/googleplus.png" id="save-box-google" />
+      <input id="save-box-link" type="text" value="http://repl.it/ABCDEF" />
     </div>
     <div id="footer">
       <div id="social">
@@ -58,6 +196,19 @@
           </div>
           <div id="fb-root"></div>
           <script src="http://connect.facebook.net/en_US/all.js#appId=123&amp;xfbml=1"></script> -->
+          <!-- Google+
+          <div class="social_button" type="google">
+            <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+            <g:plusone size="medium"></g:plusone>
+          </div> -->
+          <!-- Twitter
+          <div class="social_button" type="twitter">
+            <a href="http://twitter.com/share" class="twitter-share-button" data-text="Testing out the twitter button." data-url="http://localhost" data-count="horizontal" data-via="Localhost">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+          </div> -->
+          <!-- Hacker News
+          <a href="http://news.ycombinator.com/submitlink?u=&amp;t=http://localhost/" class="social_button">
+            <img src="images/hnlike.png" />
+          </a> -->
         </div>
       </div>
       <div id="links">
@@ -66,8 +217,5 @@
         <a href="/" id="language-engine-link">language engine</a>
       </div>
     </div>
-    <div id="language-selector" class="overlay">
-    </div>
-    <div id="examples-selector" class="overlay"></div>
   </body>
 </html>
