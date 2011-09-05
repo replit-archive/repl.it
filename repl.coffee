@@ -14,7 +14,7 @@ $.extend REPLIT,
       ErrorCallback: $.proxy @ErrorCallback, @
     }
     # Init console.
-    @jqconsole = @$consoleContainer.jqconsole '', '> '
+    @jqconsole = @$consoleContainer.jqconsole '', '   '
     @$console = @$consoleContainer.find '.jqconsole'
 
     # Init editor.
@@ -114,5 +114,5 @@ $ ->
   REPLIT.Init()
   REPLIT.OnResize()
   # Shitty sucky new chrome
-  setTimeout (-> REPLIT.OnResize()), 300
+  setTimeout (-> REPLIT.OnResize()), 500
 
