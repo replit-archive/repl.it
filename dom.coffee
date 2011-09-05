@@ -36,6 +36,7 @@ $.fn.enableSelection = ->
 
 $.extend REPLIT,
   split_ratio: .5
+  min_content_width: 500
   # Initialize the DOM (Runs before JSRPEL's load)
   InitDOM: ->
     @$doc_elem = $('html')
@@ -109,6 +110,7 @@ $.extend REPLIT,
     # Bind the release on mouseup for right/left resizers.
     @$resizer.l.mouseup resizer_lr_release
     @$resizer.r.mouseup resizer_lr_release
+    $body.mouseup resizer_lr_release
     
     # When stopping the drag or when the editor/console snaps into hiding,
     # unbind the mousemove event for the container.
@@ -182,6 +184,10 @@ $.extend REPLIT,
     # Calculate container width.
     width = document.documentElement.clientWidth - CONTENT_PADDING
     height = document.documentElement.clientHeight - HEADER_HEIGHT - FOOTER_HEIGHT
+    if width < @min_content_width
+      width = @min_content_width
+      CONTENT_PADDING = document.documentElement.clientWidth - width
+      
     editor_width = (@split_ratio * width) -  (RESIZER_WIDTH * 1.5)
     console_width = ((1 - @split_ratio) * width) - (RESIZER_WIDTH * 1.5)
     
@@ -207,6 +213,8 @@ $.extend REPLIT,
       @$editorContainer.hide()
       @$resizer.c.hide()
       @$unhider.editor.show()
+    
+    @$this.trigger 'resize'
     # Call to resize environment if the app has already initialized.
     REPLIT.EnvResize() if @inited
 
@@ -227,7 +235,9 @@ $.extend REPLIT,
     # Call to Ace editor resize.
     @editor.resize()
 
-
+  SetTitle: (title) ->
+    $('#title').text title or @current_lang.name
+    
   InjectSocial: ->
     # Some of this is fucking with Ace's loading so we dynamically inject the
     # social shit. Facebook doesn't like being injected so it gets a special
@@ -257,7 +267,7 @@ $ ->
   
   REPLIT.$this.bind 'language_loaded', (e, lang_name) ->
     REPLIT.$throbber.hide()
-    REPLIT.$current_lang_name.text lang_name
+    REPLIT.SetTitle lang_name
   
   REPLIT.InitDOM()
   REPLIT.OnResize()
