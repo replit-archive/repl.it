@@ -138,8 +138,8 @@ $.extend REPLIT,
   CloseLastPage: ->
     @pages_stack.pop().$elem.hide()
     @min_content_width = @pages_stack.current()?.min_width or PAGES.main.min_width
-    @SetTitle @pages_stack.current()?.title or PAGES.main.titl
-    @OnResize()
+    @SetTitle @pages_stack.current()?.title or PAGES.main.title
+    @OnResize(true)
   
   # Sync all pages with the container.
   SyncPages: ->
