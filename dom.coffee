@@ -9,6 +9,7 @@ RESIZER_WIDTH = 8
 DEFAULT_SPLIT = 0.5
 CONSOLE_HIDDEN = 1
 EDITOR_HIDDEN = 0
+ANIMATION_DURATION = 700
 $ = jQuery
 
 # jQuery plugin to disable text selection (x-browser).
@@ -180,23 +181,28 @@ $.extend REPLIT,
       
   # Resize containers on each window resize, split ratio change or 
   # content padding change.
-  OnResize: ->
+  OnResize: (animate=false)->
     # Calculate container width.
     width = document.documentElement.clientWidth - CONTENT_PADDING
     height = document.documentElement.clientHeight - HEADER_HEIGHT - FOOTER_HEIGHT
     if width < @min_content_width
       width = @min_content_width
       CONTENT_PADDING = document.documentElement.clientWidth - width
-      
     editor_width = (@split_ratio * width) -  (RESIZER_WIDTH * 1.5)
     console_width = ((1 - @split_ratio) * width) - (RESIZER_WIDTH * 1.5)
     
     # The center resizer is placed to the left of the editor.
     @$resizer.c.css 'left', editor_width + RESIZER_WIDTH
     # Do the actual resizing.
-    @$container.css
-      width: width
-      height: height
+    if animate
+      @$container.animate width: width,
+        duration: ANIMATION_DURATION
+        queue: false
+        step: => @$this.trigger 'resize'
+    else
+      @$container.css
+        width: width
+        height: height
     @$editorContainer.css
       width: editor_width
       height: height
