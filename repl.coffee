@@ -33,6 +33,8 @@ $.extend REPLIT,
   LoadLanguage: (lang_name, callback=$.noop) ->
     @$this.trigger 'language_loading', [lang_name]
     @current_lang = JSREPL::Languages::[lang_name]
+    # Hold the name for saving and such.
+    @current_lang.system_name = lang_name
     #Load ace mode.
     EditSession = require("ace/edit_session").EditSession
     session = new EditSession ''

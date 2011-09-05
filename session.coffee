@@ -2,6 +2,10 @@
 
 # Extension module.
 
+# TODO(amasad):
+  # 1- Graceful localStorage degrading to cookies.
+  # 2- Don't depend on pushState and window location for sharing.
+  
 $ = jQuery
 
 SHARE_TEMPLATE =
@@ -22,6 +26,7 @@ SHARE_TEMPLATE =
     """
       <a href="javascript:var d=document,f='http://www.facebook.com/share',l=d.location,e=encodeURIComponent,p='.php?src=bm&v=4&i=1315186262&u='+e(l.href)+'&t='+e(d.title);1;try{if (!/^(.*\.)?facebook\.[^.]*$/.test(l.host))throw(0);share_internal_bookmarklet(p)}catch(z) {a=function() {if (!window.open(f+'r'+p,'sharer','toolbar=0,status=0,resizable=1,width=626,height=436'))l.href=f+p};if (/Firefox/.test(navigator.userAgent))setTimeout(a,0);else{a()}}void(0)"></a>
     """
+    
   #unofficial!
   gplus: ->
     text = 'Check out my REPL session - ' + window.location.href
@@ -72,6 +77,7 @@ $ ->
       # This a first visit, show language overlay.
       REPLIT.OpenPage 'languages'
       $('#content-languages').find('')
+      
   # Click handler for the replay button
   $('#replay-button').click (e) ->
     # Get the history comming from the server
@@ -109,7 +115,7 @@ $ ->
   $('#button-save').click (e) ->
     # Get the post data to save.
     post_data =
-      lang_name: localStorage.getItem 'lang_name'
+      lang_name: REPLIT.current_lang.system_name
       editor_text: REPLIT.editor.getSession().getValue()
       eval_history: JSON.stringify(REPLIT.session.eval_history)
     
@@ -129,6 +135,7 @@ $ ->
         history.pushState null, null, data
         # Save the session id (urlhash) in the session object.
         REPLIT.session.id = data
+        
       # Render social share links.
       console.log SHARE_TEMPLATE.twitter()
       $savebox.find('li.twitter a').replaceWith(SHARE_TEMPLATE.twitter data)
