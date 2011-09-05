@@ -121,9 +121,10 @@ html, body {
 #content-languages, #content-examples, #content-save, #content-help, #content-about {
   background: #FFF;
   margin: 0 auto;
-  height: 672px;
+  height: 100%;
   width: 1200px;
-  position: relative;
+  position: absolute;
+  overflow: hidden;
   display: none;
 }
 
@@ -348,6 +349,8 @@ html, body {
   background: url(/images/footer.png) repeat-x;
   text-align: center;
   line-height: 30px;
+  position: relative;
+  z-index: 9999;
 }
 
 #social {
@@ -520,7 +523,6 @@ html, body {
 
 #content-examples {
   color: #444;
-  position: relative;
 }
 
 .example-group {
@@ -538,7 +540,7 @@ html, body {
   background: #ccc;
 }
 
-#examples-back, #about-back, #help-back {
+#examples-back, #about-back, #help-back, #languages-back {
   background: url(../images/close.png) center center no-repeat;
   height: 50px;
   position: absolute;
@@ -548,7 +550,7 @@ html, body {
   cursor: pointer;
 }
 
-#examples-back:hover, #about-back:hover, #help-back:hover {
+#examples-back:hover, #about-back:hover, #help-back:hover, #languages-back:hover {
   background: url(../images/close-hover.png) center center no-repeat;
 }
 
@@ -704,7 +706,6 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 
 #content-help {
   color: #555;
-  position: relative;
 }
 
 #help-faq {
@@ -800,8 +801,12 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 #content-about {
   color: #555;
   width: 500px;
+  padding-top: 40px;
+}
+#content-about .inner{
+  width: 500px;
   height: 602px;
-  padding: 40px;
+  margin: 0 auto;
 }
 
 #content-about p {
@@ -839,7 +844,7 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
   background: #fff;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
   padding: 10px;
-  display: none;
+  /*display: none;*/
 }
 
 #save-box-handle {
@@ -859,12 +864,28 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
   top: -2px;
 }
 
-#save-box img {
+#save-box ul {
+  display: inline;
+}
+#save-box li {
   float: right;
   margin-left: 10px;
-  cursor: pointer;
+  /*cursor: pointer;*/
 }
-
+#save-box .facebook {
+  background: url(/images/facebook.png);
+}
+#save-box .twitter {
+  background: url(/images/twitter.png);
+}
+#save-box .gplus {
+  background: url(/images/googleplus.png);
+}
+#save-box li a {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+}
 #save-box input {
   border: 1px #ccc solid;
   padding: 2px;

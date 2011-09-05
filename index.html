@@ -16,7 +16,7 @@
     <script src="/base.js"></script>
     <script src="/dom.js"></script>
     <script src="/repl.js"></script>
-    <script src="/overlay.js"></script>
+    <script src="/pager.js"></script>
     <script src="/session.js"></script>
     <script src="/languages.js"></script>
 
@@ -34,7 +34,7 @@
       <div id="buttons">
         <div id="button-languages" class="button left"></div><div id="button-examples" class="button middle"></div><div id="button-save" class="button middle"></div><div id="button-help" class="button right"></div>
       </div>
-      <div id="title">About Us</div>
+      <div id="title"></div>
     </div>
     <div id="content">
       <div id="resize-left"></div>
@@ -51,42 +51,7 @@
       <div id="resize-right"></div>
     </div>
     <div id="content-languages">
-      <div class="language-group">
-        <div class="language-group-header">Classic</div>
-        <ul>
-          <li><b><em>Q</em>uick Basic:</b> Structured programming for beginners.</li>
-          <li><b><em>F</em>orth:</b> An interactive stack-oriented language.</li>
-          <li><b>Small<em>t</em>alk:</b> The grand-daddy of OOP.</li>
-        </ul>
-      </div>
-      <div class="language-group">
-        <div class="language-group-header">Practical</div>
-        <ul>
-          <li><b><em>P</em>ython:</b> A dynamic language emphasizing readabillity.</li>
-          <li><b><em>L</em>ua:</b> A lightweight multi-paradigm scripting language.</li>
-          <li><b><em>S</em>cheme:</b> An elegant dynamic dialect of Lisp.</li>
-        </ul>
-      </div>
-      <div class="language-group">
-        <div class="language-group-header">Esoteric</div>
-        <ul>
-          <li><b><em>E</em>moticon:</b> Programming with an extra dose of smile.</li>
-          <li><b>Brain<em>f</em>uck:</b> A pure Turing machine controller.</li>
-          <li><b>L<em>O</em>LCODE:</b> The BASIC language of lolcats.</li>
-          <li><b><em>U</em>nlambda:</b> Functional purity given form.</li>
-          <li><b><em>B</em>loop:</b> Nothing but bounded loops.</li>
-        </ul>
-      </div>
-      <div class="language-group">
-        <div class="language-group-header">Web</div>
-        <ul>
-          <li><b><em>J</em>avaScript:</b> The de facto language of the Web.</li>
-          <li><b>JavaScript.<em>n</em>ext:</b> The JavaScript of tomorrow.</li>
-          <li><b><em>M</em>ove:</b> The easy way to program the web.</li>
-          <li><b><em>K</em>affeine:</b> Extended JavaScript for pros.</li>
-          <li><b><em>C</em>offeeScript:</b> Unfancy JavaScript.</li>
-        </ul>
-      </div>
+      <div id="languages-back" class="page-close"></div>
     </div>
     <div id="content-examples">
       <div class="example-group example-l-2-1">
@@ -126,7 +91,7 @@
 <span class="k">print</span> <span class="s">'Hi, </span><span class="si">%s</span><span class="s">.'</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">)</span></code>
       </div>
       <div id="examples-separator"></div>
-      <div id="examples-back"></div>
+      <div id="examples-back" class="page-close"></div>
     </div>
     <div id="content-help">
       <div id="help-faq">
@@ -168,25 +133,29 @@
           <div class="shortcut"><kbd>Ctrl<em>+</em>Z</kbd></div> Cancel current prompt.<br />
         </div>
       </div>
-      <div id="help-back"></div>
+      <div id="help-back" class="page-close"></div>
     </div>
     <div id="content-about">
+      <div class="inner">
       <p>The repl.it project is an attempt to create an online environment for interactively exploring programming languages. It provides a fully-featured terminal emulator and code editor, powered underneath by interpreter engines for more than a dozen languages.</p>
       <p>All our interpreters are written in (or compiled to) JavaScript, and run completely on the user's device, regardless or whether it's a desktop, laptop or phone.</p>
       <p>The repl.it code is open source and is available on <a href="https://github.com/replit">GitHub</a>.</p>
       <p>&nbsp;</p>
-      <p><img src="/images/amjad.jpg" /><a href="http://amasad.github.com/">Amjad Masad</a> is a web developer at Yahoo! Jordan and a JavaScript fanatic. He usually does frontend development, but is also known to dabble in server stuff. He drives fast cars and likes good food.</p>
-      <p><img src="/images/max.jpg" /><a href="http://max99x.com/">Max Shawabkeh</a> is a software engineer at Google and a Python enthusiast. He fancies himself a jack of many programming trades and a master of none. He reads fantasy books and likes good food.</p>
+      <p><a href="http://amasad.github.com/"><img src="/images/amjad.jpg" /></a><a href="http://amasad.github.com/">Amjad Masad</a> is a web developer at Yahoo! Jordan and a JavaScript fanatic. He usually does frontend development, but is also known to dabble in server stuff. He drives fast cars and likes good food.</p>
+      <p><a href="http://max99x.com/"><img src="/images/max.jpg" /></a><a href="http://max99x.com/">Max Shawabkeh</a> is a software engineer at Google and a Python enthusiast. He fancies himself a jack of many programming trades and a master of none. He reads fantasy books and likes good food.</p>
       <p>&nbsp;</p>
       <p>This application is a result of their sushi-powered collaboration.</p>
-      <div id="about-back"></div>
+      <div id="about-back"  class="page-close"></div>
+      </div>
     </div>
     <div id="save-box">
       <div id="save-box-handle"></div>
       <label for="save-box-link">Share on:</label>
-      <img src="/images/facebook.png" id="save-box-facebook" />
-      <img src="/images/twitter.png" id="save-box-twitter" />
-      <img src="/images/googleplus.png" id="save-box-google" />
+      <ul>
+        <li class="share-social facebook"><a href="#"></a></li>
+        <li class="share-social twitter"><a href="#"></a></li>
+        <li class="share-social gplus"><a href="#"></a></li>
+      </ul>
       <input id="save-box-link" type="text" value="http://repl.it/ABCDEF" />
     </div>
     <div id="footer">
@@ -221,7 +190,7 @@
         </div>
       </div>
       <div id="links">
-        <a href="/">about us</a>
+        <a href="#" id="link-about">about us</a>
         <a href="https://github.com/replit/jsrepl">source code</a>
         <a href="/" id="language-engine-link">language engine</a>
       </div>
