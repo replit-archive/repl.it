@@ -237,11 +237,13 @@ html, body {
 #replay-button{
   display: none;
   position: absolute;
-  width: 116px;
-  left: 36%;
+  width: 30%;
+  left: 30%;
   height: 1px;
   z-index: 9;
   padding-top: 1px;
+  overflow: hidden;
+  text-align: center;
 }
 #console *::selection, #console *::-moz-selection, #console *::-webkit-selection {
   background: #94A2BB;
@@ -844,7 +846,7 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
   background: #fff;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
   padding: 10px;
-  /*display: none;*/
+  display: none;
 }
 
 #save-box-handle {
@@ -891,4 +893,14 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
   padding: 2px;
   width: 180px;
   color: #666;
+}
+
+#save-box .close {
+  background: url(../images/close.png) center center no-repeat;
+  height: 10px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 10px;
+  cursor: pointer;
 }
