@@ -543,6 +543,12 @@ html, body {
   overflow-y: auto;
 }
 
+#content-examples .inner{
+  width: 1000px;
+  margin: 0 auto;
+  position:relative;
+  min-height: 750px;
+}
 #examples-separator {
   height: 88%;
   position: absolute;
