@@ -375,6 +375,16 @@ html, body {
   float: left !important;
 }
 
+/* Make the FB comment box appear above the footer */
+.social_button span.fb_edge_comment_widget{
+  top: -139px!important;
+}
+
+/* Hide the twitter share incase of load fail */
+.twitter-share-button {
+  display: none;
+}
+
 #links {
   height: 30px;
   line-height: 30px;
