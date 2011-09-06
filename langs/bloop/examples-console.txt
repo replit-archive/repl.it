@@ -1,10 +1,19 @@
-HELLO WORLD
+Hello World
 ********************************************************************************
-define procedure ''hello-world'' [n]:
-block 0: begin
-     print['Hello World']
-     output<=42;
-block 0: end.
+DEFINE PROCEDURE ''HELLO-WORLD'' [N]:
+BLOCK 0: BEGIN
+     PRINT['Hello World!']
+BLOCK 0: END.
+HELLO-WORLD[1];
+********************************************************************************
 
-hello-world[1];
+Power
+********************************************************************************
+DEFINE PROCEDURE ''POWER''[BASE,EXP]:
+BLOCK 0: BEGIN
+  OUTPUT <= 1;
+  LOOP EXP TIMES:
+  OUTPUT <= OUTPUT * BASE;
+BLOCK 0: END.
+POWER[3,4];
 ********************************************************************************

@@ -1,6 +1,6 @@
-Naive Fibonacci
+Fibonacci
 ********************************************************************************
-var fib = function(n) {
+function fib(n) {
   if (n < 2) {
     return n;
   } else {
@@ -8,4 +8,18 @@ var fib = function(n) {
   }
 };
 console.log("Fib(9) = " + fib(9));
+********************************************************************************
+
+********************************************************************************
+Class
+********************************************************************************
+function Person(name, job) {
+  this.name = name;
+  this.job = job;
+  this.print = function() {
+    console.log(this.name + ' is a ' + this.job + '.');
+  }
+}
+var thatGuy = new Person("Jack", "coder");
+thatGuy.print();
 ********************************************************************************

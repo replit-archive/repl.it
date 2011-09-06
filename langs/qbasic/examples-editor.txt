@@ -1,27 +1,24 @@
-Conditionals
+Factorial
 ********************************************************************************
-INPUT "Enter two numbers: ", X, Y
-PRINT "X = "; X, "Y = "; Y
-IF X > Y THEN
-  PRINT "X is more than Y!"
-ELSE IF X < Y THEN
-  PRINT "X is less than Y!"
-ELSE
-  PRINT "X and Y are equal!"
-END IF
+DECLARE FUNCTION Factorial (n)
+FUNCTION Factorial (n)
+  IF n = 0 THEN
+    Factorial = 1
+  ELSE
+    Factorial = n * Factorial(n - 1)
+  END IF
+END FUNCTION
+PRINT "6! = "; Factorial(6)
 ********************************************************************************
 
-Subroutine
+Scopes
 ********************************************************************************
 DIM SHARED MY_GLOBAL AS STRING
 MY_GLOBAL = "Starting value"
-
 DECLARE SUB Quack (Q)
 SUB Quack (Q)
-  PRINT MY_GLOBAL
-  PRINT Q
+  PRINT MY_GLOBAL, Q
 END SUB
-
 Quack 13
 MY_GLOBAL = "New Value"
 Quack 42

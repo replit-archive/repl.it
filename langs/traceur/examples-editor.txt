@@ -1,17 +1,26 @@
-Default arguments
+Generator
 ********************************************************************************
-function hello(name = 'John') {
-  console.log('Hello, ' + name + '!');
+function Tree(label, left, right) {
+  this.label = label;
+  this.left = left;
+  this.right = right;
 }
-hello();
-hello('Jane');
-********************************************************************************
+function inorder(t) {
+  if (t) {
+    yield for inorder(t.left);
+    yield t.label;
+    yield for inorder(t.right);
+  }
+}
 
-Spread
-********************************************************************************
-var a = [1];
-var b = [2, 3, 4];
-var c = [6, 7];
-var d = [0, ...a, ...b, 5, ...c];
-d;
+function make(t) {
+  if (t.length == 1) return new Tree(t[0]);
+  return new Tree(t[0], make(t[1]), make(t[2]));
+}
+let tree = make(['d', ['b', ['a'], ['c']],
+                      ['f', ['e'], ['g']]]);
+
+for (let node : inorder(tree)) {
+  console.log(node);
+}
 ********************************************************************************
