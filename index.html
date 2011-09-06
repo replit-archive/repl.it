@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html itemscope itemtype="http://schema.org/Product">
   <head>
     <title>repl.it</title>
     <script src="/lib/jquery-1.6.2.js"></script>
     <script src="/lib/jqconsole.js"></script>
-    <script src="/lib/mustache.js"></script>
-    <script src="/lib/history.js"></script>
-    <script src="/lib/facebox.js"></script>
     <script src="/lib/ace/ace.js"></script>
     <script src="/lib/ace/theme-textmate.js"></script>
     <script src="/jsrepl/loader.js" id="jsrepl_loader"></script>
@@ -19,7 +16,19 @@
     <script src="/pager.js"></script>
     <script src="/session.js"></script>
     <script src="/languages.js"></script>
+    
+    <meta property="og:title" content="repl.it" />
+    <meta property="og:description" content="Run code in a variety of languages from your browser!"/> 
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="http://repl.it" />
+    <meta property="og:image" content="http://repl.it/logo-small.png" />
+    <meta property="og:site_name" content="repl.it" />
+    <meta property="fb:app_id" content="111098168994577" />
 
+    <!-- Add the following three tags inside head -->
+    <meta itemprop="name" content="Title of your content">
+    <meta itemprop="description" content="Run code in a variety of languages from your browser!">
+    
     <script>try{
       {{REPLIT_DATA}}
       }catch(e){}</script>
@@ -163,32 +172,16 @@
     <div id="footer">
       <div id="social">
         <div id="social-buttons-container">
-          <!-- Facebook
-          <div class="social_button" type="facebook"> 
-            <fb:like
-              href="http:/localhost"
-              height="20"
-              layout="button_count"
-              show_faces="false"
-              send="false"
-              font="">
-            </fb:like>
+          <div class="social_button" type="facebook">
+            <div id="fb-root"></div><fb:like href="http://repl.it" send="false" layout="button_count" width="100" show_faces="false" font="verdana"></fb:like>
           </div>
-          <div id="fb-root"></div>
-          <script src="http://connect.facebook.net/en_US/all.js#appId=123&amp;xfbml=1"></script> -->
-          <!-- Google+
-          <div class="social_button" type="google">
-            <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-            <g:plusone size="medium"></g:plusone>
-          </div> -->
-          <!-- Twitter
           <div class="social_button" type="twitter">
-            <a href="http://twitter.com/share" class="twitter-share-button" data-text="Testing out the twitter button." data-url="http://localhost" data-count="horizontal" data-via="Localhost">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-          </div> -->
-          <!-- Hacker News
-          <a href="http://news.ycombinator.com/submitlink?u=&amp;t=http://localhost/" class="social_button">
-            <img src="images/hnlike.png" />
-          </a> -->
+            <a href="http://twitter.com/share" data-via="replit" data-text="Run code in a variety of languages from your browser!" data-url="http://repl.it" class="twitter-share-button">Tweet</a>
+          </div>
+          <div class="social_button" type="gplus">
+            <g:plusone size="medium"></g:plusone>
+          </div>
+            
         </div>
       </div>
       <div id="links">
