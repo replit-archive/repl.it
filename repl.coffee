@@ -14,7 +14,7 @@ $.extend REPLIT,
       ErrorCallback: $.proxy @ErrorCallback, @
     }
     # Init console.
-    @jqconsole = @$consoleContainer.jqconsole '', '   '
+    @jqconsole = @$consoleContainer.jqconsole '', '   ', '.. '
     @$console = @$consoleContainer.find '.jqconsole'
 
     # Init editor.
