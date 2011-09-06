@@ -8,22 +8,14 @@
       editor: '/langs/qbasic/examples-editor.txt'
       console: '/langs/qbasic/examples-console.txt'
     help_link: 'http://westcompsci.pima.edu/cis100/'
-  Forth: 
+  Forth:
     name: 'Forth'
     tagline: 'An interactive stack-oriented language.'
     shortcut: 'r'
     category: 'Classic'
     examples:
       editor: '/langs/forth/examples-editor.txt'
-      console: '/langs/forth/examples-console.txt'      
-  Smalltalk:
-    name: 'Smalltalk'
-    tagline: 'The grand-daddy of OOP.'
-    shortcut: 't'
-    category: 'Classic'
-    examples:
-      editor: '/langs/smalltalk/examples-editor.txt'
-      console: '/langs/smalltalk/examples-console.txt'
+      console: '/langs/forth/examples-console.txt'
   LOLCODE:
     name: 'LOLCODE'
     tagline: 'The BASIC language of lolcats.'
@@ -34,7 +26,7 @@
       console: '/langs/lolcode/examples-console.txt'
     help_link: 'http://lolcode.com/specs/1.2'
   Brainfuck:
-    name: 'Brainf*ck'
+    name: 'Brainfuck'
     tagline: 'A pure Turing machine controller.'
     shortcut: 'f'
     category: 'Esoteric'
