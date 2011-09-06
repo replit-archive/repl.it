@@ -181,7 +181,7 @@ $.extend REPLIT,
       
   # Resize containers on each window resize, split ratio change or 
   # content padding change.
-  OnResize: (animate=false)->
+  OnResize: ->
     # Calculate container width.
     width = document.documentElement.clientWidth - CONTENT_PADDING
     height = document.documentElement.clientHeight - HEADER_HEIGHT - FOOTER_HEIGHT
@@ -193,16 +193,9 @@ $.extend REPLIT,
     
     # The center resizer is placed to the left of the editor.
     @$resizer.c.css 'left', editor_width + RESIZER_WIDTH
-    # Do the actual resizing.
-    if animate
-      @$container.animate width: width,
-        duration: ANIMATION_DURATION
-        queue: false
-        step: => @$this.trigger 'resize'
-    else
-      @$container.css
-        width: width
-        height: height
+    @$container.css
+      width: width
+      height: height
     @$editorContainer.css
       width: editor_width
       height: height
@@ -222,7 +215,7 @@ $.extend REPLIT,
     
     @$this.trigger 'resize'
     # Call to resize environment if the app has already initialized.
-    REPLIT.EnvResize() if @inited
+    REPLIT.EnvResize() if @inited and not animate
 
   # Calculates editor and console dimensions according to their parents and
   # neighboring elements (if any).

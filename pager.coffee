@@ -92,14 +92,27 @@ ZINDEX_OFFSET = 11
 $.extend REPLIT,
   # The pages stacking on the screen.
   pages_stack: []
+  # The editor/console width before automatic resize.
+  EnvWidth: null
+  
   # Open a page by its name.
-  OpenPage: (page_name) ->
-    # Get the page
-    page = PAGES[page_name]
-    if page
+  OpenPage: (page_name, record_env_width=true) ->
+    # We maybe given a page name or a page object.
+    if typeof page_name == 'object'
+      page = page_name
+    else
+      page = PAGES[page_name]
+    
+    # If the page actually exists and its not the current one.
+    if page and @pages_stack.current() isnt page
       @SetTitle page.title
-      # Hide current page if exists.
-      @pages_stack.$current()?.fadeOut FADE_DURATION * 4
+      $current_page = @pages_stack.$current()
+      # Hide the current page if existed.
+      $current_page?.fadeOut FADE_DURATION * 4
+      # Record the container width if we are asked to.
+      if record_env_width and not $current_page
+        @EnvWidth = @$container.width() 
+      
       # Set the minimum width of the content space to the minimum width
       # specified by the page settings above.
       @min_content_width = page.min_width or @min_content_width
@@ -117,12 +130,7 @@ $.extend REPLIT,
         # Do initial syncing.
         @SyncPages()
         # Start animating the container to the minimum width.
-        @$container.animate width: page.min_width,
-          duration: ANIMATION_DURATION
-          # On each step syncpages.
-          step: => @SyncPages()
-          # Don't queue animations just execute them.
-          queue:false
+        @AnimateEnv page.min_width, (=> @SyncPages)
         # Sync pages before animating the top stacked page.
         @SyncPages()
         # Animate the top stacked page so it follows the container with no delay.
@@ -131,19 +139,50 @@ $.extend REPLIT,
           queue: false
           step: => @SyncPages()
           # As a precaution resync everything upon animation completion.
-          complete: $.proxy(@SyncPages, @)
-          
+          complete: => @SyncPages()
       else
         # Sync the pages.
         @SyncPages()
   
-  # Close the top page.
+  # Close the top page and opens the page underneath if exists or just animates
+  # Back to the original environment width.
   CloseLastPage: ->
-    @pages_stack.pop().$elem.hide()
-    @min_content_width = @pages_stack.current()?.min_width or PAGES.main.min_width
-    @SetTitle @pages_stack.current()?.title or PAGES.main.title
-    @OnResize(true)
+    @pages_stack.pop().$elem.fadeOut FADE_DURATION * 4
+    curr_page = @pages_stack.current()
+    # Check if this is not the last page.
+    if curr_page?
+      @min_content_width = curr_page.min_width
+      # Reopen this page.
+      @pages_stack.pop()
+      @OpenPage curr_page, false
+    else
+      @OnResize()
+      @min_content_width = PAGES.main.min_width
+      @AnimateEnv @EnvWidth
   
+  # Animates the container and its guts to the specified size.
+  AnimateEnv: (width, step=$.noop)->
+    # The prompt keeps jiggling no matter what,
+    # Best choice to hide it!
+    @$console.hide()
+    editor_width = (@split_ratio * width) -  (RESIZER_WIDTH * 1.5)
+    console_width = ((1 - @split_ratio) * width) - (RESIZER_WIDTH * 1.5)
+    @$resizer.c.animate left: editor_width + RESIZER_WIDTH,
+      duration: ANIMATION_DURATION
+      step: step
+    @$container.animate width: width,
+      duration: ANIMATION_DURATION 
+    @$editorContainer.animate width: editor_width,
+      duration: ANIMATION_DURATION
+    @$consoleContainer.animate width: console_width,
+      duration: ANIMATION_DURATION
+    @$editor.animate width: editor_width,
+      duration: ANIMATION_DURATION
+      complete: =>
+        @$console.fadeIn()
+        @EnvResize()
+      
+        
   # Sync all pages with the container.
   SyncPages: ->
     $.each @pages_stack, (i, page) =>
@@ -160,7 +199,7 @@ REPLIT.pages_stack.$current = -> @[@length - 1]?.$elem
 REPLIT.pages_stack.current = -> @[@length - 1]
 
 $ ->
-  $('#content-languages').append LANG_TEMPLATE.render()
+  $('#content-languages .inner').append LANG_TEMPLATE.render()
   # Sync pages each time REPLIT resizes.
   REPLIT.$this.bind 'resize', REPLIT.SyncPages
   # Since were going to be doing lots of animation and syncing we better cache
