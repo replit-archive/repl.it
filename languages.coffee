@@ -6,8 +6,8 @@
     about_link: 'http://en.wikipedia.org/wiki/QBasic'
     engine_link: 'https://github.com/amasad/jsrepl/tree/master/extern/qb.js'
     examples:
-      editor: '/langs/qbasic/examples-editor.txt'
-      console: '/langs/qbasic/examples-console.txt'
+      editor: '/langs/qbasic/examples-editor.html'
+      console: '/langs/qbasic/examples-console.html'
   Forth:
     name: 'Forth'
     tagline: 'An interactive stack-oriented language.'
@@ -15,8 +15,8 @@
     about_link: 'http://en.wikipedia.org/wiki/Forth_(programming_language)'
     engine_link: 'https://github.com/amasad/jsrepl/blob/master/extern/jsforth/jsforth.js'
     examples:
-      editor: '/langs/forth/examples-editor.txt'
-      console: '/langs/forth/examples-console.txt'
+      editor: '/langs/forth/examples-editor.html'
+      console: '/langs/forth/examples-console.html'
   LOLCODE:
     name: 'LOLCODE'
     tagline: 'The BASIC language of lolcats.'
@@ -24,8 +24,8 @@
     about_link: 'http://lolcode.com/specs/1.2'
     engine_link: 'https://github.com/max99x/lol-coffee'
     examples:
-      editor: '/langs/lolcode/examples-editor.txt'
-      console: '/langs/lolcode/examples-console.txt'
+      editor: '/langs/lolcode/examples-editor.html'
+      console: '/langs/lolcode/examples-console.html'
   Brainfuck:
     name: 'Brainfuck'
     tagline: 'A pure Turing machine controller.'
@@ -33,8 +33,8 @@
     about_link: 'http://en.wikipedia.org/wiki/Brainfuck'
     engine_link: 'https://github.com/amasad/bfjs'
     examples:
-      editor: '/langs/brainfuck/examples-editor.txt'
-      console: '/langs/brainfuck/examples-console.txt'
+      editor: '/langs/brainfuck/examples-editor.html'
+      console: '/langs/brainfuck/examples-console.html'
   Emoticon:
     name: 'Emoticon'
     tagline: 'Programming with an extra dose of smile.'
@@ -42,8 +42,8 @@
     about_link: 'http://www.teuton.org/~stranger/code/emoticon/manual.php'
     engine_link: 'https://github.com/amasad/emoticoffee'
     examples:
-      editor: '/langs/emoticon/examples-editor.txt'
-      console: '/langs/emoticon/examples-console.txt'
+      editor: '/langs/emoticon/examples-editor.html'
+      console: '/langs/emoticon/examples-console.html'
   Bloop:
     name: 'Bloop'
     tagline: 'Nothing but bounded loops'
@@ -51,8 +51,8 @@
     about_link: 'http://en.wikipedia.org/wiki/BlooP_and_FlooP'
     engine_link: 'https://github.com/amasad/jsrepl/blob/master/extern/bloop/bloop.js'
     examples:
-      editor: '/langs/bloop/examples-editor.txt'
-      console: '/langs/bloop/examples-console.txt'
+      editor: '/langs/bloop/examples-editor.html'
+      console: '/langs/bloop/examples-console.html'
   Unlambda:
     name: 'Unlambda'
     tagline: 'Functional purity given form.'
@@ -60,8 +60,8 @@
     about_link: 'http://en.wikipedia.org/wiki/Unlambda'
     engine_link: 'https://github.com/max99x/unlambda-coffee'
     examples:
-      editor: '/langs/unlambda/examples-editor.txt'
-      console: '/langs/unlambda/examples-console.txt'
+      editor: '/langs/unlambda/examples-editor.html'
+      console: '/langs/unlambda/examples-console.html'
   JavaScript:
     name: 'JavaScript'
     tagline: 'The de facto language of the Web.'
@@ -69,8 +69,8 @@
     about_link: 'http://en.wikipedia.org/wiki/Javascript'
     engine_link: 'http://en.wikipedia.org/wiki/JavaScript_engine#JavaScript_engines'
     examples:
-      editor: '/langs/javascript/examples-editor.txt'
-      console: '/langs/javascript/examples-console.txt'
+      editor: '/langs/javascript/examples-editor.html'
+      console: '/langs/javascript/examples-console.html'
     ace_mode:
       script: '/lib/ace/mode-javascript.js'
       module: 'ace/mode/javascript'
@@ -81,8 +81,8 @@
     about_link: 'http://code.google.com/p/traceur-compiler/'
     engine_link: 'https://github.com/amasad/jsrepl/tree/master/extern/traceur'
     examples:
-      editor: '/langs/traceur/examples-editor.txt'
-      console: '/langs/traceur/examples-console.txt'
+      editor: '/langs/traceur/examples-editor.html'
+      console: '/langs/traceur/examples-console.html'
   CoffeeScript:
     name: 'CoffeeScript'
     tagline: 'Unfancy JavaScript.'
@@ -90,8 +90,8 @@
     about_link: 'http://jashkenas.github.com/coffee-script/'
     engine_link: 'https://github.com/amasad/jsrepl/tree/master/extern/coffee-script'
     examples:
-      editor: '/langs/coffee-script/examples-editor.txt'
-      console: '/langs/coffee-script/examples-console.txt'
+      editor: '/langs/coffee-script/examples-editor.html'
+      console: '/langs/coffee-script/examples-console.html'
     ace_mode:
       script: '/lib/ace/mode-coffee.js'
       module: 'ace/mode/coffee'
@@ -102,16 +102,16 @@
     about_link: 'http://weepy.github.com/kaffeine/'
     engine_link: 'https://github.com/weepy/kaffeine'
     examples:
-      editor: '/langs/kaffeine/examples-editor.txt'
-      console: '/langs/kaffeine/examples-console.txt'
+      editor: '/langs/kaffeine/examples-editor.html'
+      console: '/langs/kaffeine/examples-console.html'
   Move:
     name: 'Move'
     tagline: 'The easy way to program the web.'
     shortcut: 'M'
     about_link: 'http://movelang.org/'
     examples:
-      editor: '/langs/move/examples-editor.txt'
-      console: '/langs/move/examples-console.txt'
+      editor: '/langs/move/examples-editor.html'
+      console: '/langs/move/examples-console.html'
   Scheme:
     name: 'Scheme'
     tagline: 'An elegant dynamic dialect of Lisp.'
@@ -119,8 +119,8 @@
     about_link: 'http://en.wikipedia.org/wiki/Scheme_(programming_language)'
     engine_link: 'https://github.com/yhara/biwascheme'
     examples:
-      editor: '/langs/scheme/examples-editor.txt'
-      console: '/langs/scheme/examples-console.txt'
+      editor: '/langs/scheme/examples-editor.html'
+      console: '/langs/scheme/examples-console.html'
   Lua:
     name: 'Lua'
     tagline: 'A lightweight multi-paradigm scripting language.'
@@ -128,8 +128,8 @@
     about_link: 'http://en.wikipedia.org/wiki/Lua_(programming_language)'
     engine_link: 'https://github.com/amasad/jsrepl/tree/master/extern/lua'
     examples:
-      editor: '/langs/lua/examples-editor.txt'
-      console: '/langs/lua/examples-console.txt'
+      editor: '/langs/lua/examples-editor.html'
+      console: '/langs/lua/examples-console.html'
     ace_mode:
       script: '/lib/ace/mode-lua.js'
       module: 'ace/mode/lua'
@@ -140,8 +140,8 @@
     about_link: 'http://en.wikipedia.org/wiki/Python_(programming_language)'
     engine_link: 'https://github.com/max99x/empythoned'
     examples:
-      editor: '/langs/python/examples-editor.txt'
-      console: '/langs/python/examples-console.txt'
+      editor: '/langs/python/examples-editor.html'
+      console: '/langs/python/examples-console.html'
     ace_mode:
       script: '/lib/ace/mode-python.js'
       module: 'ace/mode/python'

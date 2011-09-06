@@ -15,7 +15,6 @@ OIC
 Subroutine
 ********************************************************************************
 I HAS A CHZBRGR ITZ "HOT"
-
 HOW DUZ I NOM YR FUD
   VISIBLE "I NOMD YR " FUD
   VISIBLE "I CAN HAZ :{CHZBRGR} BRGR NAO"

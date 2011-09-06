@@ -72,5 +72,5 @@ task 'watch', 'Watch all coffee files and compile them live to javascript', ->
     for examples_file in fs.readdirSync 'langs/' + lang
       if examples_file.match /\.txt$/
         file = "langs/#{lang}/#{examples_file}"
-        do (file) -> watchFile file, (filename) ->
+        do (file, lang) -> watchFile file, (filename) ->
           setTimeout (-> pygmentizeExample(lang, file)), 1

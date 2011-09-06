@@ -535,6 +535,8 @@ html, body {
 
 #content-examples {
   color: #444;
+  min-height: 750px;
+  overflow-y: auto;
 }
 
 #examples-separator {
@@ -561,10 +563,9 @@ html, body {
 }
 
 .example-group {
-  width: 50%;
+  width: 49%;
   cursor: pointer;
   position: absolute;
-  margin-top: 6%;
 }
 
 .example-left {
@@ -574,28 +575,27 @@ html, body {
   left: 50%;
 }
 .example-1-1 {
-  height: 100%;
-  left: 0;
-  top: 0;
+  height: 94%;
+  top: 6%;
 }
 .example-2-1 {
-  height: 50%;
-  top: 0;
+  height: 47%;
+  top: 6%;
 }
 .example-2-2 {
-  height: 50%;
+  height: 47%;
   top: 50%;
 }
 .example-3-1 {
-  height: 33.333%;
-  top: 0;
+  height: 31.333%;
+  top: 6%;
 }
 .example-3-2 {
-  height: 33.333%;
-  top: 33.333%;
+  height: 31.333%;
+  top: 36.333%;
 }
 .example-3-3 {
-  height: 33.333%;
+  height: 31.333%;
   top: 66.666%;
 }
 

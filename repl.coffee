@@ -25,7 +25,7 @@ $.extend REPLIT,
     @$run.click =>
       @jqconsole.AbortPrompt()
       @Evaluate REPLIT.editor.getSession().getValue()
-      
+
     @current_lang = null
     @inited = true
 
@@ -35,11 +35,11 @@ $.extend REPLIT,
     @current_lang = JSREPL::Languages::[lang_name]
     # Hold the name for saving and such.
     @current_lang.system_name = lang_name
-    #Load ace mode.
+
+    #Load Ace mode.
     EditSession = require("ace/edit_session").EditSession
     session = new EditSession ''
     ace_mode = @Languages[lang_name].ace_mode
-    
     if ace_mode?
       $.getScript ace_mode.script, =>
         mode = require(ace_mode.module).Mode
@@ -49,14 +49,13 @@ $.extend REPLIT,
       textMode = require("ace/mode/text").Mode
       session.setMode new textMode
       @editor.setSession session
-      
-    # Empty out the history, prompt and example selection.
+
+    # Empty out the history and prompt.
     @jqconsole.Reset()
-    # Register charecter matchings in jqconsole for the current language
-    i = 0
-    for [open, close] in @current_lang.matchings
-      @jqconsole.RegisterMatching open, close, 'matching-' + (++i)
-  
+    # Register character matchings in jqconsole for the current language.
+    for [open, close], index in @current_lang.matchings
+      @jqconsole.RegisterMatching open, close, 'matching-' + index
+
     @jqconsole.RegisterShortcut 'Z', =>
       @jqconsole.AbortPrompt()
       @StartPrompt()
@@ -64,7 +63,33 @@ $.extend REPLIT,
       @StartPrompt()
       @$this.trigger 'language_loaded', [lang_name]
       callback()
-  
+
+    # TODO: Hide console/editor examples if only the editor/console is open,
+    #       respectively.
+    examples = REPLIT.Languages[lang_name].examples
+    @LoadExamples examples.editor, 'left'
+    @LoadExamples examples.console, 'right'
+
+  LoadExamples: (file, side) ->
+    $examples_container = $ '#content-examples'
+    $('.example-group').remove()
+    $.get file, (contents) ->
+      raw_examples = contents.split /\*{60,}/
+      index = 0
+      total = Math.floor raw_examples.length / 2
+      while index + 1 < raw_examples.length
+        name = raw_examples[index].replace /^\s+|\s+$/g, ''
+        code = raw_examples[index + 1].replace /^\s+|\s+$/g, ''
+        cls = "example-#{side} example-#{total}-#{1 + index / 2}"
+        $examples_container.append """
+          <div class="example-group #{cls}">
+            <div class="example-group-header">#{name}</div>
+            <code>#{code}</code>
+          </div>
+        """
+        index += 2
+      
+
   # Receives the result of a command evaluation.
   #   @arg result: The user-readable string form of the result of an evaluation.
   ResultCallback: (result) ->
@@ -101,7 +126,7 @@ $.extend REPLIT,
       catch e
         @ErrorCallback e
     return undefined
-    
+
   Evaluate: (command) ->
     if command
       @jsrepl.Evaluate command
