@@ -28,7 +28,7 @@ LANG_TEMPLATE =
     """
     
   render: ->
-    html = ''
+    html = []
     categories_order = [
       'Classic'
       'Practical'
@@ -36,27 +36,28 @@ LANG_TEMPLATE =
       'Web' 
     ]
     template_data =
-      Classic: 
+      Classic:
         category: 'Classic'
-        languages: []
-      Practical: 
+        languages: ['QBasic', 'Forth']
+      Practical:
         category: 'Practical'
-        languages: []
+        languages: ['Python', 'Lua', 'Scheme']
       Esoteric:
         category: 'Esoteric'
-        languages: []
+        languages: ['Emoticon', 'Brainfuck', 'LOLCODE', 'Unlambda', 'Bloop']
       Web:
         category: 'Web'
-        languages: []
+        languages: ['JavaScript', 'Traceur', 'Move', 'Kaffeine', 'CoffeeScript']
       
-    for lang_name, lang of REPLIT.Languages
-      lang.system_name = lang_name
-      template_data[lang.category].languages.push lang
-    
+    for _, category of template_data
+      for lang_name, index in category.languages
+        lang = REPLIT.Languages[lang_name]
+        lang.system_name = lang_name
+        category.languages[index] = lang
     for category in categories_order
-      html += @language_group template_data[category]
+      html.push @language_group template_data[category]
     
-    return html
+    return html.join ''
 
 
 # Constant page settings.

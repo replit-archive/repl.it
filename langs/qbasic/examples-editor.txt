@@ -1,16 +1,3 @@
-Factorial
-********************************************************************************
-DECLARE FUNCTION Factorial (n)
-FUNCTION Factorial (n)
-  IF n = 0 THEN
-    Factorial = 1
-  ELSE
-    Factorial = n * Factorial(n - 1)
-  END IF
-END FUNCTION
-PRINT "6! = "; Factorial(6)
-********************************************************************************
-
 Scopes
 ********************************************************************************
 DIM SHARED MY_GLOBAL AS STRING
@@ -22,4 +9,17 @@ END SUB
 Quack 13
 MY_GLOBAL = "New Value"
 Quack 42
+********************************************************************************
+
+Factorial
+********************************************************************************
+DECLARE FUNCTION Factorial (n)
+FUNCTION Factorial (n)
+  IF n = 0 THEN
+    Factorial = 1
+  ELSE
+    Factorial = n * Factorial(n - 1)
+  END IF
+END FUNCTION
+PRINT "6! = "; Factorial(6)
 ********************************************************************************
