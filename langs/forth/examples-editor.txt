@@ -1,4 +1,4 @@
-Input
+Echo
 ********************************************************************************
 : INPUT$    ( -- $addr )
  PAD 1+     ( leave room for byte count )
@@ -9,19 +9,13 @@ Input
 INPUT$ COUNT TYPE
 ********************************************************************************
 
-Unit Conversions
+Nested Loop
 ********************************************************************************
-: D,  ( hi lo --)   SWAP  , ,  ;
-: D@  ( adr -- hi lo)   DUP  @   SWAP   CELL+  @   ;
-: UNITS  CREATE  D,   DOES> D@  */ ;
-
-254 10        UNITS INCHES
-254 12 *  10  UNITS FEET
-254 36 *  10  UNITS YARDS
-10  1         UNITS CENTIMETERS
-1000  1       UNITS METERS
-
-10 FEET .
-15 CENTIMETERS .
-3 METERS .
+: NESTED ( n m --) CR
+  0 DO DUP ( n n --)
+    0 DO CR J .  I .
+    LOOP
+  LOOP
+DROP ;
+2 3  NESTED
 ********************************************************************************

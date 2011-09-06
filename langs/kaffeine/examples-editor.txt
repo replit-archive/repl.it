@@ -1,7 +1,20 @@
-Conditionals
+Class
+********************************************************************************
+Person = (name, job = 'logician') {
+  @name = name
+  @job = job
+}
+Person::whoAmI = {
+  console.log "I'm #{@name} the #{@job}!"
+}
+crystal = new Person 'Crystal'
+crystal.whoAmI()
+********************************************************************************
+
+Conditional
 ********************************************************************************
 console.log 'Enter an integer: '
-str = console.read!()
+str = console.read!
 number = parseInt str, 10
 if number % 2
   console.log "#{number} is odd."

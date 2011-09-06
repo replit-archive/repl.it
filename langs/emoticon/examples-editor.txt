@@ -1,24 +1,21 @@
 Loop
 ********************************************************************************
-** Ensure that lists to be used is empty **
-    E-O
-    |8-D
-    =|8-D
-    ()=D
-** first set up some useful values **
-    |8-O   5               ** this is the counter for the loop          **
-    =|8-O  1               ** this is the decrement value               **
-    ()=O   0               ** this is the comparison value for stopping **
+E-O |8-D =|8-D ()=D   ** Empty used lists **
+|8-O 5 =|8-O 1 ()=O 0 ** Set up limits **
+:-(  ** Loop **
+  |8-P                ** print counter **
+  =|8-O  |8-[ |8-}    ** decrement     **
+  |8-O ()=\ :-E       ** check limit   **
+  :-O - :-Q           ** print divider **
+:-)
+********************************************************************************
 
-** now do the actual looping **
-    :-(
-       |8-P                ** print the current inner loop value        **
-       =|8-O               ** select the decrement value                **
-       |8-[                ** copy the decrement value to the counter   **
-       |8-}                ** decrement the counter                     **
-       |8-O                ** select the counter                        **
-       ()=\                ** is the counter equal to the stop value?   **
-       :-E                 ** if so break the loop                      **
-       :-O - :-Q           ** print a divider                           **
-    :-)
+Reverse
+********************************************************************************
+:-O Hello World
+)]:-O :-C :~# :-7
+:-O
+:-(   [:]o<    8=\ 8-E    :-)
+[:]oO
+:-(   [:]oQ    8=\ 8-E    :-)
 ********************************************************************************

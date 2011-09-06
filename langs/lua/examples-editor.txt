@@ -1,5 +1,17 @@
 Factorial
 ********************************************************************************
+function addto(x)
+  return function(y)
+    return x + y
+  end
+end
+
+fourplus = addto(4)
+print(fourplus(3))
+********************************************************************************
+
+First-class Function
+********************************************************************************
 function factorial(n)
   if n == 0 then
     return 1
@@ -8,15 +20,4 @@ function factorial(n)
   end
 end
 return factorial(5)
-********************************************************************************
-
-First-class Function
-********************************************************************************
-function addto(x)
-  return function(y)
-    return x + y
-  end
-end
-fourplus = addto(4)
-print(fourplus(3))
 ********************************************************************************
