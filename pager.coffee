@@ -83,6 +83,7 @@ PAGES =
     min_width: 530
 
 ANIMATION_DURATION = 700
+FADE_DURATION = 200
 # TODO(amasad): Export from the DOM module.
 RESIZER_WIDTH = 8
 # The minimum offset.
@@ -97,6 +98,8 @@ $.extend REPLIT,
     page = PAGES[page_name]
     if page
       @SetTitle page.title
+      # Hide current page if exists.
+      @pages_stack.$current()?.fadeOut FADE_DURATION * 4
       # Set the minimum width of the content space to the minimum width
       # specified by the page settings above.
       @min_content_width = page.min_width or @min_content_width
@@ -108,7 +111,7 @@ $.extend REPLIT,
       # Put the page on top of the stack
       @pages_stack.push page
       # Show the last stacked page.
-      @pages_stack.$current().show()
+      @pages_stack.$current().fadeIn FADE_DURATION
       # Resize the container to the minimum width specified by the page in question.
       if @$container.width() < page.min_width
         # Do initial syncing.
