@@ -287,23 +287,23 @@ html, body {
 .jqconsole-prompt {
   font-weight: bold;
   color: #FC0;
-  background: url(../images/dots-yellow.png) 3px 1px no-repeat;
+  background: url(../images/dots-yellow.png) 3px 0px no-repeat;
 }
 
 .jqconsole-blurred .jqconsole-prompt {
   color: #B91;
-  background: url(../images/dots-yellow-faded.png) 3px 1px no-repeat;
+  background: url(../images/dots-yellow-faded.png) 3px 0px no-repeat;
 }
 
 .jqconsole-old-prompt {
   font-weight: bold;
   color: #F60;
-  background: url(../images/dots-orange.png) 3px 1px no-repeat;
+  background: url(../images/dots-orange.png) 3px 0px no-repeat;
 }
 
 .jqconsole-blurred .jqconsole-old-prompt {
   color: #B41;
-  background: url(../images/dots-orange-faded.png) 3px 1px no-repeat;
+  background: url(../images/dots-orange-faded.png) 3px 0px no-repeat;
 }
 
 .jqconsole-cursor {
@@ -375,12 +375,12 @@ html, body {
   float: left !important;
 }
 
-/* Make the FB comment box appear above the footer */
-.social_button span.fb_edge_comment_widget{
-  top: -139px!important;
+/* Make the FB comment box appear above the footer. */
+.social_button span.fb_edge_comment_widget {
+  top: -139px !important;
 }
 
-/* Hide the twitter share incase of load fail */
+/* Hide the twitter share in case loading it fails. */
 .twitter-share-button {
   display: none;
 }
