@@ -487,6 +487,10 @@ html, body {
   color: #444;
 }
 
+#content-languages .inner {
+  width: 1000px;
+  margin: 0 auto;
+}
 .language-group {
   width: 50%;
   float: left;
@@ -539,6 +543,12 @@ html, body {
   overflow-y: auto;
 }
 
+#content-examples .inner{
+  width: 1000px;
+  margin: 0 auto;
+  position:relative;
+  min-height: 750px;
+}
 #examples-separator {
   height: 88%;
   position: absolute;

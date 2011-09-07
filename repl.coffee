@@ -63,31 +63,6 @@ $.extend REPLIT,
       @StartPrompt()
       @$this.trigger 'language_loaded', [lang_name]
       callback()
-
-    # TODO: Hide console/editor examples if only the editor/console is open,
-    #       respectively.
-    examples = REPLIT.Languages[lang_name].examples
-    @LoadExamples examples.editor, 'left'
-    @LoadExamples examples.console, 'right'
-
-  LoadExamples: (file, side) ->
-    $examples_container = $ '#content-examples'
-    $('.example-group').remove()
-    $.get file, (contents) ->
-      raw_examples = contents.split /\*{60,}/
-      index = 0
-      total = Math.floor raw_examples.length / 2
-      while index + 1 < raw_examples.length
-        name = raw_examples[index].replace /^\s+|\s+$/g, ''
-        code = raw_examples[index + 1].replace /^\s+|\s+$/g, ''
-        cls = "example-#{side} example-#{total}-#{1 + index / 2}"
-        $examples_container.append """
-          <div class="example-group #{cls}">
-            <div class="example-group-header">#{name}</div>
-            <code>#{code}</code>
-          </div>
-        """
-        index += 2
       
 
   # Receives the result of a command evaluation.

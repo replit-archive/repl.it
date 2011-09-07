@@ -1,8 +1,7 @@
 # Responsible for DOM initializations, and most interactions.
 
 # Core module.
-
-CONTENT_PADDING = 200
+DEFAULT_CONTENT_PADDING = 200
 FOOTER_HEIGHT = 30
 HEADER_HEIGHT = 61
 RESIZER_WIDTH = 8
@@ -36,8 +35,9 @@ $.fn.enableSelection = ->
 
 
 $.extend REPLIT,
-  split_ratio: .5
+  split_ratio: DEFAULT_SPLIT
   min_content_width: 500
+  content_padding: DEFAULT_CONTENT_PADDING
   # Initialize the DOM (Runs before JSRPEL's load)
   InitDOM: ->
     @$doc_elem = $('html')
@@ -99,13 +99,13 @@ $.extend REPLIT,
       $body.bind 'mousemove.resizer', (e) =>
         # The horizontal mouse position is simply half of the content_padding.
         # Subtract half of the resizer_width for better percesion.
-        CONTENT_PADDING = ((e.pageX - (RESIZER_WIDTH / 2)) * 2)
+        @content_padding = ((e.pageX - (RESIZER_WIDTH / 2)) * 2)
         @OnResize()
     @$resizer.r.mousedown (e) =>
       $body.bind 'mousemove.resizer', (e) =>
         # The mouse is on the right of the container, subtracting the horizontal
         # position from the page width to get the right number.
-        CONTENT_PADDING = ($body.width() - e.pageX - (RESIZER_WIDTH / 2)) * 2
+        @content_padding = ($body.width() - e.pageX - (RESIZER_WIDTH / 2)) * 2
         @OnResize()
         
     # Bind the release on mouseup for right/left resizers.
@@ -123,7 +123,7 @@ $.extend REPLIT,
     @$resizer.c.mousedown (e) =>
       @$container.bind 'mousemove.resizer', (e) =>
         # Get the mousposition relative to the container.
-        left = e.pageX - (CONTENT_PADDING / 2) + (RESIZER_WIDTH / 2)
+        left = e.pageX - (@content_padding / 2) + (RESIZER_WIDTH / 2)
         # The ratio of the editor-to-console is the relative mouse position
         # divided by the width of the container.
         @split_ratio = left / @$container.width()
@@ -181,28 +181,21 @@ $.extend REPLIT,
       
   # Resize containers on each window resize, split ratio change or 
   # content padding change.
-  OnResize: (animate=false)->
+  OnResize: ->
     # Calculate container width.
-    width = document.documentElement.clientWidth - CONTENT_PADDING
+    width = document.documentElement.clientWidth - @content_padding
     height = document.documentElement.clientHeight - HEADER_HEIGHT - FOOTER_HEIGHT
     if width < @min_content_width
       width = @min_content_width
-      CONTENT_PADDING = document.documentElement.clientWidth - width
+      @content_padding = document.documentElement.clientWidth - width
     editor_width = (@split_ratio * width) -  (RESIZER_WIDTH * 1.5)
     console_width = ((1 - @split_ratio) * width) - (RESIZER_WIDTH * 1.5)
     
     # The center resizer is placed to the left of the editor.
     @$resizer.c.css 'left', editor_width + RESIZER_WIDTH
-    # Do the actual resizing.
-    if animate
-      @$container.animate width: width,
-        duration: ANIMATION_DURATION
-        queue: false
-        step: => @$this.trigger 'resize'
-    else
-      @$container.css
-        width: width
-        height: height
+    @$container.css
+      width: width
+      height: height
     @$editorContainer.css
       width: editor_width
       height: height
@@ -265,9 +258,9 @@ $ ->
   REPLIT.$this.bind 'language_loading', ->
     REPLIT.$throbber.show()
   
-  REPLIT.$this.bind 'language_loaded', (e, lang_name) ->
+  REPLIT.$this.bind 'language_loaded', (e, system_name) ->
     REPLIT.$throbber.hide()
-    REPLIT.SetTitle lang_name
+    REPLIT.SetTitle @Languages[system_name].name
   
   REPLIT.InitDOM()
   REPLIT.OnResize()
