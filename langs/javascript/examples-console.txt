@@ -5,8 +5,8 @@ console.log("Hello world!");
 
 Object
 ********************************************************************************
-var person = { fname: "John", lname: "Doe", age: 25 };
-for (x in person) console.log(person[x] + " ");
+var obj = { a: 13, b: 42, c: 211 };
+for (i in obj) console.log(i + ': ' + obj[i]);
 ********************************************************************************
 
 Input
