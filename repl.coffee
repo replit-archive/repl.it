@@ -69,7 +69,7 @@ $.extend REPLIT,
   #   @arg result: The user-readable string form of the result of an evaluation.
   ResultCallback: (result) ->
     if result
-      @jqconsole.Write '==> ' + result, 'result'
+      @jqconsole.Write '=> ' + result, 'result'
     @StartPrompt()
     @$this.trigger 'result', [result]
   # Receives an error message resulting from a command evaluation.
