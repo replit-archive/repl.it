@@ -16,7 +16,7 @@ LANG_TEMPLATE =
       </div>
     </div>
   """
-  
+
   language_entry: (data) ->
     {name, shortcut, system_name, tagline} = data
     shortcut_index = name.indexOf(shortcut)
@@ -26,14 +26,14 @@ LANG_TEMPLATE =
           #{tagline}
       </li>
     """
-    
+
   render: ->
     html = []
     categories_order = [
       'Classic'
       'Practical'
       'Esoteric'
-      'Web' 
+      'Web'
     ]
     template_data =
       Classic:
@@ -48,7 +48,7 @@ LANG_TEMPLATE =
       Web:
         category: 'Web'
         languages: ['JavaScript', 'Traceur', 'Move', 'Kaffeine', 'CoffeeScript']
-      
+
     for _, category of template_data
       for lang_name, index in category.languages
         lang = REPLIT.Languages[lang_name]
@@ -56,17 +56,17 @@ LANG_TEMPLATE =
         category.languages[index] = lang
     for category in categories_order
       html.push @language_group template_data[category]
-    
+
     return html.join ''
 
 
 # Constant page settings.
-PAGES = 
-  main: 
+PAGES =
+  main:
     id: 'content'
     title: ''
     min_width: 230
-  languages: 
+  languages:
     id: 'content-languages'
     title: 'Languages Supported'
     min_width: 1030
@@ -74,11 +74,11 @@ PAGES =
     id: 'content-examples'
     title: 'Examples'
     min_width: 1030
-  help: 
+  help:
     id: 'content-help'
     title: 'Help'
     min_width: 1030
-  about: 
+  about:
     id: 'content-about'
     title: 'About Us'
     min_width: 530
@@ -91,10 +91,11 @@ RESIZER_WIDTH = 8
 ZINDEX_OFFSET = 11
 
 $.extend REPLIT,
-  LoadExamples: (file, side) ->
+  LoadExamples: (file, side, callback) ->
     $examples_container = $('#content-examples .inner')
     $('.example-group').remove()
-    $.get file, (contents) ->
+    $.get file, (contents) =>
+      # Parse examples.
       raw_examples = contents.split /\*{60,}/
       index = 0
       total = Math.floor raw_examples.length / 2
@@ -102,19 +103,22 @@ $.extend REPLIT,
         name = raw_examples[index].replace /^\s+|\s+$/g, ''
         code = raw_examples[index + 1].replace /^\s+|\s+$/g, ''
         cls = "example-#{side} example-#{total}-#{1 + index / 2}"
-        $examples_container.append """
+        # Insert an example element and set up its click handler.
+        example_element = $ """
           <div class="example-group #{cls}">
             <div class="example-group-header">#{name}</div>
             <code>#{code}</code>
           </div>
         """
+        $examples_container.append example_element
+        example_element.click -> callback $('code', @).text()
         index += 2
-        
+
   # The pages stacking on the screen.
   page_stack: []
   # The editor/console width before automatic resize.
   EnvWidth: null
-  
+
   # Open a page by its name.
   OpenPage: (page_name, record_env_width=true) ->
     # We maybe given a page name or a page object.
@@ -122,7 +126,7 @@ $.extend REPLIT,
       page = page_name
     else
       page = PAGES[page_name]
-    
+
     # If the page actually exists and its not the current one.
     if page and @page_stack.current() isnt page
       @SetTitle page.title
@@ -131,8 +135,8 @@ $.extend REPLIT,
       $current_page?.fadeOut FADE_DURATION * 4
       # Record the container width if we are asked to.
       if record_env_width and not $current_page
-        @EnvWidth = @$container.width() 
-      
+        @EnvWidth = @$container.width()
+
       # Set the minimum width of the content space to the minimum width
       # specified by the page settings above.
       @min_content_width = page.min_width or @min_content_width
@@ -163,7 +167,7 @@ $.extend REPLIT,
       else
         # Sync the pages.
         @SyncPages()
-  
+
   # Close the top page and opens the page underneath if exists or just animates
   # Back to the original environment width.
   CloseLastPage: ->
@@ -182,34 +186,34 @@ $.extend REPLIT,
       $closed_page.fadeOut FADE_DURATION
       @AnimateEnv @EnvWidth
       @SetTitle @Languages[@current_lang.system_name].name
-  
+
   # Animates the container and its guts to the specified size.
   AnimateEnv: (width, step=$.noop)->
     # The prompt keeps jiggling no matter what,
     # Best choice to hide it!
     @$console.hide()
-    
+
     editor_width = (@split_ratio * width) -  (RESIZER_WIDTH * 1.5)
     console_width = ((1 - @split_ratio) * width) - (RESIZER_WIDTH * 1.5)
     # Change content_padding variable so, it would not snap back on window resize.
     @content_padding = document.documentElement.clientWidth - width
-    
+
     num_anims = 5
     complete = =>
       if --num_anims == 0
         @EnvResize()
         @$console.fadeIn()
-    anim_config = 
+    anim_config =
       duration: ANIMATION_DURATION
       step: step
       complete: complete
-      
+
     @$resizer.c.animate left: editor_width + RESIZER_WIDTH, anim_config
     @$container.animate width: width, anim_config
     @$editorContainer.animate width: editor_width, anim_config
     @$consoleContainer.animate width: console_width, anim_config
     @$editor.animate width: editor_width, anim_config
-        
+
   # Sync all pages with the container.
   SyncPages: ->
     $.each @page_stack, (i, page) =>
@@ -219,8 +223,8 @@ $.extend REPLIT,
         left: @$container.offset().left + RESIZER_WIDTH
         # TODO(amasad): Find another way, this is stupid!
         'z-index': ZINDEX_OFFSET++
-    
-# Gets the top page jQuery elem. 
+
+# Gets the top page jQuery elem.
 REPLIT.page_stack.$current = -> @[@length - 1]?.$elem
 # Gets the top page settings.
 REPLIT.page_stack.current = -> @[@length - 1]
@@ -228,7 +232,7 @@ REPLIT.page_stack.current = -> @[@length - 1]
 $ ->
   # Render lanuage selector.
   $('#content-languages .inner').append LANG_TEMPLATE.render()
-  
+
   # Sync pages each time REPLIT resizes.
   REPLIT.$this.bind 'resize', REPLIT.SyncPages
   # Load Examples
@@ -236,9 +240,15 @@ $ ->
     # TODO: Hide console/editor examples if only the editor/console is open,
     #       respectively.
     examples = REPLIT.Languages[system_name].examples
-    REPLIT.LoadExamples examples.editor, 'left'
-    REPLIT.LoadExamples examples.console, 'right'
-    
+    REPLIT.LoadExamples examples.editor, 'left', (example) =>
+      REPLIT.editor.getSession().setValue example
+      REPLIT.CloseLastPage()
+      REPLIT.editor.focus()
+    REPLIT.LoadExamples examples.console, 'right', (example) =>
+      REPLIT.jqconsole.SetPromptText example
+      REPLIT.CloseLastPage()
+      REPLIT.jqconsole.Focus()
+
   # Since were going to be doing lots of animation and syncing we better cache
   # the jquery elements.
   for name, settings of PAGES
@@ -246,7 +256,7 @@ $ ->
   # Assign events.
   $body = $('body')
   $body.delegate '.page-close', 'click', -> REPLIT.CloseLastPage()
-  $body.delegate '.language-group li', 'click', -> 
+  $body.delegate '.language-group li', 'click', ->
     REPLIT.LoadLanguage $(this).data('lang')
     REPLIT.CloseLastPage()
   # Bind page buttons.
@@ -258,5 +268,4 @@ $ ->
     REPLIT.OpenPage 'about'
   $('#button-help').click ->
     REPLIT.OpenPage 'help'
-  
-  
+
