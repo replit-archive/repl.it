@@ -1,4 +1,4 @@
-Factorial
+First-class Function
 ********************************************************************************
 function addto(x)
   return function(y)
@@ -10,7 +10,7 @@ fourplus = addto(4)
 print(fourplus(3))
 ********************************************************************************
 
-First-class Function
+Factorial
 ********************************************************************************
 function factorial(n)
   if n == 0 then
