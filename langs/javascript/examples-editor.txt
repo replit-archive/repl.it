@@ -5,7 +5,7 @@ function Person(name, job) {
   this.job = job;
   this.print = function() {
     console.log(this.name + ', ' + this.job);
-  }
+  };
 }
 var thatGuy = new Person("Jack", "coder");
 thatGuy.print();
@@ -19,6 +19,6 @@ function fib(n) {
   } else {
     return fib(n - 1) + fib(n - 2);
   }
-};
+}
 console.log("Fib(9) = " + fib(9));
 ********************************************************************************
