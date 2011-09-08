@@ -202,7 +202,7 @@ $ ->
   REPLIT.$this.bind 'language_loading', (_, system_name) ->
     examples = REPLIT.Languages[system_name].examples
     REPLIT.LoadExamples examples.editor, 'editor', (example) ->
-      REPLIT.editor.getSession().setValue example
+      REPLIT.editor.getSession().doc.setValue example
       REPLIT.OpenPage 'workspace', ->
         REPLIT.editor.focus()
     REPLIT.LoadExamples examples.console, 'console', (example) ->
