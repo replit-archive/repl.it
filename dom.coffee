@@ -205,10 +205,10 @@ $.extend REPLIT,
     $('.page:visible').css
       width: innerWidth
 
-    @ResizeWorkspace innerWidth, height
+    if $('.page:visible').is '#content-workspace'
+      @ResizeWorkspace innerWidth, height
 
   ResizeWorkspace: (innerWidth, height) ->
-    if not $('.page:visible').is '#content-workspace' then return
     # Calculate editor and console sizes.
     editor_width = Math.floor @split_ratio * innerWidth
     console_width = innerWidth - editor_width
@@ -236,9 +236,6 @@ $.extend REPLIT,
       @$resizer.c.hide()
       @$unhider.editor.show()
 
-    # Calculates editor and console dimensions according to their parents and
-    # neighboring elements (if any).
-    if not (@$console? and @$console?) then return
     # Calculate paddings if any.
     console_hpadding = @$console.innerWidth() - @$console.width()
     console_vpadding = @$console.innerHeight() - @$console.height()
@@ -278,7 +275,4 @@ $ ->
     REPLIT.$throbber.hide()
 
   REPLIT.InitDOM()
-  REPLIT.OnResize()
-  # Workaround for delay on Chrome.
-  setTimeout (-> REPLIT.OnResize()), 500
   REPLIT.InjectSocial()

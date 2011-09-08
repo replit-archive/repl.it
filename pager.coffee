@@ -132,34 +132,38 @@ $.extend REPLIT,
         ''
       $('#title').text page.title.replace /\$/g, lang_name
 
-      openPage = =>
-        # Update widths to those of the new page.
-        @min_content_width = page.min_width or @min_content_width
-        @max_content_width = page.max_width or @max_content_width
-        @content_padding = document.documentElement.clientWidth - page.width
+      # Update widths to those of the new page.
+      @min_content_width = page.min_width
+      @max_content_width = page.max_width
+      @content_padding = document.documentElement.clientWidth - page.width
 
-        # Check if the page exists on our stack, if so splice out to be put
-        # on top.
-        index = @page_stack.indexOf page_name
-        if index > -1
-          @page_stack.splice index, 1
-        # Put the page on top of the stack.
-        @page_stack.push page_name
+      # Check if the page exists on our stack, if so splice out to be put
+      # on top.
+      index = @page_stack.indexOf page_name
+      if index > -1
+        @page_stack.splice index, 1
+      # Put the page on top of the stack.
+      @page_stack.push page_name
 
-        # Show the newly opened page.
-        outerWidth = page.width + 2 * @RESIZER_WIDTH
-        @$container.animate width: outerWidth, ANIMATION_DURATION, =>
-          page.$elem.css width: page.width
-          page.$elem.fadeIn ANIMATION_DURATION, =>
-            @OnResize()
-            callback()
+      # Calculate container width.
+      outerWidth = page.width
+      # HACK: Workspace doesn't account for resizers for some reason...
+      if page_name isnt 'workspace' then outerWidth += 2 * @RESIZER_WIDTH
 
-      # Record the current page width and hide the page.
       if current_page
+        # Perform the animation.
         PAGES[current_page].width = $('.page:visible').width()
-        PAGES[current_page].$elem.fadeOut ANIMATION_DURATION, openPage
+        PAGES[current_page].$elem.fadeOut ANIMATION_DURATION, =>
+          @$container.animate width: outerWidth, ANIMATION_DURATION, =>
+            page.$elem.css width: page.width
+            page.$elem.css display: 'block', opacity: 0
+            @OnResize()
+            page.$elem.animate opacity: 1, ANIMATION_DURATION, callback
       else
-        openPage()
+        @$container.css width: outerWidth
+        page.$elem.css width: page.width, display: 'block'
+        @OnResize()
+        callback()
 
   # Close the top page and opens the page underneath if exists or just animates
   # Back to the original environment width.
