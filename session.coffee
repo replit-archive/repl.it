@@ -48,7 +48,7 @@ $ ->
   # If there exist a REPLIT_DATA variable then we are in a saved session.
   if REPLIT_DATA?
     # Load the language specified by the incoming session data.
-    REPLIT.LoadLanguage REPLIT_DATA.language, () ->
+    REPLIT.LoadLanguage REPLIT_DATA.language, ->
       # Set the editor text.
       REPLIT.editor.getSession().setValue REPLIT_DATA.editor_text
       # Get the session data.
@@ -69,11 +69,11 @@ $ ->
     lang_name = localStorage.getItem('lang_name')
     if lang_name isnt null
       # We have a saved local settings for language to load.
+      REPLIT.OpenPage 'workspace'
       REPLIT.LoadLanguage lang_name
     else
       # This a first visit, show language overlay.
       REPLIT.OpenPage 'languages'
-      $('#content-languages').find('')
 
   # Click handler for the replay button
   $('#replay-button').click (e) ->
@@ -147,4 +147,3 @@ $ ->
   # object, in order to send it to the server on save.
   REPLIT.$this.bind 'eval', (e, command) ->
     REPLIT.session.eval_history.push command
-

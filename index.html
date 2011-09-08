@@ -49,35 +49,36 @@
       </div>
       <div id="title"></div>
     </div>
-    <div id="content">
+    <div id="main">
       <div id="resize-left"></div>
-      <div id="editor">
-        <div id="editor-run" class="button"></div>
-        <div id="editor-widget"></div>
-        <div id="unhide-left"></div>
+
+      <!-- Main wokspace area with editor and console. -->
+      <div id="content-workspace" class="page">
+        <div id="editor">
+          <div id="editor-run" class="button"></div>
+          <div id="editor-widget"></div>
+          <div id="unhide-left"></div>
+        </div>
+        <div id="resize-center"></div>
+        <div id="console">
+          <div id="replay-button" class="button">Run Session</div>
+          <div id="throbber"></div>
+          <div id="unhide-right"></div>
+        </div>
       </div>
-      <div id="resize-center"></div>
-      <div id="console">
-        <div id="replay-button" class="button" style="display: block; ">Replay commands?</div>
-        <div id="throbber"></div>
-        <div id="unhide-right"></div>
+      <!-- Language selector. -->
+      <div id="content-languages" class="page">
+        <div id="languages-back" class="page-close"></div>
       </div>
-      <div id="resize-right"></div>
-    </div>
-    <div id="content-languages">
-      <div class="inner"></div>
-      <div id="languages-back" class="page-close"></div>
-    </div>
-    <div id="content-examples">
-      <div class="inner">
+      <!-- Examples page. -->
+      <div id="content-examples" class="page">
         <div id="examples-separator"></div>
+        <div id="examples-back" class="page-close"></div>
       </div>
-      <div id="examples-back" class="page-close"></div>
-    </div>
-    <div id="content-help">
-      <div id="help-faq">
-        <div id="help-header">Frequently Asked Questions</div>
-        <div id="help-faq-content">
+      <!-- Help page. -->
+      <div id="content-help" class="page">
+        <div id="help-faq">
+          <div id="help-header">Frequently Asked Questions</div>
           <div class="faq-question">What is repl.it?</div>
           <div class="faq-answer">It is an online environment for interactively exploring programming languages.</div>
 
@@ -99,35 +100,36 @@
           <div class="faq-question">How does repl.it work?</div>
           <div class="faq-answer">All code processed by repl.it runs entirely on your computer, with no server-side evaluation. It uses language interpreters written in JavaScript to execute your code and keep track of state. Some of the interpreters (like CoffeeScript) are originally implemented in JavaScript, while others (like Python) were compiled automatically from their original lower-level implementations using <a href="http://emscripten.org/">Emscripten</a>.</div>
         </div>
-      </div>
-      <div id="help-shortcuts">
-        <div id="help-header">Console Shortcuts</div>
-        <div id="help-shortcuts-content">
-          <div class="shortcut"><kbd>Enter</kbd></div> Evaluate the entered command.<br />
-          <div class="shortcut"><kbd>Shift<em>+</em>Enter</kbd></div> Continue to the next line.<br />
-          <div class="shortcut"><kbd>Tab</kbd></div> Indent.<br />
-          <div class="shortcut"><kbd>Shift<em>+</em>Tab</kbd></div> Unindent.<br />
-          <div class="shortcut"><kbd>Up</kbd></div> Previous history item.<br />
-          <div class="shortcut"><kbd>Down</kbd></div> Next history item.<br />
-          <div class="shortcut"><kbd>Ctrl<em>+</em>Up</kbd></div> Move to the line above the current one.<br />
-          <div class="shortcut"><kbd>Ctrl<em>+</em>Down</kbd></div> Move to the line below the current one.<br />
-          <div class="shortcut"><kbd>Ctrl<em>+</em>Z</kbd></div> Cancel current prompt.<br />
+        <div id="help-shortcuts">
+          <div id="help-header">Console Shortcuts</div>
+          <div id="help-shortcuts-content">
+            <div class="shortcut"><kbd>Enter</kbd></div> Evaluate the entered command.<br />
+            <div class="shortcut"><kbd>Shift<em>+</em>Enter</kbd></div> Continue to the next line.<br />
+            <div class="shortcut"><kbd>Tab</kbd></div> Indent.<br />
+            <div class="shortcut"><kbd>Shift<em>+</em>Tab</kbd></div> Unindent.<br />
+            <div class="shortcut"><kbd>Up</kbd></div> Previous history item.<br />
+            <div class="shortcut"><kbd>Down</kbd></div> Next history item.<br />
+            <div class="shortcut"><kbd>Ctrl<em>+</em>Up</kbd></div> Move to the line above the current one.<br />
+            <div class="shortcut"><kbd>Ctrl<em>+</em>Down</kbd></div> Move to the line below the current one.<br />
+            <div class="shortcut"><kbd>Ctrl<em>+</em>Z</kbd></div> Cancel current prompt.<br />
+          </div>
         </div>
+        <div id="help-back" class="page-close"></div>
       </div>
-      <div id="help-back" class="page-close"></div>
-    </div>
-    <div id="content-about">
-      <div class="inner">
-      <p>The repl.it project is an attempt to create an online environment for interactively exploring programming languages. It provides a fully-featured terminal emulator and code editor, powered underneath by interpreter engines for more than a dozen languages.</p>
-      <p>All our interpreters are written in (or compiled to) JavaScript, and run completely on the user's device, regardless or whether it's a desktop, laptop or phone.</p>
-      <p>The repl.it code is open source and is available on <a href="https://github.com/replit">GitHub</a>.</p>
-      <p>&nbsp;</p>
-      <p><a href="http://amasad.github.com/"><img src="/images/amjad.jpg" /></a><a href="http://amasad.github.com/">Amjad Masad</a> is a web developer at Yahoo! Jordan and a JavaScript fanatic. He usually does frontend development, but is also known to dabble in server stuff. He drives fast cars and likes good food.</p>
-      <p><a href="http://max99x.com/"><img src="/images/max.jpg" /></a><a href="http://max99x.com/">Max Shawabkeh</a> is a software engineer at Google and a Python enthusiast. He fancies himself a jack of many programming trades and a master of none. He reads fantasy books and likes good food.</p>
-      <p>&nbsp;</p>
-      <p>This application is a result of their sushi-powered collaboration.</p>
-      <div id="about-back" class="page-close"></div>
+      <!-- About page. -->
+      <div id="content-about" class="page">
+        <p>The repl.it project is an attempt to create an online environment for interactively exploring programming languages. It provides a fully-featured terminal emulator and code editor, powered underneath by interpreter engines for more than a dozen languages.</p>
+        <p>All our interpreters are written in (or compiled to) JavaScript, and run completely on the user's device, regardless or whether it's a desktop, laptop or phone.</p>
+        <p>The repl.it code is open source and is available on <a href="https://github.com/replit">GitHub</a>.</p>
+        <p>&nbsp;</p>
+        <p><a href="http://amasad.github.com/"><img src="/images/amjad.jpg" /></a><a href="http://amasad.github.com/">Amjad Masad</a> is a web developer at Yahoo! Jordan and a JavaScript fanatic. He usually does frontend development, but is also known to dabble in server stuff. He drives fast cars and likes good food.</p>
+        <p><a href="http://max99x.com/"><img src="/images/max.jpg" /></a><a href="http://max99x.com/">Max Shawabkeh</a> is a software engineer at Google and a Python enthusiast. He fancies himself a jack of many programming trades and a master of none. He reads fantasy books and likes good food.</p>
+        <p>&nbsp;</p>
+        <p>This application is a result of their sushi-powered collaboration.</p>
+        <div id="about-back" class="page-close"></div>
       </div>
+
+      <div id="resize-right"></div>
     </div>
     <div id="save-box">
       <div id="save-box-handle"></div>

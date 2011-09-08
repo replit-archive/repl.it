@@ -58,11 +58,11 @@ $.extend REPLIT,
     @jqconsole.RegisterShortcut 'Z', =>
       @jqconsole.AbortPrompt()
       @StartPrompt()
+    # TODO(max99x): Register Ctrl+L for languages selector.
     @jsrepl.LoadLanguage lang_name, =>
       @StartPrompt()
       @$this.trigger 'language_loaded', [lang_name]
       callback()
-
 
   # Receives the result of a command evaluation.
   #   @arg result: The user-readable string form of the result of an evaluation.
@@ -90,7 +90,7 @@ $.extend REPLIT,
   # Receives a request for a string input from a language engine. Passes back
   # the user's response asynchronously.
   #   @arg callback: The function called with the string containing the user's
-  #     response. Currently called synchronously, but that is *NOT* guaranteed.
+  #     response.
   InputCallback: (callback) ->
     @jqconsole.Input (result) =>
       try
@@ -107,13 +107,11 @@ $.extend REPLIT,
       @$this.trigger 'eval', [command]
     else
       @StartPrompt()
+
   # Shows a command prompt in the console and waits for input.
   StartPrompt: ->
-    @jqconsole.Prompt true, $.proxy(@Evaluate, @), $.proxy(@jsrepl.CheckLineEnd, @jsrepl)
+    line_checker = $.proxy(@jsrepl.CheckLineEnd, @jsrepl)
+    @jqconsole.Prompt true, $.proxy(@Evaluate, @), line_checker
 
 $ ->
   REPLIT.Init()
-  REPLIT.OnResize()
-  # Shitty sucky new chrome
-  setTimeout (-> REPLIT.OnResize()), 500
-

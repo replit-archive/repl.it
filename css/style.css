@@ -110,21 +110,21 @@ html, body {
 
 /* Content */
 
-#content {
+#main {
   background: #FFF;
   margin: 0 auto;
-  height: 672px;
-  width: 1200px;
+  height: 682px;
+  width: 1000px;
   position: relative;
 }
 
-#content-languages, #content-examples, #content-save, #content-help, #content-about {
+.page {
   background: #FFF;
   margin: 0 auto;
   height: 100%;
-  width: 1200px;
-  position: absolute;
-  overflow: hidden;
+  width: 100%;
+  position: relative;
+  overflow: auto;
   display: none;
 }
 
@@ -135,7 +135,7 @@ html, body {
   width: 591px;
   position: absolute;
   height: 100%; 
-  left: 8px;
+  left: 0px;
   bottom: 0;
 }
 
@@ -153,23 +153,24 @@ html, body {
 
 #resize-left {
   border-right: 1px solid #DDD;
-  background: -webkit-gradient(linear,left top ,  right top, from(#FFF), to(#E8E8E8));
-  background: -webkit-linear-gradient(left, #FFF, #E8E8E8);
-  background: -moz-linear-gradient(left, #FFF, #E8E8E8);
-  background: -ms-linear-gradient(left, #FFF, #E8E8E8);
-  background: -o-linear-gradient(left, #FFF, #E8E8E8);
-  background: linear-gradient(left, #FFF, #E8E8E8);
+  background: -webkit-gradient(linear, right top, left top, from(#CCC), to(white));
+  background: -webkit-linear-gradient(right, #CCC, white);
+  background: -moz-linear-gradient(right, #CCC, white);
+  background: -ms-linear-gradient(right, #CCC, white);
+  background: -o-linear-gradient(right, #CCC, white);
+  background: linear-gradient(right, #CCC, white);
   width: 8px;
   cursor: w-resize;
   position: absolute;
   height: 100%;
   left: 0;
+  top: 0;
   z-index: 1;
 }
 
 #resize-center {
   z-index: 1;
-  width: 9px;
+  width: 8px;
   cursor: col-resize;
   background: -webkit-gradient(linear, left top, right top, from(black), to(#0E1628));
   background: -webkit-linear-gradient(left, black, #0E1628);
@@ -179,7 +180,9 @@ html, body {
   background: linear-gradient(left, black, #0E1628);
   position: absolute;
   height: 100%;
+  top: 0;
   left: 600px;
+  z-index: 1;
 }
 
 #resize-right {
@@ -194,6 +197,7 @@ html, body {
   cursor: e-resize;
   position: absolute;
   height: 100%;
+  top: 0;
   right: 0;
   z-index: 1;
 }
@@ -204,7 +208,7 @@ html, body {
   background: url(/images/arrow-left.png);
   position: absolute;
   top: 45%;
-  right: 16px;
+  right: 20px;
   display: none;
   z-index: 9;
   cursor:pointer;
@@ -215,7 +219,7 @@ html, body {
   height: 21px;
   background: url(/images/arrow-right.png);
   position: absolute;
-  left: 10px;
+  left: 15px;
   top: 45%;
   z-index: 9;
   display: none;
@@ -229,12 +233,12 @@ html, body {
   background: #0E1628;
   width: 591px;
   position: absolute;
-  right: 8px;
+  right: 0px;
   bottom: 0;
   height: 100%;
 }
 
-#replay-button{
+#replay-button {
   display: none;
   position: absolute;
   width: 30%;
@@ -245,6 +249,7 @@ html, body {
   overflow: hidden;
   text-align: center;
 }
+
 #console *::selection, #console *::-moz-selection, #console *::-webkit-selection {
   background: #94A2BB;
 }
@@ -487,10 +492,6 @@ html, body {
   color: #444;
 }
 
-#content-languages .inner {
-  width: 1000px;
-  margin: 0 auto;
-}
 .language-group {
   width: 50%;
   float: left;
@@ -539,16 +540,8 @@ html, body {
 
 #content-examples {
   color: #444;
-  min-height: 750px;
-  overflow-y: auto;
 }
 
-#content-examples .inner{
-  width: 1000px;
-  margin: 0 auto;
-  position:relative;
-  min-height: 750px;
-}
 #examples-separator {
   height: 88%;
   position: absolute;
@@ -558,7 +551,7 @@ html, body {
   background: #ccc;
 }
 
-#examples-back, #about-back, #help-back, #languages-back {
+.page-close {
   background: url(../images/close.png) center center no-repeat;
   height: 50px;
   position: absolute;
@@ -568,7 +561,7 @@ html, body {
   cursor: pointer;
 }
 
-#examples-back:hover, #about-back:hover, #help-back:hover, #languages-back:hover {
+.page-close:hover {
   background: url(../images/close-hover.png) center center no-repeat;
 }
 
@@ -715,17 +708,10 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 }
 
 #help-faq {
-  position: absolute;
-  top: 5%;
-  height: 86.5%;
   width: 50%;
+  float: left;
   padding-bottom: 40px;
-}
-
-#help-faq-content {
-  overflow-y: auto;
-  height: 90%;
-  position: relative;
+  padding-top: 30px;
 }
 
 .faq-question {
@@ -748,16 +734,14 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 }
 
 #help-shortcuts {
-  position: absolute;
-  top: 5%;
-  left: 50%;
-  height: 100%;
   width: 50%;
+  float: right;
+  padding-top: 30px;
 }
 
 #help-header {
   text-align: center;
-  text-shadow: 0px 2px 0px rgba(220, 220, 220, 1);
+  text-shadow: 0px 1px 0px rgba(200, 200, 200, 0.75);
   font-size: 120%;
   color: #777;
   margin-bottom: 20px;
@@ -774,8 +758,9 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 
 #help-shortcuts-content {
   padding-left: 40px;
-  padding-top: 80px;
   text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+  width: 450px;
+  margin: auto;
 }
 
 #help-shortcuts-content .shortcut {
@@ -806,18 +791,16 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 
 #content-about {
   color: #555;
-  width: 500px;
-  padding-top: 40px;
-}
-#content-about .inner{
-  width: 500px;
-  height: 602px;
-  margin: 0 auto;
 }
 
 #content-about p {
-  margin: 1em 0;
+  margin: 1em 2em;
   text-align: justify;
+}
+
+#content-about p:first-child {
+  padding-top: 40px;
+  margin-top: 0;
 }
 
 #content-about img {
@@ -876,22 +859,27 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 #save-box li {
   float: right;
   margin-left: 10px;
-  /*cursor: pointer;*/
+  cursor: pointer;
 }
+
 #save-box .facebook {
   background: url(/images/facebook.png);
 }
+
 #save-box .twitter {
   background: url(/images/twitter.png);
 }
+
 #save-box .gplus {
   background: url(/images/googleplus.png);
 }
+
 #save-box li a {
   display: inline-block;
   width: 16px;
   height: 16px;
 }
+
 #save-box input {
   border: 1px #ccc solid;
   padding: 2px;

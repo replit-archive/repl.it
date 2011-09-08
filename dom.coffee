@@ -8,11 +8,12 @@ RESIZER_WIDTH = 8
 DEFAULT_SPLIT = 0.5
 CONSOLE_HIDDEN = 1
 EDITOR_HIDDEN = 0
+SNAP_THRESHOLD = 0.05
 ANIMATION_DURATION = 700
 $ = jQuery
 
 # jQuery plugin to disable text selection (x-browser).
-# Used for one dragging the resizer.
+# Used for dragging the resizer.
 $.fn.disableSelection = ->
   @each ->
     $this = $(this)
@@ -38,101 +39,108 @@ $.extend REPLIT,
   RESIZER_WIDTH: RESIZER_WIDTH
   split_ratio: DEFAULT_SPLIT
   min_content_width: 500
+  max_content_width: 3000
   content_padding: DEFAULT_CONTENT_PADDING
   # Initialize the DOM (Runs before JSRPEL's load)
   InitDOM: ->
-    @$doc_elem = $('html')
-    # The main container holding the editor and console.
-    @$container = $('#content')
+    @$doc_elem = $ 'html'
+    # The main container holding the pages.
+    @$container = $ '#main'
     # The container holding the editor widget and related elements.
-    @$editorContainer = $('#editor')
+    @$editorContainer = $ '#editor'
     # The container holding the console widget and related elements.
-    @$consoleContainer = $('#console')
+    @$consoleContainer = $ '#console'
     # An object holding all the resizer elements.
     @$resizer =
-      l: $('#resize-left')
-      c: $('#resize-center')
-      r: $('#resize-right')
+      l: $ '#resize-left'
+      c: $ '#resize-center'
+      r: $ '#resize-right'
     # The loading throbber.
-    @$throbber = $('#throbber')
+    @$throbber = $ '#throbber'
     # An object holding unhider elements.
     @$unhider =
-      editor: $('#unhide-right')
-      console: $('#unhide-left')
+      editor: $ '#unhide-right'
+      console: $ '#unhide-left'
 
-    @$run = $('#editor-run')
-    @$editorContainer.hover =>
-      @$run.fadeToggle 'fast'
+    # Show the run button on hover.
+    @$run = $ '#editor-run'
+    @$editorContainer.mouseleave =>
+      @$run.fadeOut 'fast'
     @$editorContainer.mousemove =>
-      @$run.fadeIn 'fast'
+      if @$run.is ':hidden' then @$run.fadeIn 'fast'
     @$editorContainer.keydown =>
       @$run.fadeOut 'fast'
-    # Initialaize the column resizer.
-    @InitResizer()
+
+    # Initialaize the column resizers.
+    @InitSideResizers()
+    @InitCenterResizer()
     # Attatch unhiders functionality.
     @InitUnhider()
     # Fire the onresize method to do initial resizing
     @OnResize()
-    # When the window call the containers resizer.
-    $(window).bind 'resize',-> REPLIT.OnResize()
+    # When the window change size, call the container's resizer.
+    $(window).bind 'resize', => @OnResize()
 
   # Attatches the resizers behaviors.
-  InitResizer: ->
-    $body = $('body')
+  InitSideResizers: ->
+    $body = $ 'body'
     # For all resizers discard right clicks,
     # disable text selection on drag start.
-    for n, $elem of @$resizer
+    for _, $elem of @$resizer
       $elem.mousedown (e) ->
         if e.button != 0
           e.stopImmediatePropagation()
         else
           $body.disableSelection()
 
-    # When stopping the drag unbind the mousemove handlers and enable selection.
-    resizer_lr_release = ->
-      $body.enableSelection()
-      $body.unbind 'mousemove.resizer'
-
     # On start drag bind the mousemove functionality for right/left resizers.
     @$resizer.l.mousedown (e) =>
-      $body.bind 'mousemove.resizer', (e) =>
+      $body.bind 'mousemove.side_resizer', (e) =>
         # The horizontal mouse position is simply half of the content_padding.
-        # Subtract half of the resizer_width for better percesion.
+        # Subtract half of the resizer_width for better precision.
         @content_padding = ((e.pageX - (RESIZER_WIDTH / 2)) * 2)
+        if @content_padding / $body.width() < SNAP_THRESHOLD
+          @content_padding = 0
         @OnResize()
     @$resizer.r.mousedown (e) =>
-      $body.bind 'mousemove.resizer', (e) =>
+      $body.bind 'mousemove.side_resizer', (e) =>
         # The mouse is on the right of the container, subtracting the horizontal
         # position from the page width to get the right number.
         @content_padding = ($body.width() - e.pageX - (RESIZER_WIDTH / 2)) * 2
+        if @content_padding / $body.width() < SNAP_THRESHOLD
+          @content_padding = 0
         @OnResize()
 
-    # Bind the release on mouseup for right/left resizers.
+    # When stopping the drag unbind the mousemove handlers and enable selection.
+    resizer_lr_release = ->
+      $body.enableSelection()
+      $body.unbind 'mousemove.side_resizer'
     @$resizer.l.mouseup resizer_lr_release
     @$resizer.r.mouseup resizer_lr_release
     $body.mouseup resizer_lr_release
 
+  InitCenterResizer: ->
     # When stopping the drag or when the editor/console snaps into hiding,
     # unbind the mousemove event for the container.
     resizer_c_release = =>
       @$container.enableSelection()
-      @$container.unbind 'mousemove.resizer'
+      @$container.unbind 'mousemove.center_resizer'
 
     # When start drag for the center resizer bind the resize logic.
     @$resizer.c.mousedown (e) =>
-      @$container.bind 'mousemove.resizer', (e) =>
-        # Get the mousposition relative to the container.
+      @$container.bind 'mousemove.center_resizer', (e) =>
+        # Get the mouse position relative to the container.
         left = e.pageX - (@content_padding / 2) + (RESIZER_WIDTH / 2)
         # The ratio of the editor-to-console is the relative mouse position
         # divided by the width of the container.
         @split_ratio = left / @$container.width()
         # If the smaller split ratio as small as 0.5% then we must hide the element.
-        if @split_ratio > 0.95
-          @split_ratio = 1
+        if @split_ratio > CONSOLE_HIDDEN - SNAP_THRESHOLD
+          @split_ratio = CONSOLE_HIDDEN
           # Stop the resize drag.
           resizer_c_release()
-        else if @split_ratio < 0.05
-          @split_ratio = 0
+        else if @split_ratio < EDITOR_HIDDEN + SNAP_THRESHOLD
+          @split_ratio = EDITOR_HIDDEN
           # Stop the resize drag.
           resizer_c_release()
         # Run the window resize handler to recalculate everything.
@@ -144,29 +152,23 @@ $.extend REPLIT,
     @$container.mouseleave resizer_c_release
 
   InitUnhider: ->
-    # TODO(amasad): When typing and moving mouse the icon will start blinking,
-    # maybe implement debounce.
-
-    # When the mouse move on the page and an element is hidden show the
-    # appropriate unhider.
+    # Show unhider on mouse movement and hide on keyboard interactions.
+    getUnhider = =>
+      if @split_ratio not in [CONSOLE_HIDDEN, EDITOR_HIDDEN] then return $ []
+      side = if @split_ratio == CONSOLE_HIDDEN then 'console' else 'editor'
+      return @$unhider[side]
     $('body').mousemove =>
-      if @split_ratio == CONSOLE_HIDDEN
-        @$unhider.console.fadeIn 'fast'
-      else if @split_ratio == EDITOR_HIDDEN
-        @$unhider.editor.fadeIn 'fast'
-    # When typing start on an element make sure the unhider is hidden.
+      unhider = getUnhider()
+      if unhider.is ':hidden' then unhider.fadeIn 'fast'
     @$container.keydown =>
-      if @split_ratio == CONSOLE_HIDDEN
-        @$unhider.console.fadeOut 'fast'
-      else if @split_ratio == EDITOR_HIDDEN
-        @$unhider.editor.fadeOut 'fast'
+      unhider = getUnhider()
+      if unhider.is ':visible' then unhider.fadeOut 'fast'
 
-    # Handler for when clicking an unhider.
-    click_helper = ($elem, $elemtoShow) =>
+    bindUnhiderClick = ($elem, $elemtoShow) =>
       $elem.click (e) =>
         # Hide the unhider.
         $elem.hide()
-        # Get the split ratio to the default split.
+        # Set the split ratio to the default split.
         @split_ratio = DEFAULT_SPLIT
         # Show the hidden element.
         $elemtoShow.show()
@@ -175,26 +177,48 @@ $.extend REPLIT,
         # Recalculate all sizes.
         @OnResize()
 
-    click_helper @$unhider.editor, @$editorContainer
-    click_helper @$unhider.console, @$consoleContainer
+    bindUnhiderClick @$unhider.editor, @$editorContainer
+    bindUnhiderClick @$unhider.console, @$consoleContainer
 
   # Resize containers on each window resize, split ratio change or
   # content padding change.
   OnResize: ->
-    # Calculate container width.
-    width = document.documentElement.clientWidth - @content_padding
-    height = document.documentElement.clientHeight - HEADER_HEIGHT - FOOTER_HEIGHT
-    if width < @min_content_width
-      width = @min_content_width
-      @content_padding = document.documentElement.clientWidth - width
-    editor_width = (@split_ratio * width) -  (RESIZER_WIDTH * 1.5)
-    console_width = ((1 - @split_ratio) * width) - (RESIZER_WIDTH * 1.5)
+    # Calculate container height and width.
+    documentWidth = document.documentElement.clientWidth
+    documentHeight = document.documentElement.clientHeight
+    height = documentHeight - HEADER_HEIGHT - FOOTER_HEIGHT
+    width = documentWidth - @content_padding
+    innerWidth = width - 2 * RESIZER_WIDTH
 
-    # The center resizer is placed to the left of the editor.
-    @$resizer.c.css 'left', editor_width + RESIZER_WIDTH
+    # Clamp width.
+    if innerWidth < @min_content_width
+      innerWidth = @min_content_width
+    else if innerWidth > @max_content_width
+      innerWidth = @max_content_width
+    width = innerWidth + 2 * RESIZER_WIDTH
+    @content_padding = documentWidth - width
+
+    # Resize container and current page.
     @$container.css
       width: width
       height: height
+    $('.page:visible').css
+      width: innerWidth
+
+    @ResizeWorkspace innerWidth, height
+
+  ResizeWorkspace: (innerWidth, height) ->
+    if not $('.page:visible').is '#content-workspace' then return
+    # Calculate editor and console sizes.
+    editor_width = Math.floor @split_ratio * innerWidth
+    console_width = innerWidth - editor_width
+    if @split_ratio not in [CONSOLE_HIDDEN, EDITOR_HIDDEN]
+      editor_width -= RESIZER_WIDTH / 2
+      console_width -= RESIZER_WIDTH / 2
+
+    # Apply the new sizes.
+    @$resizer.c.css
+      left: editor_width
     @$editorContainer.css
       width: editor_width
       height: height
@@ -212,13 +236,9 @@ $.extend REPLIT,
       @$resizer.c.hide()
       @$unhider.editor.show()
 
-    @$this.trigger 'resize'
-    # Call to resize environment if the app has already initialized.
-    REPLIT.EnvResize() if @inited
-
-  # Calculates editor and console dimensions according to their parents and
-  # neighboring elements (if any).
-  EnvResize: ->
+    # Calculates editor and console dimensions according to their parents and
+    # neighboring elements (if any).
+    if not (@$console? and @$console?) then return
     # Calculate paddings if any.
     console_hpadding = @$console.innerWidth() - @$console.width()
     console_vpadding = @$console.innerHeight() - @$console.height()
@@ -232,9 +252,6 @@ $.extend REPLIT,
 
     # Call to Ace editor resize.
     @editor.resize()
-
-  SetTitle: (title) ->
-    $('#title').text title or @current_lang.name
 
   InjectSocial: ->
     $rootDOM = $('#social-buttons-container')
@@ -259,8 +276,9 @@ $ ->
 
   REPLIT.$this.bind 'language_loaded', (e, system_name) ->
     REPLIT.$throbber.hide()
-    REPLIT.SetTitle @Languages[system_name].name
 
   REPLIT.InitDOM()
   REPLIT.OnResize()
+  # Workaround for delay on Chrome.
+  setTimeout (-> REPLIT.OnResize()), 500
   REPLIT.InjectSocial()
