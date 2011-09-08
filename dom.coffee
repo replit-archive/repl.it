@@ -1,6 +1,6 @@
+# Core module.
 # Responsible for DOM initializations, and most interactions.
 
-# Core module.
 DEFAULT_CONTENT_PADDING = 200
 FOOTER_HEIGHT = 30
 HEADER_HEIGHT = 61
@@ -41,8 +41,6 @@ $.extend REPLIT,
   # Initialize the DOM (Runs before JSRPEL's load)
   InitDOM: ->
     @$doc_elem = $('html')
-    # The div showing the current selected language.
-    @$current_lang_name = $('#language')
     # The main container holding the editor and console.
     @$container = $('#content')
     # The container holding the editor widget and related elements.
@@ -57,10 +55,10 @@ $.extend REPLIT,
     # The loading throbber.
     @$throbber = $('#throbber')
     # An object holding unhider elements.
-    @$unhider = 
+    @$unhider =
       editor: $('#unhide-right')
       console: $('#unhide-left')
-    
+
     @$run = $('#editor-run')
     @$editorContainer.hover =>
       @$run.fadeToggle 'fast'
@@ -85,15 +83,15 @@ $.extend REPLIT,
     for n, $elem of @$resizer
       $elem.mousedown (e) ->
         if e.button != 0
-          e.stopImmediatePropagation() 
+          e.stopImmediatePropagation()
         else
           $body.disableSelection()
-    
+
     # When stopping the drag unbind the mousemove handlers and enable selection.
     resizer_lr_release = ->
       $body.enableSelection()
       $body.unbind 'mousemove.resizer'
-      
+
     # On start drag bind the mousemove functionality for right/left resizers.
     @$resizer.l.mousedown (e) =>
       $body.bind 'mousemove.resizer', (e) =>
@@ -107,18 +105,18 @@ $.extend REPLIT,
         # position from the page width to get the right number.
         @content_padding = ($body.width() - e.pageX - (RESIZER_WIDTH / 2)) * 2
         @OnResize()
-        
+
     # Bind the release on mouseup for right/left resizers.
     @$resizer.l.mouseup resizer_lr_release
     @$resizer.r.mouseup resizer_lr_release
     $body.mouseup resizer_lr_release
-    
+
     # When stopping the drag or when the editor/console snaps into hiding,
     # unbind the mousemove event for the container.
     resizer_c_release = =>
       @$container.enableSelection()
       @$container.unbind 'mousemove.resizer'
-    
+
     # When start drag for the center resizer bind the resize logic.
     @$resizer.c.mousedown (e) =>
       @$container.bind 'mousemove.resizer', (e) =>
@@ -138,16 +136,16 @@ $.extend REPLIT,
           resizer_c_release()
         # Run the window resize handler to recalculate everything.
         @OnResize()
-    
+
     # Release when:
     @$resizer.c.mouseup resizer_c_release
     @$container.mouseup resizer_c_release
     @$container.mouseleave resizer_c_release
-  
+
   InitUnhider: ->
     # TODO(amasad): When typing and moving mouse the icon will start blinking,
     # maybe implement debounce.
-    
+
     # When the mouse move on the page and an element is hidden show the
     # appropriate unhider.
     $('body').mousemove =>
@@ -161,7 +159,7 @@ $.extend REPLIT,
         @$unhider.console.fadeOut 'fast'
       else if @split_ratio == EDITOR_HIDDEN
         @$unhider.editor.fadeOut 'fast'
-    
+
     # Handler for when clicking an unhider.
     click_helper = ($elem, $elemtoShow) =>
       $elem.click (e) =>
@@ -175,11 +173,11 @@ $.extend REPLIT,
         @$resizer.c.show()
         # Recalculate all sizes.
         @OnResize()
-        
+
     click_helper @$unhider.editor, @$editorContainer
     click_helper @$unhider.console, @$consoleContainer
-      
-  # Resize containers on each window resize, split ratio change or 
+
+  # Resize containers on each window resize, split ratio change or
   # content padding change.
   OnResize: ->
     # Calculate container width.
@@ -190,7 +188,7 @@ $.extend REPLIT,
       @content_padding = document.documentElement.clientWidth - width
     editor_width = (@split_ratio * width) -  (RESIZER_WIDTH * 1.5)
     console_width = ((1 - @split_ratio) * width) - (RESIZER_WIDTH * 1.5)
-    
+
     # The center resizer is placed to the left of the editor.
     @$resizer.c.css 'left', editor_width + RESIZER_WIDTH
     @$container.css
@@ -202,7 +200,7 @@ $.extend REPLIT,
     @$consoleContainer.css
       width: console_width
       height: height
-    
+
     # Check if console/editor was meant to be hidden.
     if @split_ratio == CONSOLE_HIDDEN
       @$consoleContainer.hide()
@@ -212,7 +210,7 @@ $.extend REPLIT,
       @$editorContainer.hide()
       @$resizer.c.hide()
       @$unhider.editor.show()
-    
+
     @$this.trigger 'resize'
     # Call to resize environment if the app has already initialized.
     REPLIT.EnvResize() if @inited
@@ -230,39 +228,38 @@ $.extend REPLIT,
     @$console.css 'height', @$consoleContainer.height() - console_vpadding
     @$editor.css 'width', @$editorContainer.innerWidth() - editor_hpadding
     @$editor.css 'height', @$editorContainer.innerHeight() - editor_vpadding
-    
+
     # Call to Ace editor resize.
     @editor.resize()
 
   SetTitle: (title) ->
     $('#title').text title or @current_lang.name
-    
+
   InjectSocial: ->
     $rootDOM = $('#social-buttons-container')
-    
+
     $.getScript 'http://connect.facebook.net/en_US/all.js#appId=111098168994577&amp;xfbml=1', ->
       FB.init
         appId: '111098168994577'
         xfbxml: true
         status: true
         cookie: true
-      
+
       FB.XFBML.parse $rootDOM.get(0)
-    
+
     $.getScript 'http://platform.twitter.com/widgets.js', ->
       $rootDOM.find('.twitter-share-button').show()
-    
+
     $.getScript 'https://apis.google.com/js/plusone.js'
-    
+
 $ ->
   REPLIT.$this.bind 'language_loading', ->
     REPLIT.$throbber.show()
-  
+
   REPLIT.$this.bind 'language_loaded', (e, system_name) ->
     REPLIT.$throbber.hide()
     REPLIT.SetTitle @Languages[system_name].name
-  
+
   REPLIT.InitDOM()
   REPLIT.OnResize()
   REPLIT.InjectSocial()
-    

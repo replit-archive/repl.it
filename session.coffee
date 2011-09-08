@@ -1,11 +1,8 @@
-# Encapsulates for all session/state loading saving logic.
-
 # Extension module.
+# Encapsulates for all session/state loading saving logic.
+# TODO(amasad): Graceful localStorage degrading to cookies.
+# TODO(amasad): Don't depend on pushState and window location for sharing.
 
-# TODO(amasad):
-  # 1- Graceful localStorage degrading to cookies.
-  # 2- Don't depend on pushState and window location for sharing.
-  
 $ = jQuery
 
 SHARE_TEMPLATE =
@@ -21,12 +18,12 @@ SHARE_TEMPLATE =
     """
       <a href="https://twitter.com/share?#{uri}" target="_blank"></a>
     """
-  
+
   facebook: ->
     """
       <a href="javascript:var d=document,f='http://www.facebook.com/share',l=d.location,e=encodeURIComponent,p='.php?src=bm&v=4&i=1315186262&u='+e(l.href)+'&t='+e(d.title);1;try{if (!/^(.*\.)?facebook\.[^.]*$/.test(l.host))throw(0);share_internal_bookmarklet(p)}catch(z) {a=function() {if (!window.open(f+'r'+p,'sharer','toolbar=0,status=0,resizable=1,width=626,height=436'))l.href=f+p};if (/Firefox/.test(navigator.userAgent))setTimeout(a,0);else{a()}}void(0)"></a>
     """
-    
+
   #unofficial!
   gplus: ->
     text = 'Check out my REPL session - ' + window.location.href
@@ -34,11 +31,11 @@ SHARE_TEMPLATE =
     """
       <a href="https://m.google.com/app/plus/x/bggo8s9j8yqo/?v=compose&content=#{text}&login=1&pli=1&hideloc=1" target="_blank"></a>
     """
-    
+
 $.extend REPLIT,
   session:
     eval_history: []
-    
+
 # Resets application to its initial state (handler for language_loaded event).
 reset_state = (e, lang_name) ->
   localStorage.setItem 'lang_name', lang_name
@@ -46,7 +43,7 @@ reset_state = (e, lang_name) ->
   history.pushState null, null, '/'
   @session = {}
   @session.eval_history = []
-    
+
 $ ->
   # If there exist a REPLIT_DATA variable then we are in a saved session.
   if REPLIT_DATA?
@@ -77,7 +74,7 @@ $ ->
       # This a first visit, show language overlay.
       REPLIT.OpenPage 'languages'
       $('#content-languages').find('')
-      
+
   # Click handler for the replay button
   $('#replay-button').click (e) ->
     # Get the history comming from the server
@@ -104,21 +101,21 @@ $ ->
         REPLIT.$this.unbind 'error', handler
         # We are done from the eval history comming from the server, delete it.
         delete REPLIT.session['saved_eval_history']
-    
+
     REPLIT.$this.bind 'result', handler
     REPLIT.$this.bind 'error', handler
     # Initiate the first handler to start executing history commands.
     handler()
     # This button has to be click atmost once, now hide it.
     $(this).hide()
-  
+
   $('#button-save').click (e) ->
     # Get the post data to save.
     post_data =
       lang_name: REPLIT.current_lang.system_name
       editor_text: REPLIT.editor.getSession().getValue()
-      eval_history: JSON.stringify(REPLIT.session.eval_history)
-    
+      eval_history: JSON.stringify REPLIT.session.eval_history
+
     # If we are already replin on a saved session get its id.
     post_data.id = REPLIT.session.id if REPLIT.session.id?
     # Do the actual save request.
@@ -135,20 +132,19 @@ $ ->
         history.pushState null, null, data
         # Save the session id (urlhash) in the session object.
         REPLIT.session.id = data
-        
+
       # Render social share links.
       console.log SHARE_TEMPLATE.twitter()
-      $savebox.find('li.twitter a').replaceWith(SHARE_TEMPLATE.twitter data)
-      $savebox.find('li.facebook a').replaceWith(SHARE_TEMPLATE.facebook data)
-      $savebox.find('li.gplus a').replaceWith(SHARE_TEMPLATE.gplus data)
+      $savebox.find('li.twitter a').replaceWith SHARE_TEMPLATE.twitter data
+      $savebox.find('li.facebook a').replaceWith SHARE_TEMPLATE.facebook data
+      $savebox.find('li.gplus a').replaceWith SHARE_TEMPLATE.gplus data
       $savebox.find('input').val window.location.href
       $savebox.slideDown()
-  
+
   $('#save-box input').click -> $(this).select()
   $('#save-box .close').click -> $(this).parents('div').slideUp()
   # When any command is evaled, save it in the eval_history array of the session
   # object, in order to send it to the server on save.
   REPLIT.$this.bind 'eval', (e, command) ->
     REPLIT.session.eval_history.push command
-      
-  
+

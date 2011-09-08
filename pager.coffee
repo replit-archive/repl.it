@@ -1,5 +1,4 @@
-# Extension Module, depends on: Core.
-
+# Extension module.
 # Responsible for page opening/closing/stacking.
 
 $ = jQuery

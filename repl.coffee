@@ -1,7 +1,6 @@
+# Core module.
 # Holds the core application logic and all interactions with JSREPL.
 # Emits events so other modules can hook into.
-
-# Core module
 
 $ = jQuery
 
@@ -63,7 +62,7 @@ $.extend REPLIT,
       @StartPrompt()
       @$this.trigger 'language_loaded', [lang_name]
       callback()
-      
+
 
   # Receives the result of a command evaluation.
   #   @arg result: The user-readable string form of the result of an evaluation.

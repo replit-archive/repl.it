@@ -1,3 +1,6 @@
+# Core module.
+# Defines the supported languages.
+
 @REPLIT.Languages =
   QBasic:
     name: 'QBasic'
