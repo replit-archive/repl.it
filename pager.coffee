@@ -180,8 +180,6 @@ $ ->
 
   # Load Examples
   REPLIT.$this.bind 'language_loading', (_, system_name) ->
-    # TODO: Hide console/editor examples if only the editor/console is open,
-    #       respectively.
     examples = REPLIT.Languages[system_name].examples
     REPLIT.LoadExamples examples.editor, 'editor', (example) ->
       REPLIT.editor.getSession().setValue example
@@ -206,7 +204,10 @@ $ ->
 
   # Bind page buttons.
   $('#button-examples').click ->
-    if REPLIT.current_lang? then REPLIT.OpenPage 'examples'
+    if REPLIT.current_lang?
+      $('#examples-editor').toggle REPLIT.split_ratio != REPLIT.EDITOR_HIDDEN
+      $('#examples-console').toggle REPLIT.split_ratio != REPLIT.CONSOLE_HIDDEN
+      REPLIT.OpenPage 'examples'
   $('#button-languages').click ->
     REPLIT.OpenPage 'languages'
   $('#link-about').click ->
