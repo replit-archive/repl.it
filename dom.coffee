@@ -270,11 +270,26 @@ $.extend REPLIT,
     $.getScript 'https://apis.google.com/js/plusone.js'
 
 $ ->
-  REPLIT.$this.bind 'language_loading', ->
-    REPLIT.$throbber.show()
+  REPLIT.$this.bind 'language_loading', (_, system_name) ->
+    REPLIT.$throbber.show 'fast'
 
-  REPLIT.$this.bind 'language_loaded', (e, system_name) ->
-    REPLIT.$throbber.hide()
+    # Update footer links.
+    lang = REPLIT.Languages[system_name]
+    $about = $ '#language-about-link'
+    $engine = $ '#language-engine-link'
+    $links = $ '#language-engine-link, #language-about-link'
+
+    $links.animate opacity: 0, 'fast', ->
+      $about.text 'about ' + system_name
+      $about.attr href: lang.about_link
+
+      $engine.text system_name + ' engine'
+      $engine.attr href: lang.engine_link
+
+      $links.animate opacity: 1, 'fast'
+
+  REPLIT.$this.bind 'language_loaded', ->
+    REPLIT.$throbber.hide 'fast'
 
   REPLIT.InitDOM()
   REPLIT.InjectSocial()

@@ -240,7 +240,8 @@ $ ->
       REPLIT.CloseLastPage()
 
   # Bind language selector hotkeys.
-  $('#content-languages').keydown (e) ->
+  $('#content-languages').keypress (e) ->
+    if e.shiftKey or e.ctrlKey or e.metaKey then return
     letter = String.fromCharCode(e.which).toLowerCase()
     $('#content-languages li').each ->
       if $('em', $ @).text().toLowerCase() == letter

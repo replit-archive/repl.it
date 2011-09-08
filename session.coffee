@@ -69,8 +69,9 @@ $ ->
     lang_name = localStorage.getItem('lang_name')
     if lang_name isnt null
       # We have a saved local settings for language to load.
-      REPLIT.OpenPage 'workspace'
-      REPLIT.LoadLanguage lang_name
+      REPLIT.current_lang_name = lang_name
+      REPLIT.OpenPage 'workspace', ->
+        REPLIT.LoadLanguage lang_name
     else
       # This a first visit, show language overlay.
       REPLIT.OpenPage 'languages'
