@@ -64,15 +64,15 @@ LANG_TEMPLATE =
 PAGES =
   main:
     id: 'content'
-    title: ''
+    title: '$'
     min_width: 230
   languages:
     id: 'content-languages'
-    title: 'Languages Supported'
+    title: 'Select a Language'
     min_width: 1030
   examples:
     id: 'content-examples'
-    title: 'Examples'
+    title: '$ Examples'
     min_width: 1030
   help:
     id: 'content-help'
@@ -129,7 +129,11 @@ $.extend REPLIT,
 
     # If the page actually exists and its not the current one.
     if page and @page_stack.current() isnt page
-      @SetTitle page.title
+      lang_name = if @current_lang
+        @Languages[@current_lang.system_name].name
+      else
+        ''
+      @SetTitle page.title.replace /\$/g, lang_name
       $current_page = @page_stack.$current()
       # Hide the current page if existed.
       $current_page?.fadeOut FADE_DURATION * 4
