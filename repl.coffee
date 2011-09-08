@@ -55,6 +55,7 @@ $.extend REPLIT,
     for [open, close], index in @current_lang.matchings
       @jqconsole.RegisterMatching open, close, 'matching-' + index
 
+    # Register shortcuts.
     @jqconsole.RegisterShortcut 'Z', =>
       @jqconsole.AbortPrompt()
       @StartPrompt()
@@ -66,6 +67,8 @@ $.extend REPLIT,
       @OpenPage 'help'
     @jqconsole.RegisterShortcut 'S', =>
       $('#button-save').click()
+
+    # Load the language engine from jsREPL.
     @jsrepl.LoadLanguage lang_name, =>
       @StartPrompt()
       @$this.trigger 'language_loaded', [lang_name]
