@@ -26,6 +26,7 @@ $.extend REPLIT,
       @Evaluate REPLIT.editor.getSession().getValue()
 
     @current_lang = null
+    @current_lang_name = null
     @inited = true
 
   # Load a given language by name.

@@ -10,7 +10,6 @@ CONSOLE_HIDDEN = 1
 EDITOR_HIDDEN = 0
 SNAP_THRESHOLD = 0.05
 ANIMATION_DURATION = 700
-KEY_ESCAPE = 27
 $ = jQuery
 
 # jQuery plugin to disable text selection (x-browser).
@@ -276,10 +275,6 @@ $ ->
 
   REPLIT.$this.bind 'language_loaded', (e, system_name) ->
     REPLIT.$throbber.hide()
-
-  $(window).keydown (e) ->
-    if e.which == KEY_ESCAPE and $('.page:visible') isnt 'workspace'
-      REPLIT.CloseLastPage()
 
   REPLIT.InitDOM()
   REPLIT.InjectSocial()

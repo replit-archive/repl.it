@@ -4,6 +4,7 @@
 $ = jQuery
 
 ANIMATION_DURATION = 300
+KEY_ESCAPE = 27
 
 LANG_TEMPLATE =
   language_group: (data) ->
@@ -130,11 +131,18 @@ $.extend REPLIT,
     # If the page actually exists and it's not the current one.
     if page and current_page isnt page_name
       # Calculate and set title.
-      lang_name = if @current_lang
-        @Languages[@current_lang.system_name].name
+      lang_name = if @current_lang_name
+        @Languages[@current_lang_name].name
       else
         ''
-      $('#title').text page.title.replace /\$/g, lang_name
+      $title = $ '#title'
+      new_title = page.title.replace /\$/g, lang_name
+      if current_page
+        $title.fadeOut ANIMATION_DURATION, ->
+          $title.text new_title
+          $title.fadeIn ANIMATION_DURATION
+      else
+        $title.text new_title
 
       # Update widths to those of the new page.
       @min_content_width = page.min_width
@@ -154,6 +162,11 @@ $.extend REPLIT,
       # HACK: Workspace doesn't account for resizers for some reason...
       if page_name isnt 'workspace' then outerWidth += 2 * @RESIZER_WIDTH
 
+      done = =>
+        @changing_page = false
+        page.$elem.focus()
+        callback()
+      
       if current_page
         # Perform the animation.
         PAGES[current_page].width = $('.page:visible').width()
@@ -163,15 +176,12 @@ $.extend REPLIT,
             # width calculations inside OnResize() work.
             page.$elem.css width: page.width, display: 'block', opacity: 0
             @OnResize()
-            page.$elem.animate opacity: 1, ANIMATION_DURATION, =>
-              @changing_page = false
-              callback()
+            page.$elem.animate opacity: 1, ANIMATION_DURATION, done
       else
         @$container.css width: outerWidth
         page.$elem.css width: page.width, display: 'block'
         @OnResize()
-        @changing_page = false
-        callback()
+        done()
 
   # Close the top page and opens the page underneath if exists or just animates
   # Back to the original environment width.
@@ -207,8 +217,9 @@ $ ->
   $body = $ 'body'
   $body.delegate '.page-close', 'click', -> REPLIT.CloseLastPage()
   $body.delegate '.language-group li', 'click', ->
+    REPLIT.current_lang_name = $(@).data 'lang'
     REPLIT.OpenPage 'workspace', =>
-      REPLIT.LoadLanguage $(@).data 'lang'
+      REPLIT.LoadLanguage REPLIT.current_lang_name
 
   # Bind page buttons.
   $('#button-examples').click ->
@@ -222,3 +233,16 @@ $ ->
     REPLIT.OpenPage 'about'
   $('#button-help').click ->
     REPLIT.OpenPage 'help'
+
+  # Bind page closing to Escape.
+  $(window).keydown (e) ->
+    if e.which == KEY_ESCAPE and $('.page:visible') isnt '#content-workspace'
+      REPLIT.CloseLastPage()
+
+  # Bind language selector hotkeys.
+  $('#content-languages').keydown (e) ->
+    letter = String.fromCharCode(e.which).toLowerCase()
+    $('#content-languages li').each ->
+      if $('em', $ @).text().toLowerCase() == letter
+        $(@).click()
+        return false
