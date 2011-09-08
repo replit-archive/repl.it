@@ -181,11 +181,11 @@ $ ->
     examples = REPLIT.Languages[system_name].examples
     REPLIT.LoadExamples examples.editor, 'left', (example) =>
       REPLIT.editor.getSession().setValue example
-      REPLIT.CloseLastPage()
+      REPLIT.OpenPage 'workspace'
       REPLIT.editor.focus()
     REPLIT.LoadExamples examples.console, 'right', (example) =>
       REPLIT.jqconsole.SetPromptText example
-      REPLIT.CloseLastPage()
+      REPLIT.OpenPage 'workspace'
       REPLIT.jqconsole.Focus()
 
   # Since we will be doing lots of animation and syncing, we better cache the
@@ -197,12 +197,12 @@ $ ->
   $body = $ 'body'
   $body.delegate '.page-close', 'click', -> REPLIT.CloseLastPage()
   $body.delegate '.language-group li', 'click', ->
-    REPLIT.LoadLanguage $(@).data 'lang'
-    REPLIT.OpenPage 'workspace'
+    REPLIT.OpenPage 'workspace', =>
+      REPLIT.LoadLanguage $(@).data 'lang'
 
   # Bind page buttons.
   $('#button-examples').click ->
-    REPLIT.OpenPage 'examples'
+    if REPLIT.current_lang? then REPLIT.OpenPage 'examples'
   $('#button-languages').click ->
     REPLIT.OpenPage 'languages'
   $('#link-about').click ->
