@@ -117,9 +117,13 @@ $.extend REPLIT,
 
   # The pages stacking on the screen.
   page_stack: []
+  # Whether we are currently changing a page (to prevent interference).
+  changing_page: false
 
   # Open a page by its name.
   OpenPage: (page_name, callback=$.noop) ->
+    if @changing_page then return
+    @changing_page = true
     page = PAGES[page_name]
     current_page = @page_stack[@page_stack.length - 1]
 
@@ -159,16 +163,20 @@ $.extend REPLIT,
             # width calculations inside OnResize() work.
             page.$elem.css width: page.width, display: 'block', opacity: 0
             @OnResize()
-            page.$elem.animate opacity: 1, ANIMATION_DURATION, callback
+            page.$elem.animate opacity: 1, ANIMATION_DURATION, =>
+              @changing_page = false
+              callback()
       else
         @$container.css width: outerWidth
         page.$elem.css width: page.width, display: 'block'
         @OnResize()
+        @changing_page = false
         callback()
 
   # Close the top page and opens the page underneath if exists or just animates
   # Back to the original environment width.
   CloseLastPage: ->
+    if @changing_page then return
     if @page_stack.length <= 1 then return
     closed_page = @page_stack[@page_stack.length - 1]
     @OpenPage @page_stack[@page_stack.length - 2], =>

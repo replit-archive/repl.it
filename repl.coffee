@@ -58,7 +58,14 @@ $.extend REPLIT,
     @jqconsole.RegisterShortcut 'Z', =>
       @jqconsole.AbortPrompt()
       @StartPrompt()
-    # TODO(max99x): Register Ctrl+L for languages selector.
+    @jqconsole.RegisterShortcut 'L', =>
+      @OpenPage 'languages'
+    @jqconsole.RegisterShortcut 'E', =>
+      @OpenPage 'examples'
+    @jqconsole.RegisterShortcut 'H', =>
+      @OpenPage 'help'
+    @jqconsole.RegisterShortcut 'S', =>
+      $('#button-save').click()
     @jsrepl.LoadLanguage lang_name, =>
       @StartPrompt()
       @$this.trigger 'language_loaded', [lang_name]
