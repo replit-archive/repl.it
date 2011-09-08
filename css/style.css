@@ -128,6 +128,20 @@ html, body {
   display: none;
 }
 
+.page-close {
+  background: url(../images/close.png) center center no-repeat;
+  height: 50px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 50px;
+  cursor: pointer;
+}
+
+.page-close:hover {
+  background: url(../images/close-hover.png) center center no-repeat;
+}
+
 /* Editor */
 
 #editor {
@@ -542,64 +556,41 @@ html, body {
   color: #444;
 }
 
+#examples-editor, #examples-console {
+  padding-top: 30px;
+  width: 50%;
+}
+
+#examples-editor {
+  float: left;
+}
+
+#examples-console {
+  float: right;
+}
+
 #examples-separator {
-  height: 88%;
-  position: absolute;
+  position: fixed;
   left: 50%;
-  top: 6%;
+  top: 89px;
+  bottom: 50px;
   width: 1px;
   background: #ccc;
 }
 
-.page-close {
-  background: url(../images/close.png) center center no-repeat;
-  height: 50px;
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  width: 50px;
-  cursor: pointer;
-}
-
-.page-close:hover {
-  background: url(../images/close-hover.png) center center no-repeat;
-}
-
 .example-group {
-  width: 49%;
+  width: 100%;
   cursor: pointer;
-  position: absolute;
 }
 
-.example-left {
-  left: 0;
+.example-1 {
+  height: 650px;
 }
-.example-right {
-  left: 50%;
+.example-2 {
+  height: 325px;
 }
-.example-1-1 {
-  height: 94%;
-  top: 6%;
-}
-.example-2-1 {
-  height: 47%;
-  top: 6%;
-}
-.example-2-2 {
-  height: 47%;
-  top: 50%;
-}
-.example-3-1 {
-  height: 31.333%;
-  top: 6%;
-}
-.example-3-2 {
-  height: 31.333%;
-  top: 36.333%;
-}
-.example-3-3 {
-  height: 31.333%;
-  top: 66.666%;
+.example-3 {
+  height: 216px;
 }
 
 .example-group-header {

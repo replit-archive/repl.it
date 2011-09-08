@@ -93,8 +93,8 @@ PAGES =
     width: 600
 
 $.extend REPLIT,
-  LoadExamples: (file, side, callback) ->
-    $examples_container = $('#content-examples')
+  LoadExamples: (file, container, callback) ->
+    $examples_container = $ '#examples-' + container
     $('.example-group').remove()
     $.get file, (contents) =>
       # Parse examples.
@@ -104,10 +104,9 @@ $.extend REPLIT,
       while index + 1 < raw_examples.length
         name = raw_examples[index].replace /^\s+|\s+$/g, ''
         code = raw_examples[index + 1].replace /^\s+|\s+$/g, ''
-        cls = "example-#{side} example-#{total}-#{1 + index / 2}"
         # Insert an example element and set up its click handler.
         example_element = $ """
-          <div class="example-group #{cls}">
+          <div class="example-group example-#{total}">
             <div class="example-group-header">#{name}</div>
             <code>#{code}</code>
           </div>
@@ -179,14 +178,14 @@ $ ->
     # TODO: Hide console/editor examples if only the editor/console is open,
     #       respectively.
     examples = REPLIT.Languages[system_name].examples
-    REPLIT.LoadExamples examples.editor, 'left', (example) =>
+    REPLIT.LoadExamples examples.editor, 'editor', (example) ->
       REPLIT.editor.getSession().setValue example
-      REPLIT.OpenPage 'workspace'
-      REPLIT.editor.focus()
-    REPLIT.LoadExamples examples.console, 'right', (example) =>
+      REPLIT.OpenPage 'workspace', ->
+        REPLIT.editor.focus()
+    REPLIT.LoadExamples examples.console, 'console', (example) ->
       REPLIT.jqconsole.SetPromptText example
-      REPLIT.OpenPage 'workspace'
-      REPLIT.jqconsole.Focus()
+      REPLIT.OpenPage 'workspace', ->
+        REPLIT.jqconsole.Focus()
 
   # Since we will be doing lots of animation and syncing, we better cache the
   # jQuery elements.
