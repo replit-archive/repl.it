@@ -155,8 +155,9 @@ $.extend REPLIT,
         PAGES[current_page].width = $('.page:visible').width()
         PAGES[current_page].$elem.fadeOut ANIMATION_DURATION, =>
           @$container.animate width: outerWidth, ANIMATION_DURATION, =>
-            page.$elem.css width: page.width
-            page.$elem.css display: 'block', opacity: 0
+            # We need to have the box actually displayed (if invisible) so the
+            # width calculations inside OnResize() work.
+            page.$elem.css width: page.width, display: 'block', opacity: 0
             @OnResize()
             page.$elem.animate opacity: 1, ANIMATION_DURATION, callback
       else
