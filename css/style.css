@@ -509,6 +509,7 @@ html, body {
 
 #content-languages {
   color: #444;
+  outline: none !important;
 }
 
 .language-group {
