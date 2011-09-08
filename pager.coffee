@@ -129,7 +129,9 @@ $.extend REPLIT,
     current_page = @page_stack[@page_stack.length - 1]
 
     # If the page actually exists and it's not the current one.
-    if page and current_page isnt page_name
+    if not page or current_page is page_name
+      @changing_page = false
+    else
       # Calculate and set title.
       lang_name = if @current_lang_name
         @Languages[@current_lang_name].name
