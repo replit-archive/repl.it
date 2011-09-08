@@ -35,6 +35,7 @@ $.fn.enableSelection = ->
 
 
 $.extend REPLIT,
+  RESIZER_WIDTH: RESIZER_WIDTH
   split_ratio: DEFAULT_SPLIT
   min_content_width: 500
   content_padding: DEFAULT_CONTENT_PADDING

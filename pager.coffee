@@ -84,8 +84,6 @@ PAGES =
 
 ANIMATION_DURATION = 700
 FADE_DURATION = 300
-# TODO(amasad): Export from the DOM module.
-RESIZER_WIDTH = 8
 # The minimum offset.
 ZINDEX_OFFSET = 11
 
@@ -161,7 +159,7 @@ $.extend REPLIT,
         # Sync pages before animating the top stacked page.
         @SyncPages()
         # Animate the top stacked page so it follows the container with no delay.
-        @page_stack.$current().animate width: page.min_width - (RESIZER_WIDTH * 2),
+        @page_stack.$current().animate width: page.min_width - (@RESIZER_WIDTH * 2),
           duration: ANIMATION_DURATION
           queue: false
           step: => @SyncPages()
@@ -196,8 +194,8 @@ $.extend REPLIT,
     # Best choice to hide it!
     @$console.hide()
 
-    editor_width = (@split_ratio * width) -  (RESIZER_WIDTH * 1.5)
-    console_width = ((1 - @split_ratio) * width) - (RESIZER_WIDTH * 1.5)
+    editor_width = (@split_ratio * width) -  (@RESIZER_WIDTH * 1.5)
+    console_width = ((1 - @split_ratio) * width) - (@RESIZER_WIDTH * 1.5)
     # Change content_padding variable so, it would not snap back on window resize.
     @content_padding = document.documentElement.clientWidth - width
 
@@ -211,7 +209,7 @@ $.extend REPLIT,
       step: step
       complete: complete
 
-    @$resizer.c.animate left: editor_width + RESIZER_WIDTH, anim_config
+    @$resizer.c.animate left: editor_width + @RESIZER_WIDTH, anim_config
     @$container.animate width: width, anim_config
     @$editorContainer.animate width: editor_width, anim_config
     @$consoleContainer.animate width: console_width, anim_config
@@ -221,9 +219,9 @@ $.extend REPLIT,
   SyncPages: ->
     $.each @page_stack, (i, page) =>
       page.$elem.css
-        width: @$container.width() - (RESIZER_WIDTH * 2)
+        width: @$container.width() - (@RESIZER_WIDTH * 2)
         top: @$container.offset().top
-        left: @$container.offset().left + RESIZER_WIDTH
+        left: @$container.offset().left + @RESIZER_WIDTH
         # TODO(amasad): Find another way, this is stupid!
         'z-index': ZINDEX_OFFSET++
 
