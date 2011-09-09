@@ -75,6 +75,7 @@ $.extend REPLIT,
     @jsrepl.LoadLanguage lang_name, =>
       @StartPrompt()
       @$this.trigger 'language_loaded', [lang_name]
+      @jqconsole.Write @Languages[lang_name].header + '\n'
       callback()
 
   # Receives the result of a command evaluation.

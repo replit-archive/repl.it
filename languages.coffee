@@ -11,6 +11,10 @@
     examples:
       editor: '/langs/qbasic/examples-editor.html'
       console: '/langs/qbasic/examples-console.html'
+    header: '''
+      QBasic (qb.js)
+      Copyright (c) 2010 Steve Hanov
+    '''
   Forth:
     name: 'Forth'
     tagline: 'An interactive stack-oriented language.'
@@ -20,6 +24,11 @@
     examples:
       editor: '/langs/forth/examples-editor.html'
       console: '/langs/forth/examples-console.html'
+    header: '''
+      JS-Forth 0.5200804171342
+      http://www.forthfreak.net/jsforth.html
+      This program is published under the GPL.
+    '''
   LOLCODE:
     name: 'LOLCODE'
     tagline: 'The BASIC language of lolcats.'
@@ -29,6 +38,10 @@
     examples:
       editor: '/langs/lolcode/examples-editor.html'
       console: '/langs/lolcode/examples-console.html'
+    header: '''
+      LOLCODE v1.2 (lol-coffee)
+      Copyright (c) 2011 Max Shawabkeh
+    '''
   Brainfuck:
     name: 'Brainfuck'
     tagline: 'A pure Turing machine controller.'
@@ -38,6 +51,10 @@
     examples:
       editor: '/langs/brainfuck/examples-editor.html'
       console: '/langs/brainfuck/examples-console.html'
+    header: '''
+      Brainfuck, bfjs
+      Copyright (c) 2011 Amjad Masad
+    '''
   Emoticon:
     name: 'Emoticon'
     tagline: 'Programming with an extra dose of smile.'
@@ -47,6 +64,10 @@
     examples:
       editor: '/langs/emoticon/examples-editor.html'
       console: '/langs/emoticon/examples-console.html'
+    header: '''
+      Emoticon v1.5 (emoticoffee)
+      Copyright (c) 2011 Amjad Masad
+    '''
   Bloop:
     name: 'Bloop'
     tagline: 'Nothing but bounded loops'
@@ -56,6 +77,11 @@
     examples:
       editor: '/langs/bloop/examples-editor.html'
       console: '/langs/bloop/examples-console.html'
+    header: '''
+      BlooPjs
+      Copyright (c) 2005 Tim Cameron Ryan
+      Based on Perl code by John Cowan, 1994
+    '''
   Unlambda:
     name: 'Unlambda'
     tagline: 'Functional purity given form.'
@@ -65,6 +91,10 @@
     examples:
       editor: '/langs/unlambda/examples-editor.html'
       console: '/langs/unlambda/examples-console.html'
+    header: '''
+      Unlambda v2.0 (unlambda-coffee)
+      Copyright (c) 2011 Max Shawabkeh
+    '''
   JavaScript:
     name: 'JavaScript'
     tagline: 'The de facto language of the Web.'
@@ -77,6 +107,26 @@
     ace_mode:
       script: '/lib/ace/mode-javascript.js'
       module: 'ace/mode/javascript'
+    header: """
+      Native #{
+        if $.browser.webkit
+          if navigator?.vendor.match /Google/ then 'Chrome'
+          else 'WebKit'
+        else if $.browser.opera then 'Opera'
+        else if $.browser.msie then 'Internet Explorer'
+        else if $.browser.mozilla then 'Mozilla Firefox'
+        else 'Browser'
+      } JavaScript.
+      Copyright (c) 2011 #{
+        navigator?.vendor?.replace(/\.$/, '') or (
+          if $.browser.webkit then 'Apple Inc'
+          else if $.browser.opera then 'Opera Software ASA'
+          else if $.browser.msie then 'Microsoft'
+          else if $.browser.mozilla then 'Mozilla Foundation'
+          else 'Browser Vendor'
+        )
+      }
+    """
   Traceur:
     name: 'Javascript.next'
     tagline: 'The JavaScript of tomorrow.'
@@ -86,6 +136,10 @@
     examples:
       editor: '/langs/traceur/examples-editor.html'
       console: '/langs/traceur/examples-console.html'
+    header: '''
+      Traceur Compiler v0.10
+      Copyright (c) 2011 Google Inc.
+    '''
   CoffeeScript:
     name: 'CoffeeScript'
     tagline: 'Unfancy JavaScript.'
@@ -98,6 +152,10 @@
     ace_mode:
       script: '/lib/ace/mode-coffee.js'
       module: 'ace/mode/coffee'
+    header: '''
+      CoffeeScript v1.0.1
+      Copyright (c) 2011, Jeremy Ashkenas
+    '''
   Kaffeine:
     name: 'Kaffeine'
     tagline: 'Extended JavaScript for pros.'
@@ -107,6 +165,12 @@
     examples:
       editor: '/langs/kaffeine/examples-editor.html'
       console: '/langs/kaffeine/examples-console.html'
+    header: '''
+      | |/ /__ _ / _|/ _|___(_)_ _  ___
+      | ' </ _` |  _|  _/ -_) | ' \\/ -_)
+      |_|\\_\\__,_|_| |_| \\___|_|_||_\\___|
+      Version 0.1.6, Copyright (c) 2010 Jonah Fox
+    '''
   Move:
     name: 'Move'
     tagline: 'The easy way to program the web.'
@@ -115,6 +179,10 @@
     examples:
       editor: '/langs/move/examples-editor.html'
       console: '/langs/move/examples-console.html'
+    header: '''
+      Move v0.4.3
+      Copyright (c) 2011 Rasmus Andersson
+    '''
   Scheme:
     name: 'Scheme'
     tagline: 'An elegant dynamic dialect of Lisp.'
@@ -124,6 +192,10 @@
     examples:
       editor: '/langs/scheme/examples-editor.html'
       console: '/langs/scheme/examples-console.html'
+    header: '''
+      BiwaScheme Interpreter version 0.5.7
+      Copyright (C) 2007-2010 Yutaka HARA and the BiwaScheme team
+    '''
   Lua:
     name: 'Lua'
     tagline: 'A lightweight multi-paradigm scripting language.'
@@ -136,6 +208,10 @@
     ace_mode:
       script: '/lib/ace/mode-lua.js'
       module: 'ace/mode/lua'
+    header: '''
+      Lua 5.1  Copyright (C) 1994-2006 Lua.org, PUC-Rio
+      [GCC 4.2.1 (LLVM, Emscripten 1.5)] on linux2
+    '''
   Python:
     name: 'Python'
     tagline: 'A dynamic language emphasizing readabillity.'
@@ -148,3 +224,7 @@
     ace_mode:
       script: '/lib/ace/mode-python.js'
       module: 'ace/mode/python'
+    header: '''
+      Python 2.7.2 (default, Jul 20 2011, 02:32:18)
+      [GCC 4.2.1 (LLVM, Emscripten 1.5, Empythoned)] on linux2
+    '''
