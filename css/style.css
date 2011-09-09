@@ -423,13 +423,15 @@ html, body {
   margin-left: 15px;
   margin-right: 15px;
   text-shadow: 0 -1px 0 #000;
-  -webkit-transition: 200ms;
-  -moz-transition-duration:200ms;
+  -webkit-transition: color .200s, text-shadow .200s;
+  -moz-transition: color .200s, text-shadow .200s;
+  -o-transition: color .200s, text-shadow .200s;
+  transition: color .200s, text-shadow .200s;
 }
 
 #links a:hover, #links a:active, #links a:focus {
   color: #FFF;
-  text-shadow: 0 -1px 0.3em #C5C5C5;
+  text-shadow: 0 0px 0.3em #C5C5C5;
 }
 
 #language-about-link, #language-engine-link {
@@ -448,10 +450,10 @@ html, body {
   position: relative;
   display: inline-block;
   text-shadow: 0 1px 0 #fff;
-  -webkit-transition: border-color .218s;
-  -moz-transition: border .218s;
-  -o-transition: border-color .218s;
-  transition: border-color .218s;
+  -webkit-transition: border .450s, box-shadow .350s;
+  -moz-transition: border .450s, box-shadow .350s;
+  -o-transition: border .450s, box-shadow .350s;
+  transition: border .450s, box-shadow .350s;
   background: #f3f3f3;
   background: -webkit-gradient(linear,0% 40%,0% 70%,from(#F5F5F5),to(#F1F1F1));
   background: -moz-linear-gradient(70% 70% 75deg, #F5F5F5, #F1F1F1);
@@ -462,6 +464,9 @@ html, body {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   margin-right: 10px;
+  -moz-box-shadow: 0 2px 0 rgba(0, 0, 0, 0);
+  -webkit-box-shadow:0 2px 5px rgba(0, 0, 0, 0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0);
 }
 
 .button:hover {
