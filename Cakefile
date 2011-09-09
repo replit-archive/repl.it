@@ -57,8 +57,8 @@ task 'watch', 'Watch all coffee files and compile them live to javascript', ->
     console.log '  ' + d.toString().slice(0, -1)
 
   # Our coffee files.
-  coffee_to_watch = ['base.coffee', 'dom.coffee', 'repl.coffee',
-                     'pager.coffee', 'session.coffee', 'languages.coffee']
+  coffee_to_watch = ['base.coffee', 'dom.coffee', 'repl.coffee', 'pager.coffee',
+                     'session.coffee', 'languages.coffee', 'analytics.coffee']
   compileFile = (filename) ->
     try
       compileCoffee filename
