@@ -39,6 +39,7 @@ $.extend REPLIT,
   RESIZER_WIDTH: RESIZER_WIDTH
   CONSOLE_HIDDEN: CONSOLE_HIDDEN
   EDITOR_HIDDEN: EDITOR_HIDDEN
+  DEFAULT_CONTENT_PADDING: DEFAULT_CONTENT_PADDING
   split_ratio: DEFAULT_SPLIT
   min_content_width: 500
   max_content_width: 3000
@@ -198,7 +199,6 @@ $.extend REPLIT,
     else if innerWidth > @max_content_width
       innerWidth = @max_content_width
     width = innerWidth + 2 * RESIZER_WIDTH
-    @content_padding = documentWidth - width
 
     # Resize container and current page.
     @$container.css

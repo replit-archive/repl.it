@@ -5,6 +5,7 @@ $ = jQuery
 
 ANIMATION_DURATION = 300
 KEY_ESCAPE = 27
+FIRST_LOAD = true
 
 LANG_TEMPLATE =
   language_group: (data) ->
@@ -149,7 +150,13 @@ $.extend REPLIT,
       # Update widths to those of the new page.
       @min_content_width = page.min_width
       @max_content_width = page.max_width
-      @content_padding = document.documentElement.clientWidth - page.width
+      
+      # When the workspace is first loaded, don't mess up its default padding.
+      if FIRST_LOAD and page_name is 'workspace'
+        FIRST_LOAD = false
+        @content_padding = @DEFAULT_CONTENT_PADDING
+      else
+        @content_padding = document.documentElement.clientWidth - page.width
 
       # Check if the page exists on our stack, if so splice out to be put
       # on top.
