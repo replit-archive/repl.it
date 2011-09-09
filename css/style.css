@@ -312,6 +312,8 @@ html, body {
   font-weight: bold;
   color: #FC0;
   background: url(../images/sprite.png) -13px -583px no-repeat;
+  position: relative;
+  left: -8px;
 }
 
 .jqconsole-blurred .jqconsole-prompt {
@@ -323,6 +325,8 @@ html, body {
   font-weight: bold;
   color: #F60;
   background: url(../images/sprite.png) -13px -647px no-repeat;
+  position: relative;
+  left: -8px;
 }
 
 .jqconsole-blurred .jqconsole-old-prompt {
@@ -333,6 +337,7 @@ html, body {
 .jqconsole-cursor {
   background: #666;
   line-height: 100%;
+  position: relative !important;
 }
 
 .jqconsole-blurred .jqconsole-cursor {
@@ -342,6 +347,8 @@ html, body {
 .error {
   color: #F06;
   display: block;
+  position: relative;
+  left: -8px;
 }
 
 .jqconsole-blurred .error {
@@ -351,6 +358,8 @@ html, body {
 .result {
   color: #6F0;
   display: block;
+  position: relative;
+  left: -8px;
 }
 
 .jqconsole-blurred .result {
