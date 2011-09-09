@@ -38,7 +38,9 @@ $.extend REPLIT,
 
     #Load Ace mode.
     EditSession = require("ace/edit_session").EditSession
+    UndoManager = require("ace/undomanager").UndoManager
     session = new EditSession ''
+    session.setUndoManager new UndoManager
     ace_mode = @Languages[lang_name].ace_mode
     if ace_mode?
       $.getScript ace_mode.script, =>
