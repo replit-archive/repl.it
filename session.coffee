@@ -143,7 +143,8 @@ $ ->
       $savebox.slideDown()
 
   $('#save-box input').click -> $(this).select()
-  $('#save-box .close').click -> $(this).parents('div').slideUp()
+  # TODO(amasad): Make any click outside the box close it (a close button looks
+  #               awful on such a small box).
   # When any command is evaled, save it in the eval_history array of the session
   # object, in order to send it to the server on save.
   REPLIT.$this.bind 'eval', (e, command) ->

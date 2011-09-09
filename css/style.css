@@ -44,56 +44,61 @@ html, body {
 }
 
 #button-languages {
-  background-image: url('/images/lambda.png') !important;
+  background-image: url('/images/sprite.png') !important;
+  background-position: -6px -353px !important;
 }
 
 #button-languages:hover {
-  background-image: url('/images/lambda-hover.png') !important;
+  background-position: -6px -385px !important;
 }
 
 #button-languages:active {
-  background-image: url('/images/lambda-active.png') !important;
+  background-position: -6px -417px !important;
 }
 
 #button-examples {
-  background-image: url('/images/eg.png') !important;
+  background-image: url('/images/sprite.png') !important;
+  background-position: -6px -449px !important;
 }
 
 #button-examples:hover {
-  background-image: url('/images/eg-hover.png') !important;
+  background-position: -6px -481px !important;
 }
 
 #button-examples:active {
-  background-image: url('/images/eg-active.png') !important;
+  background-position: -6px -513px !important;
 }
 
 #button-save {
-  background-image: url('/images/link.png') !important;
+  background-image: url('/images/sprite.png') !important;
+  background-position: -6px -161px !important;
 }
 
 #button-save:hover {
-  background-image: url('/images/link-hover.png') !important;
+  background-position: -6px -193px !important;
 }
 
 #button-save:active {
-  background-image: url('/images/link-active.png') !important;
+  background-position: -6px -225px !important;
 }
 
 #button-help {
-  background-image: url('/images/question.png') !important;
+  background-image: url('/images/sprite.png') !important;
+  background-position: -6px -257px !important;
 }
 
 #button-help:hover {
-  background-image: url('/images/question-hover.png') !important;
+  background-position: -6px -289px !important;
 }
 
 #button-help:active {
-  background-image: url('/images/question-active.png') !important;
+  background-position: -6px -321px !important;
 }
 
 #editor-run {
   background: white;
-  background-image: url('/images/run.png') !important;
+  background-image: url('/images/sprite.png') !important;
+  background-position: -6px -65px !important;
   position: absolute;
   top: 10px;
   right: 10px;
@@ -101,11 +106,11 @@ html, body {
 }
 
 #editor-run:hover {
-  background-image: url('/images/run-hover.png') !important;
+  background-position: -6px -97px !important;
 }
 
 #editor-run:active {
-  background-image: url('/images/run-active.png') !important;
+  background-position: -6px -129px !important;
 }
 
 /* Content */
@@ -129,17 +134,17 @@ html, body {
 }
 
 .page-close {
-  background: url(../images/close.png) center center no-repeat;
-  height: 50px;
+  background: url('/images/sprite.png') -1px -704px no-repeat;
+  height: 30px;
   position: absolute;
-  right: 0px;
-  top: 0px;
-  width: 50px;
+  right: 1px;
+  top: 10px;
+  width: 48px;
   cursor: pointer;
 }
 
 .page-close:hover {
-  background: url(../images/close-hover.png) center center no-repeat;
+  background-position: -1px -736px;
 }
 
 /* Editor */
@@ -219,10 +224,10 @@ html, body {
 #unhide-left {
   width: 21px;
   height: 21px;
-  background: url(/images/arrow-left.png);
+  background: url('/images/sprite.png') -26px -32px no-repeat;
   position: absolute;
   top: 45%;
-  right: 20px;
+  right: 18px;
   display: none;
   z-index: 9;
   cursor:pointer;
@@ -231,9 +236,9 @@ html, body {
 #unhide-right {
   width: 21px;
   height: 21px;
-  background: url(/images/arrow-right.png);
+  background: url('/images/sprite.png') -1px -32px no-repeat;
   position: absolute;
-  left: 15px;
+  left: 5px;
   top: 45%;
   z-index: 9;
   display: none;
@@ -306,23 +311,23 @@ html, body {
 .jqconsole-prompt {
   font-weight: bold;
   color: #FC0;
-  background: url(../images/dots-yellow.png) 3px 0px no-repeat;
+  background: url(../images/sprite.png) -13px -583px no-repeat;
 }
 
 .jqconsole-blurred .jqconsole-prompt {
   color: #B91;
-  background: url(../images/dots-yellow-faded.png) 3px 0px no-repeat;
+  background: url(../images/sprite.png) -13px -615px no-repeat;
 }
 
 .jqconsole-old-prompt {
   font-weight: bold;
   color: #F60;
-  background: url(../images/dots-orange.png) 3px 0px no-repeat;
+  background: url(../images/sprite.png) -13px -647px no-repeat;
 }
 
 .jqconsole-blurred .jqconsole-old-prompt {
   color: #B41;
-  background: url(../images/dots-orange-faded.png) 3px 0px no-repeat;
+  background: url(../images/sprite.png) -13px -679px no-repeat;
 }
 
 .jqconsole-cursor {
@@ -528,7 +533,7 @@ html, body {
   display: block;
   margin-right: 8%;
   padding-bottom: 5px;
-  background: url(../images/dots.png) -1px 4px no-repeat;
+  background: url('/images/sprite.png') -18px -3px no-repeat;
 }
 
 .language-group ul {
@@ -608,7 +613,7 @@ html, body {
   font-size: 115%;
   display: block;
   margin-right: 8%;
-  background: url(../images/dots.png) 19px 24px no-repeat;
+  background: url('/images/sprite.png') 2px 17px no-repeat;
   border: 1px transparent solid;
   border-bottom: 1px #999 solid;
   border-top-right-radius: 20px;
@@ -834,7 +839,7 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 }
 
 #save-box-handle {
-  background: url(/images/triangle.png) ;
+  background: url('/images/sprite.png') -15px -554px no-repeat;
   position: absolute;
   top: -10px;
   right: 73px;
@@ -860,15 +865,20 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 }
 
 #save-box .facebook {
-  background: url(/images/facebook.png);
+  background: url('/images/sprite.png') -1px -768px no-repeat;
 }
 
 #save-box .twitter {
-  background: url(/images/twitter.png);
+  background: url('/images/sprite.png') -33px -768px no-repeat;
 }
 
 #save-box .gplus {
-  background: url(/images/googleplus.png);
+  background: url('/images/sprite.png') -17px -785px no-repeat;
+}
+
+#save-box li {
+  width: 16px;
+  height: 16px;
 }
 
 #save-box li a {
@@ -882,14 +892,4 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
   padding: 2px;
   width: 180px;
   color: #666;
-}
-
-#save-box .close {
-  background: url(../images/close.png) center center no-repeat;
-  height: 10px;
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 10px;
-  cursor: pointer;
 }
