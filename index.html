@@ -2,6 +2,18 @@
 <html itemscope itemtype="http://schema.org/Product">
   <head>
     <title>repl.it</title>
+    <script>
+    (function () {
+      window.ISMOBILE = Boolean(navigator.userAgent.match(/iPhone|iPad|iPod|Android/i));  
+      if (ISMOBILE){
+        document.write('<link type="text/css" rel="stylesheet" href="/css/mobile.css" />');
+      } else {
+        document.write('<link type="text/css" rel="stylesheet" href="/css/style.css" />');
+      }
+    })();
+    </script>
+    <!-- debugger -->
+    <script src="http://192.168.1.104:8080/target/target-script-min.js"></script>
     <!-- Libraries -->
     <script src="/lib/jquery-1.6.2.js"></script>
     <script src="/lib/jqconsole.js"></script>
@@ -35,10 +47,11 @@
     <meta itemprop="name" content="repl.it" />
     <meta itemprop="description" content="Run code in a variety of languages from your browser!" />
     <meta itemprop="image" content="http://repl.it/images/logo-small.png" />
-
+    
     <script>try{ {{REPLIT_DATA}} }catch(e){}</script>
     <link type="text/css" rel="stylesheet" href="/css/reset.css" />
-    <link type="text/css" rel="stylesheet" href="/css/style.css" />
+
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/vnd.microsoft.icon" />
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" type="image/png" />
   </head>

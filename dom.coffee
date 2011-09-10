@@ -10,6 +10,7 @@ CONSOLE_HIDDEN = 1
 EDITOR_HIDDEN = 0
 SNAP_THRESHOLD = 0.05
 ANIMATION_DURATION = 700
+ISMOBILE = window.ISMOBILE
 $ = jQuery
 
 # jQuery plugin to disable text selection (x-browser).
@@ -40,7 +41,7 @@ $.extend REPLIT,
   CONSOLE_HIDDEN: CONSOLE_HIDDEN
   EDITOR_HIDDEN: EDITOR_HIDDEN
   DEFAULT_CONTENT_PADDING: DEFAULT_CONTENT_PADDING
-  split_ratio: DEFAULT_SPLIT
+  split_ratio: if ISMOBILE then EDITOR_HIDDEN else DEFAULT_SPLIT 
   min_content_width: 500
   max_content_width: 3000
   content_padding: DEFAULT_CONTENT_PADDING
@@ -290,6 +291,18 @@ $ ->
 
   REPLIT.$this.bind 'language_loaded', ->
     REPLIT.$throbber.hide 'fast'
-
+  
+  # When the device orientation change adapt the workspace to the new width.
+  check_orientation = ->
+    cb = ->
+      width = document.documentElement.clientWidth
+      REPLIT.min_content_width =  width - 2 * RESIZER_WIDTH
+      REPLIT.OnResize()
+      # iPhone scrolls to the left when changing orientation to portrait.
+      $(window).scrollLeft 0
+    # Android takes time to know its own width!
+    setTimeout cb, 300
+  $(window).bind 'orientationchange', check_orientation
+    
   REPLIT.InitDOM()
   REPLIT.InjectSocial()

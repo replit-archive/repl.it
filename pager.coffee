@@ -148,7 +148,12 @@ $.extend REPLIT,
         $title.text new_title
 
       # Update widths to those of the new page.
-      @min_content_width = page.min_width
+      # We can't take into account mobile sizes, so just assign the whole screen
+      # width. Thats ok, since our mobile layout is fit to width.
+      @min_content_width = if window.ISMOBILE
+        document.documentElement.clientWidth - 2 * @RESIZER_WIDTH
+      else
+        page.min_width
       @max_content_width = page.max_width
       
       # When the workspace is first loaded, don't mess up its default padding.
