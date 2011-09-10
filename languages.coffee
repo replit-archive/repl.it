@@ -110,7 +110,8 @@
     header: """
       Native #{
         if $.browser.webkit
-          if navigator?.vendor.match /Google/ then 'Chrome'
+          if navigator.userAgent.match /Android/ then 'Android'
+          else if navigator.userAgent.match /Chrome/ then 'Chrome'
           else 'WebKit'
         else if $.browser.opera then 'Opera'
         else if $.browser.msie then 'Internet Explorer'
