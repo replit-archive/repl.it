@@ -317,6 +317,6 @@ $ ->
     # Android takes time to know its own width!
     setTimeout cb, 300
   $(window).bind 'orientationchange', check_orientation
-  check_orientation()
+  if ISMOBILE then check_orientation()
   REPLIT.InitDOM()
   REPLIT.InjectSocial()
