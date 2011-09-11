@@ -21,11 +21,13 @@ html, body {
 
 #logo {
   float:left;
+  margin-top:15px;
 }
 
 /* TODO: SCALE IMAGE */
 #logo img{
-  width:110px;
+  width:85px;
+  height:30px;
 }
 #title {
   display: none;
