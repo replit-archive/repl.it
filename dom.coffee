@@ -84,7 +84,17 @@ $.extend REPLIT,
     # Fire the onresize method to do initial resizing
     @OnResize()
     # When the window change size, call the container's resizer.
-    $(window).bind 'resize', => @OnResize()
+    mobile_timer = null
+    $(window).bind 'resize', => 
+      if @ISMOBILE
+        mobile_timer = clearTimeout mobile_timer
+        cb = =>
+          width = document.documentElement.clientWidth
+          REPLIT.min_content_width =  width - 2 * RESIZER_WIDTH
+          @OnResize()
+        mobile_timer = setTimeout (=> @OnResize()), 300
+      else
+        @OnResize()
 
   # Attatches the resizers behaviors.
   InitSideResizers: ->
@@ -307,6 +317,6 @@ $ ->
     # Android takes time to know its own width!
     setTimeout cb, 300
   $(window).bind 'orientationchange', check_orientation
-    
+  check_orientation()
   REPLIT.InitDOM()
   REPLIT.InjectSocial()
