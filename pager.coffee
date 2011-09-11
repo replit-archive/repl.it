@@ -150,7 +150,7 @@ $.extend REPLIT,
       # Update widths to those of the new page.
       # We can't take into account mobile sizes, so just assign the whole screen
       # width. Thats ok, since our mobile layout is fit to width.
-      @min_content_width = if window.ISMOBILE
+      @min_content_width = if @ISMOBILE
         document.documentElement.clientWidth - 2 * @RESIZER_WIDTH
       else
         page.min_width
@@ -213,10 +213,11 @@ $ ->
   # Load Examples
   REPLIT.$this.bind 'language_loading', (_, system_name) ->
     examples = REPLIT.Languages[system_name].examples
-    REPLIT.LoadExamples examples.editor, 'editor', (example) ->
-      REPLIT.editor.getSession().doc.setValue example
-      REPLIT.OpenPage 'workspace', ->
-        REPLIT.editor.focus()
+    if not REPLIT.ISMOBILE
+      REPLIT.LoadExamples examples.editor, 'editor', (example) ->
+        REPLIT.editor.getSession().doc.setValue example
+        REPLIT.OpenPage 'workspace', ->
+          REPLIT.editor.focus()
     REPLIT.LoadExamples examples.console, 'console', (example) ->
       REPLIT.jqconsole.SetPromptText example
       REPLIT.OpenPage 'workspace', ->
@@ -226,6 +227,9 @@ $ ->
   # jQuery elements.
   for name, settings of PAGES
     settings.$elem = $("##{settings.id}")
+    # If we are on a mobile set all default widths to 0 to invoke resizing
+    # to the minimum which is already set to the width;
+    if REPLIT.ISMOBILE and name isnt 'workspace' then settings.width = 0
 
   # Assign events.
   $body = $ 'body'

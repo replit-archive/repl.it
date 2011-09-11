@@ -41,6 +41,7 @@ $.extend REPLIT,
   CONSOLE_HIDDEN: CONSOLE_HIDDEN
   EDITOR_HIDDEN: EDITOR_HIDDEN
   DEFAULT_CONTENT_PADDING: DEFAULT_CONTENT_PADDING
+  ISMOBILE: ISMOBILE
   split_ratio: if ISMOBILE then EDITOR_HIDDEN else DEFAULT_SPLIT 
   min_content_width: 500
   max_content_width: 3000
@@ -190,7 +191,7 @@ $.extend REPLIT,
     # Calculate container height and width.
     documentWidth = document.documentElement.clientWidth
     documentHeight = document.documentElement.clientHeight
-    height = documentHeight - HEADER_HEIGHT - FOOTER_HEIGHT
+    height = documentHeight - HEADER_HEIGHT - FOOTER_HEIGHT 
     width = documentWidth - @content_padding
     innerWidth = width - 2 * RESIZER_WIDTH
 
@@ -204,7 +205,10 @@ $.extend REPLIT,
     # Resize container and current page.
     @$container.css
       width: width
-      height: height
+    if ISMOBILE and not $('.page:visible').is '#content-workspace'
+      @$container.css 'height', 'auto'
+    else
+      @$container.css 'height', height
     $('.page:visible').css
       width: innerWidth
 
@@ -251,7 +255,7 @@ $.extend REPLIT,
     @$editor.css 'height', @$editorContainer.innerHeight() - editor_vpadding
 
     # Call to Ace editor resize.
-    @editor.resize()
+    @editor.resize() if not ISMOBILE
 
   InjectSocial: ->
     $rootDOM = $('#social-buttons-container')

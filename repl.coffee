@@ -15,15 +15,16 @@ $.extend REPLIT,
     # Init console.
     @jqconsole = @$consoleContainer.jqconsole '', '   ', '.. '
     @$console = @$consoleContainer.find '.jqconsole'
-
+    
     # Init editor.
-    @editor = ace.edit 'editor-widget'
-    @editor.setTheme 'ace/theme/textmate'
-    @editor.renderer.setHScrollBarAlwaysVisible false
     @$editor = @$editorContainer.find '#editor-widget'
-    @$run.click =>
-      @jqconsole.AbortPrompt()
-      @Evaluate REPLIT.editor.getSession().getValue()
+    if not @ISMOBILE
+      @editor = ace.edit 'editor-widget'
+      @editor.setTheme 'ace/theme/textmate'
+      @editor.renderer.setHScrollBarAlwaysVisible false
+      @$run.click =>
+        @jqconsole.AbortPrompt()
+        @Evaluate REPLIT.editor.getSession().getValue()
 
     @current_lang = null
     @current_lang_name = null
@@ -37,20 +38,21 @@ $.extend REPLIT,
     @current_lang.system_name = lang_name
 
     #Load Ace mode.
-    EditSession = require("ace/edit_session").EditSession
-    UndoManager = require("ace/undomanager").UndoManager
-    session = new EditSession ''
-    session.setUndoManager new UndoManager
-    ace_mode = @Languages[lang_name].ace_mode
-    if ace_mode?
-      $.getScript ace_mode.script, =>
-        mode = require(ace_mode.module).Mode
-        session.setMode new mode
+    if not @ISMOBILE
+      EditSession = require("ace/edit_session").EditSession
+      UndoManager = require("ace/undomanager").UndoManager
+      session = new EditSession ''
+      session.setUndoManager new UndoManager
+      ace_mode = @Languages[lang_name].ace_mode
+      if ace_mode?
+        $.getScript ace_mode.script, =>
+          mode = require(ace_mode.module).Mode
+          session.setMode new mode
+          @editor.setSession session
+      else
+        textMode = require("ace/mode/text").Mode
+        session.setMode new textMode
         @editor.setSession session
-    else
-      textMode = require("ace/mode/text").Mode
-      session.setMode new textMode
-      @editor.setSession session
 
     # Empty out the history and prompt.
     @jqconsole.Reset()
