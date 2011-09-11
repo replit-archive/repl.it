@@ -28,7 +28,7 @@ html, body {
   width:110px;
 }
 #title {
-  display: block;
+  display: none;
   color: #999;
   font-size: 160%;
   line-height: 60px;
