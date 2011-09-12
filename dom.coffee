@@ -295,10 +295,10 @@ $ ->
     $links = $ '#language-engine-link, #language-about-link'
 
     $links.animate opacity: 0, 'fast', ->
-      $about.text 'about ' + system_name
+      $about.text 'about ' + system_name.toLowerCase()
       $about.attr href: lang.about_link
 
-      $engine.text system_name + ' engine'
+      $engine.text system_name.toLowerCase() + ' engine'
       $engine.attr href: lang.engine_link
 
       $links.animate opacity: 1, 'fast'
