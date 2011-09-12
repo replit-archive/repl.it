@@ -12,6 +12,7 @@ $.extend REPLIT,
       ResultCallback: $.proxy @ResultCallback, @
       ErrorCallback: $.proxy @ErrorCallback, @
     }
+
     # Init console.
     @jqconsole = @$consoleContainer.jqconsole '', '   ', '.. '
     @$console = @$consoleContainer.find '.jqconsole'
