@@ -111,10 +111,10 @@ $.extend REPLIT,
     @jqconsole.Input (result) =>
       try
         callback result
-        #Should it be here?
         @$this.trigger 'input', [result]
       catch e
         @ErrorCallback e
+    @$this.trigger 'input_request', [callback]
     return undefined
 
   Evaluate: (command) ->
