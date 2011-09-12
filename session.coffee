@@ -51,7 +51,7 @@ $ ->
     REPLIT.OpenPage 'workspace', ->
       REPLIT.LoadLanguage REPLIT_DATA.language, ->
         # Set the editor text.
-        REPLIT.editor.getSession().setValue REPLIT_DATA.editor_text
+        REPLIT.editor.getSession().setValue REPLIT_DATA.editor_text if not @ISMOBILE
         # Get the session data.
         REPLIT.session.id = REPLIT_DATA.id
         REPLIT.session.rid = REPLIT_DATA.rid
@@ -130,7 +130,7 @@ $ ->
     # Get the post data to save.
     post_data =
       lang_name: REPLIT.current_lang.system_name
-      editor_text: REPLIT.editor.getSession().getValue()
+      editor_text: REPLIT.editor.getSession().getValue() if not REPLIT.ISMOBILE
       eval_history: JSON.stringify REPLIT.session.eval_history
 
     # If we are already replin on a saved session get its id.
