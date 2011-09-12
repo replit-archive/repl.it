@@ -1,7 +1,8 @@
 # Extension module.
 # Encapsulates for all session/state loading saving logic.
-# TODO(amasad): Graceful localStorage degrading to cookies.
-# TODO(amasad): Don't depend on pushState and window location for sharing.
+# Works fine on targeted browsers, delayed till after release:
+  # TO*DO(amasad): Graceful localStorage degrading to cookies.
+  # TO*DO(amasad): Don't depend on pushState and window location for sharing.
 
 $ = jQuery
 
@@ -151,16 +152,18 @@ $ ->
         REPLIT.session.id = data
 
       # Render social share links.
-      console.log SHARE_TEMPLATE.twitter()
       $savebox.find('li.twitter a').replaceWith SHARE_TEMPLATE.twitter data
       $savebox.find('li.facebook a').replaceWith SHARE_TEMPLATE.facebook data
       $savebox.find('li.gplus a').replaceWith SHARE_TEMPLATE.gplus data
       $savebox.find('input').val window.location.href
       $savebox.slideDown()
+      $savebox.click (e) ->
+        return e.stopPropagation()
+      $('body').bind 'click.closesave', ->
+        $savebox.slideUp()
+        $('body').unbind('click.closesave')
 
   $('#save-box input').click -> $(this).select()
-  # TODO(amasad): Make any click outside the box close it (a close button looks
-  #               awful on such a small box).
   # When any command is evaled, save it in the eval_history array of the session
   # object, in order to send it to the server on save.
   REPLIT.$this.bind 'eval', (e, command) ->
