@@ -29,11 +29,16 @@ $ ->
     window._gaq.push ['_trackEvent', 'language_loading', system_name]
   REPLIT.$this.bind 'language_loaded', (_, system_name) ->
     # Note that the value must be a string, even though it's used as an int.
-    if REPLIT.language_start_time?
-      time_taken = String Date.now() - REPLIT.language_start_time
+    time_taken = String Date.now() - REPLIT.language_start_time
+    # When loading the language from a session, timing is significantly skewed
+    # because language loading runs in parallel with GUI loading. We log this as
+    # a different event to ensure timing reports are accurate. 
+    event = 'language_' + if REPLIT.loading_saved_lang
+      REPLIT.loading_saved_lang = false
+      'reloaded'
     else
-      time_taken = '0'
-    window._gaq.push ['_trackEvent', 'language_loaded', system_name, time_taken]
+      'loaded'
+    window._gaq.push ['_trackEvent', event, system_name, time_taken]
 
   # Set up button tracking.
   $('#button-languages').click ->

@@ -69,11 +69,14 @@ $ ->
     # Safely bind the reset state function.
     REPLIT.$this.bind 'language_loaded', reset_state
     lang_name = localStorage.getItem('lang_name')
-    if lang_name isnt null
-      # We have a saved local settings for language to load.
-      REPLIT.current_lang_name = lang_name
-      REPLIT.OpenPage 'workspace', ->
-        REPLIT.LoadLanguage lang_name
+    if lang_name?
+      REPLIT.loading_saved_lang = true
+      # We have a saved local settings for language to load. Delay this until
+      # the Analytics modules has set its hook so it can catch language loading.
+      $ ->
+        REPLIT.current_lang_name = lang_name
+        REPLIT.OpenPage 'workspace', ->
+          REPLIT.LoadLanguage lang_name
     else
       # This a first visit, show language overlay.
       REPLIT.OpenPage 'languages'
