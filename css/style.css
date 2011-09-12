@@ -312,7 +312,8 @@ html, body {
   font-weight: bold;
   color: #FC0;
   background: url(../images/sprite.png) -13px -583px no-repeat;
-  margin-left: -8px;
+  position: relative;
+  left: -8px;
 }
 
 .jqconsole-blurred .jqconsole-prompt {
