@@ -230,8 +230,8 @@
       [GCC 4.2.1 (LLVM, Emscripten 1.5, Empythoned)] on linux2
     '''
   Ruby:
-    name: 'Ruby'
-    tagline: 'A natural object-oriented language from Japan.'
+    name: 'Ruby (beta)'
+    tagline: 'A natural dynamic object-oriented language.'
     shortcut: 'R'
     about_link: 'http://en.wikipedia.org/wiki/Ruby_(programming_language)'
     engine_link: 'https://github.com/amasad/jsrepl/tree/master/extern/ruby'

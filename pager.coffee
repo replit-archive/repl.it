@@ -44,7 +44,7 @@ LANG_TEMPLATE =
         languages: ['QBasic', 'Forth']
       Practical:
         category: 'Practical'
-        languages: ['Python', 'Ruby', 'Lua', 'Scheme']
+        languages: ['Ruby', 'Python', 'Lua', 'Scheme']
       Esoteric:
         category: 'Esoteric'
         languages: ['Emoticon', 'Brainfuck', 'LOLCODE', 'Unlambda', 'Bloop']
@@ -72,8 +72,8 @@ PAGES =
   languages:
     id: 'content-languages'
     title: 'Select a Language'
-    min_width: 1030
-    width: 1030
+    min_width: 1080
+    width: 1080
     max_width: 1400
   examples:
     id: 'content-examples'
