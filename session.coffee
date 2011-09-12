@@ -151,7 +151,6 @@ $ ->
         REPLIT.session.id = data
 
       # Render social share links.
-      console.log SHARE_TEMPLATE.twitter()
       $savebox.find('li.twitter a').replaceWith SHARE_TEMPLATE.twitter data
       $savebox.find('li.facebook a').replaceWith SHARE_TEMPLATE.facebook data
       $savebox.find('li.gplus a').replaceWith SHARE_TEMPLATE.gplus data
