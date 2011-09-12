@@ -1,6 +1,7 @@
 # Core module.
 # Responsible for DOM initializations, and most interactions.
-
+ISMOBILE = window.ISMOBILE
+ISIOS =  Boolean navigator.userAgent.match /iPhone|iPad|iPod/i
 DEFAULT_CONTENT_PADDING = 200
 FOOTER_HEIGHT = 30
 HEADER_HEIGHT = 61
@@ -10,7 +11,6 @@ CONSOLE_HIDDEN = 1
 EDITOR_HIDDEN = 0
 SNAP_THRESHOLD = 0.05
 ANIMATION_DURATION = 700
-ISMOBILE = window.ISMOBILE
 $ = jQuery
 
 # jQuery plugin to disable text selection (x-browser).
@@ -285,6 +285,7 @@ $.extend REPLIT,
     $.getScript 'https://apis.google.com/js/plusone.js'
 
 $ ->
+  if ISIOS then $('html, body').css 'overflow', 'hidden'
   REPLIT.$this.bind 'language_loading', (_, system_name) ->
     REPLIT.$throbber.show 'fast'
 
@@ -305,7 +306,6 @@ $ ->
 
   REPLIT.$this.bind 'language_loaded', ->
     REPLIT.$throbber.hide 'fast'
-  
   # When the device orientation change adapt the workspace to the new width.
   check_orientation = ->
     cb = ->
