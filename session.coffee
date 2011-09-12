@@ -48,20 +48,21 @@ $ ->
   # If there exist a REPLIT_DATA variable then we are in a saved session.
   if REPLIT_DATA?
     # Load the language specified by the incoming session data.
-    REPLIT.LoadLanguage REPLIT_DATA.language, ->
-      # Set the editor text.
-      REPLIT.editor.getSession().setValue REPLIT_DATA.editor_text
-      # Get the session data.
-      REPLIT.session.id = REPLIT_DATA.id
-      REPLIT.session.rid = REPLIT_DATA.rid
-      REPLIT.session.saved_eval_history = REPLIT_DATA.eval_history
-      # Show the replay button.
-      $('#replay-button').show()
-      # Delete the incoming session data from the server since we have extracted
-      # everything we neeed.
-      delete window['REPLIT_DATA']
-      # On each language load after this one reset the state.
-      REPLIT.$this.bind 'language_loaded', reset_state
+    REPLIT.OpenPage 'workspace', ->
+      REPLIT.LoadLanguage REPLIT_DATA.language, ->
+        # Set the editor text.
+        REPLIT.editor.getSession().setValue REPLIT_DATA.editor_text
+        # Get the session data.
+        REPLIT.session.id = REPLIT_DATA.id
+        REPLIT.session.rid = REPLIT_DATA.rid
+        REPLIT.session.saved_eval_history = REPLIT_DATA.eval_history
+        # Show the replay button.
+        $('#replay-button').show()
+        # Delete the incoming session data from the server since we have extracted
+        # everything we neeed.
+        delete window['REPLIT_DATA']
+        # On each language load after this one reset the state.
+        REPLIT.$this.bind 'language_loaded', reset_state
   else
     # We are not in a saved session.
     # Safely bind the reset state function.
@@ -80,31 +81,46 @@ $ ->
   $('#replay-button').click (e) ->
     # Get the history comming from the server
     history = REPLIT.session.saved_eval_history
+    locked = false
+    locked_queue = []
     index = -1
     # Executes a command from history and waits for the result to continue
     # with the next command.
-    handler = =>
-      index++
-      if history[index]?
-        # Set the prompt text to the command in question.
-        REPLIT.jqconsole.SetPromptText history[index]
-        # Remove multiline handler from jqconsole to ensure it doesnt' continue
-        # to the next line.
-        _multiline = REPLIT.jqconsole.multiline_callback
-        REPLIT.jqconsole.multiline_callback = undefined
-        # Simulate an enter button on jqconsole.
-        REPLIT.jqconsole._HandleEnter()
-        # Reassign the multiline handler.
-        REPLIT.jqconsole.multiline_callback = _multiline
+    handler = ->
+      if not locked
+        index++
+        if history[index]?
+          # Set the prompt text to the command in question.
+          REPLIT.jqconsole.SetPromptText history[index]
+          # Remove multiline handler from jqconsole to ensure it doesnt' continue
+          # to the next line.
+          _multiline = REPLIT.jqconsole.multiline_callback
+          REPLIT.jqconsole.multiline_callback = undefined
+          # Simulate an enter button on jqconsole.
+          REPLIT.jqconsole._HandleEnter()
+          # Reassign the multiline handler.
+          REPLIT.jqconsole.multiline_callback = _multiline
+        else
+          # There is no more commands, unbind the handler.
+          REPLIT.$this.unbind 'result', handler
+          REPLIT.$this.unbind 'error', handler
+          # We are done from the eval history comming from the server, delete it.
+          delete REPLIT.session['saved_eval_history']
       else
-        # There is no more commands, unbind the handler.
-        REPLIT.$this.unbind 'result', handler
-        REPLIT.$this.unbind 'error', handler
-        # We are done from the eval history comming from the server, delete it.
-        delete REPLIT.session['saved_eval_history']
-
+        locked_queue.push handler
+   
+    input_lock = ->
+      locked = true
+    
+    input_unlock = ->
+      locked = false
+      fn = locked_queue.shift()
+      setTimeout fn, 100 if fn?
+      
     REPLIT.$this.bind 'result', handler
     REPLIT.$this.bind 'error', handler
+    REPLIT.$this.bind 'input', input_unlock
+    REPLIT.$this.bind 'input_request', input_lock
     # Initiate the first handler to start executing history commands.
     handler()
     # This button has to be click atmost once, now hide it.
