@@ -18,7 +18,7 @@
   Forth:
     name: 'Forth'
     tagline: 'An interactive stack-oriented language.'
-    shortcut: 'r'
+    shortcut: 'h'
     about_link: 'http://en.wikipedia.org/wiki/Forth_(programming_language)'
     engine_link: 'https://github.com/amasad/jsrepl/blob/master/extern/jsforth/jsforth.js'
     examples:
@@ -215,7 +215,7 @@
     '''
   Python:
     name: 'Python'
-    tagline: 'A dynamic language emphasizing readabillity.'
+    tagline: 'A dynamic language emphasizing readability.'
     shortcut: 'P'
     about_link: 'http://en.wikipedia.org/wiki/Python_(programming_language)'
     engine_link: 'https://github.com/max99x/empythoned'
@@ -228,4 +228,20 @@
     header: '''
       Python 2.7.2 (default, Jul 20 2011, 02:32:18)
       [GCC 4.2.1 (LLVM, Emscripten 1.5, Empythoned)] on linux2
+    '''
+  Ruby:
+    name: 'Ruby'
+    tagline: 'A natural object-oriented language from Japan.'
+    shortcut: 'R'
+    about_link: 'http://en.wikipedia.org/wiki/Ruby_(programming_language)'
+    engine_link: 'https://github.com/amasad/jsrepl/tree/master/extern/ruby'
+    examples:
+      editor: '/langs/ruby/examples-editor.html'
+      console: '/langs/ruby/examples-console.html'
+    ace_mode:
+      script: '/lib/ace/mode-ruby.js'
+      module: 'ace/mode/ruby'
+    header: '''
+      Ruby 1.8.7 (2008-05-31 patchlevel 0) [x86-linux]
+      [GCC 4.2.1 (LLVM, Emscripten 1.5, Empythoned)]
     '''
