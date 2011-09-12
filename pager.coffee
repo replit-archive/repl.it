@@ -44,7 +44,7 @@ LANG_TEMPLATE =
         languages: ['QBasic', 'Forth']
       Practical:
         category: 'Practical'
-        languages: ['Python', 'Lua', 'Scheme']
+        languages: ['Python', 'Ruby', 'Lua', 'Scheme']
       Esoteric:
         category: 'Esoteric'
         languages: ['Emoticon', 'Brainfuck', 'LOLCODE', 'Unlambda', 'Bloop']
