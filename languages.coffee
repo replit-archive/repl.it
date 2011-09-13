@@ -243,5 +243,5 @@
       module: 'ace/mode/ruby'
     header: '''
       Ruby 1.8.7 (2008-05-31 patchlevel 0) [x86-linux]
-      [GCC 4.2.1 (LLVM, Emscripten 1.5, Empythoned)]
+      [GCC 4.2.1 (LLVM, Emscripten 1.5, Emscripted-Ruby)]
     '''
