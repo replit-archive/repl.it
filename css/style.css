@@ -431,12 +431,12 @@ html, body {
 }
 
 #links a, #links a:visited {
-  color: #FFF;
+  color: #EEE;
   font-size: 14px;
   text-decoration: none;
   margin-left: 15px;
   margin-right: 15px;
-  text-shadow: 0 -1px 0 #000;
+  text-shadow: 0 0 0 transparent, 0 -1px 0 #000;
   -webkit-transition: color .200s, text-shadow .200s;
   -moz-transition: color .200s, text-shadow .200s;
   -o-transition: color .200s, text-shadow .200s;
@@ -445,7 +445,7 @@ html, body {
 
 #links a:hover, #links a:active, #links a:focus {
   color: #FFF;
-  text-shadow: 0 0px 0.3em #C5C5C5;
+  text-shadow: 0 0 0 transparent, 0 0px 0.3em #FFF;
 }
 
 #language-about-link, #language-engine-link {
