@@ -337,6 +337,8 @@ html, body {
 .jqconsole-cursor {
   background: #666;
   line-height: 115%;
+  position: relative !important;
+  margin-right: -8px;
 }
 
 .jqconsole-blurred .jqconsole-cursor {
