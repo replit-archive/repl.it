@@ -9,12 +9,13 @@ html, body {
 /* Header */
 
 #header {
-  background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#EEE));
+  background: #F4F4F4;
   background: -webkit-linear-gradient(top, #FFF, #EEE);
   background: -moz-linear-gradient(top, #FFF, #EEE);
   background: -ms-linear-gradient(top, #FFF, #EEE);
   background: -o-linear-gradient(top, #FFF, #EEE);
   background: linear-gradient(top, #FFF, #EEE);
+  filter: progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#EEEEEE');
   border-bottom: 1px solid #E4E4E4;
   height: 60px;
   text-align: center;
@@ -172,12 +173,13 @@ html, body {
 
 #resize-left {
   border-right: 1px solid #DDD;
-  background: -webkit-gradient(linear, right top, left top, from(#CCC), to(white));
-  background: -webkit-linear-gradient(right, #CCC, white);
-  background: -moz-linear-gradient(right, #CCC, white);
-  background: -ms-linear-gradient(right, #CCC, white);
-  background: -o-linear-gradient(right, #CCC, white);
-  background: linear-gradient(right, #CCC, white);
+  background: #EEE;
+  background: -webkit-linear-gradient(right, #CCC, #FFF);
+  background: -moz-linear-gradient(right, #CCC, #FFF);
+  background: -ms-linear-gradient(right, #CCC, #FFF);
+  background: -o-linear-gradient(right, #CCC, #FFF);
+  background: linear-gradient(right, #CCC, #FFF);
+  filter: progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#CCCCCC', GradientType=1);
   width: 8px;
   cursor: w-resize;
   position: absolute;
@@ -191,12 +193,13 @@ html, body {
   z-index: 1;
   width: 8px;
   cursor: col-resize;
-  background: -webkit-gradient(linear, left top, right top, from(black), to(#0E1628));
-  background: -webkit-linear-gradient(left, black, #0E1628);
-  background: -moz-linear-gradient(left, black, #0E1628);
-  background: -ms-linear-gradient(left, black, #0E1628);
-  background: -o-linear-gradient(left, black, #0E1628);
-  background: linear-gradient(left, black, #0E1628);
+  background: #F8F8F8;
+  background: -webkit-linear-gradient(left, #000, #0E1628);
+  background: -moz-linear-gradient(left, #000, #0E1628);
+  background: -ms-linear-gradient(left, #000, #0E1628);
+  background: -o-linear-gradient(left, #000, #0E1628);
+  background: linear-gradient(left, #000, #0E1628);
+  filter: progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#000000', EndColorStr='#0E1628', GradientType=1);
   position: absolute;
   height: 100%;
   top: 0;
@@ -206,12 +209,13 @@ html, body {
 
 #resize-right {
   border-left: 1px solid #DDD;
-  background: -webkit-gradient(linear, left top, right top, from(#CCC), to(white));
-  background: -webkit-linear-gradient(left, #CCC, white);
-  background: -moz-linear-gradient(left, #CCC, white);
-  background: -ms-linear-gradient(left, #CCC, white);
-  background: -o-linear-gradient(left, #CCC, white);
-  background: linear-gradient(left, #CCC, white);
+  background: #F8F8F8;
+  background: -webkit-linear-gradient(left, #CCC, #FFF);
+  background: -moz-linear-gradient(left, #CCC, #FFF);
+  background: -ms-linear-gradient(left, #CCC, #FFF);
+  background: -o-linear-gradient(left, #CCC, #FFF);
+  background: linear-gradient(left, #CCC, #FFF);
+  filter: progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#CCCCCC', EndColorStr='#FFFFFF', GradientType=1);
   width: 8px;
   cursor: e-resize;
   position: absolute;
@@ -464,7 +468,7 @@ html, body {
   -moz-transition: border .450s, box-shadow .350s;
   -o-transition: border .450s, box-shadow .350s;
   transition: border .450s, box-shadow .350s;
-  background: #f3f3f3;
+  background: #f8f8f8;
   background: -webkit-gradient(linear,0% 40%,0% 70%,from(#F5F5F5),to(#F1F1F1));
   background: -moz-linear-gradient(70% 70% 75deg, #F5F5F5, #F1F1F1);
   background-repeat: no-repeat !important;
