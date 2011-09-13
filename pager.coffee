@@ -93,6 +93,7 @@ PAGES =
     min_width: 600
     max_width: 600
     width: 600
+  DEFAULT: 'workspace'
 
 $.extend REPLIT,
   LoadExamples: (file, container, callback) ->
@@ -171,6 +172,14 @@ $.extend REPLIT,
       # Put the page on top of the stack.
       @page_stack.push page_name
 
+      # Update hash.
+      hash = window.location.hash.slice 1
+      if hash.indexOf REPLIT.HASH_SEPARATOR == -1
+        hash = REPLIT.HASH_SEPARATOR + hash
+      [session, old_page_name] = hash.split ':'
+      hash_name = if page_name is PAGES.DEFAULT then '' else page_name
+      REPLIT.setHash if session then session + ':' else '' + hash_name
+
       # Calculate container width.
       outerWidth = page.width
       # HACK: Workspace doesn't account for resizers for some reason...
@@ -180,7 +189,7 @@ $.extend REPLIT,
         @changing_page = false
         page.$elem.focus()
         callback()
-      
+
       if current_page
         # Perform the animation.
         PAGES[current_page].width = $('.page:visible').width()
@@ -223,6 +232,27 @@ $ ->
       REPLIT.OpenPage 'workspace', ->
         REPLIT.jqconsole.Focus()
 
+  # React to hash changes.
+  initial_hashchange = false
+  REPLIT.$this.bind 'hashchange', (_, hash) ->
+    if initial_hashchange
+      # The first hashchange is handled by the session module.
+      initial_hashchange = false
+      return
+    if hash.indexOf REPLIT.HASH_SEPARATOR == -1
+      hash = REPLIT.HASH_SEPARATOR + hash
+    [_, new_page] = hash.split REPLIT.HASH_SEPARATOR
+    if not new_page then new_page = PAGES.DEFAULT
+    if new_page of PAGES
+      current_page = @page_stack[@page_stack.length - 1]
+      if new_page isnt current_page
+        if REPLIT.changing_page
+          # Interrupt current page switching animation.
+          $('.page').stop true, true
+          @$container.stop true, true
+          REPLIT.changing_page = false
+        REPLIT.OpenPage new_page
+
   # Since we will be doing lots of animation and syncing, we better cache the
   # jQuery elements.
   for name, settings of PAGES
@@ -245,12 +275,16 @@ $ ->
       $('#examples-editor').toggle REPLIT.split_ratio != REPLIT.EDITOR_HIDDEN
       $('#examples-console').toggle REPLIT.split_ratio != REPLIT.CONSOLE_HIDDEN
       REPLIT.OpenPage 'examples'
+    return false
   $('#button-languages').click ->
     REPLIT.OpenPage 'languages'
+    return false
   $('#link-about').click ->
     REPLIT.OpenPage 'about'
+    return false
   $('#button-help').click ->
     REPLIT.OpenPage 'help'
+    return false
 
   # Bind page closing to Escape.
   $(window).keydown (e) ->

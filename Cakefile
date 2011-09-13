@@ -58,7 +58,8 @@ task 'watch', 'Watch all coffee files and compile them live to javascript', ->
 
   # Our coffee files.
   coffee_to_watch = ['base.coffee', 'dom.coffee', 'repl.coffee', 'pager.coffee',
-                     'session.coffee', 'languages.coffee', 'analytics.coffee']
+                     'session.coffee', 'languages.coffee', 'analytics.coffee',
+                     'hash.coffee']
   compileFile = (filename) ->
     try
       compileCoffee filename
