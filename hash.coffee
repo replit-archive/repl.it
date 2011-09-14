@@ -6,26 +6,33 @@ $ = jQuery
 popStateSupported = 'onpopstate' of window
 hashchangeSupported = 'onhashchange' of window
 pushStateSupported = 'pushState' of history
+window_loaded = false
+cherry_pop = true
 
+$(window).bind 'load', ->
+  window_loaded = true
+  
 $.extend REPLIT,
   HASH_SEPARATOR: ':'
   setHash: (target) ->
-    if target[0] is '#' then target = target.slice 1
-    if pushStateSupported
-      history.pushState null, '', '#' + target
-    else
+    cb = -> 
       window.location.hash = target
-
-$ ->
-  if popStateSupported
-    $(window).bind 'popstate', ->
       REPLIT.$this.trigger 'hashchange', [window.location.hash.slice 1]
-  else if hashchangeSupported
+    if not window_loaded
+      setTimeout (-> REPLIT.setHash target), 50
+    else
+      cb()
+$(window).bind 'load', ->
+  if hashchangeSupported
     $(window).bind 'hashchange', ->
       REPLIT.$this.trigger 'hashchange', [window.location.hash.slice 1]
-    # Emulate first hashchange.
-    page = window.location.hash.slice 1
-    if hash then REPLIT.$this.trigger 'hashchange', [hash]
+      return true
+    $(window).trigger 'hashchange'
+  else if popStateSupported
+    $(window).bind 'popstate', ->
+      REPLIT.$this.trigger 'hashchange', [window.location.hash.slice 1]
+      return true
+    $(window).trgger 'popstate'
   else
     lastHash = null
     checkHash = ->
