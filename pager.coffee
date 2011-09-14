@@ -233,7 +233,7 @@ $ ->
         REPLIT.jqconsole.Focus()
 
   # React to hash changes.
-  initial_hashchange = false
+  initial_hashchange = true
   REPLIT.$this.bind 'hashchange', (_, hash) ->
     if initial_hashchange
       # The first hashchange is handled by the session module.
