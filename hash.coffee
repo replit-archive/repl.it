@@ -32,7 +32,7 @@ $(window).bind 'load', ->
     $(window).bind 'popstate', ->
       REPLIT.$this.trigger 'hashchange', [window.location.hash.slice 1]
       return true
-    $(window).trgger 'popstate'
+    $(window).trigger 'popstate'
   else
     lastHash = null
     checkHash = ->
