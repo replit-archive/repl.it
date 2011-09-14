@@ -5,24 +5,21 @@ $ = jQuery
 
 popStateSupported = 'onpopstate' of window
 hashchangeSupported = 'onhashchange' of window
-pushStateSupported = 'pushState' of history
 window_loaded = false
-cherry_pop = true
 
-$(window).bind 'load', ->
-  window_loaded = true
-  
 $.extend REPLIT,
   HASH_SEPARATOR: ':'
   setHash: (target) ->
-    cb = -> 
+    cb = ->
       window.location.hash = target
       REPLIT.$this.trigger 'hashchange', [window.location.hash.slice 1]
     if not window_loaded
       setTimeout (-> REPLIT.setHash target), 50
     else
       cb()
+
 $(window).bind 'load', ->
+  window_loaded = true
   if hashchangeSupported
     $(window).bind 'hashchange', ->
       REPLIT.$this.trigger 'hashchange', [window.location.hash.slice 1]
