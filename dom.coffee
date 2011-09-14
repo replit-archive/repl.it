@@ -319,4 +319,6 @@ $ ->
   $(window).bind 'orientationchange', check_orientation
   if ISMOBILE then check_orientation()
   REPLIT.InitDOM()
-  REPLIT.InjectSocial()
+  $(window).bind 'load', ->
+    cb = -> REPLIT.InjectSocial()
+    setTimeout cb, 0
