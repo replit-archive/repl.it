@@ -16,7 +16,7 @@ $.extend REPLIT,
     # Init console.
     @jqconsole = @$consoleContainer.jqconsole '', '   ', '.. '
     @$console = @$consoleContainer.find '.jqconsole'
-    
+
     # Init editor.
     @$editor = @$editorContainer.find '#editor-widget'
     if not @ISMOBILE
@@ -24,8 +24,10 @@ $.extend REPLIT,
       @editor.setTheme 'ace/theme/textmate'
       @editor.renderer.setHScrollBarAlwaysVisible false
       @$run.click =>
-        @jqconsole.AbortPrompt()
-        @Evaluate REPLIT.editor.getSession().getValue()
+        # TODO(max99x): Expose state properly from jqconsole.
+        if @jqconsole.state is 2  # STATE_PROMPT
+          @jqconsole.AbortPrompt()
+          @Evaluate REPLIT.editor.getSession().getValue()
 
     @current_lang = null
     @current_lang_name = null

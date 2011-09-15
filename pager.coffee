@@ -274,7 +274,8 @@ $ ->
   # Bind page buttons.
   bindPageButtons = ->
     $('#button-examples').click ->
-      if REPLIT.current_lang?
+      # TODO(max99x): Expose state properly from jqconsole.
+      if REPLIT.current_lang? and REPLIT.jqconsole.state is 2  # STATE_PROMPT
         $('#examples-editor').toggle REPLIT.split_ratio != REPLIT.EDITOR_HIDDEN
         $('#examples-console').toggle REPLIT.split_ratio != REPLIT.CONSOLE_HIDDEN
         REPLIT.OpenPage 'examples'
