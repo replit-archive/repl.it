@@ -6,9 +6,9 @@ VISIBLE "Hello world!"
 Loop
 ********************************************************************************
 I HAS A VAR ITZ 0
-IM IN YR LOOP UPPIN YR VAR TIL BOTH SAEM VAR AN 10
+IM IN YR LP UPPIN YR VAR TIL BOTH SAEM VAR AN 5
   VISIBLE SUM OF VAR AN 1
-IM OUTTA YR LOOP
+IM OUTTA YR LP
 ********************************************************************************
 
 Input
