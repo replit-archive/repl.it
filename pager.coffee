@@ -193,6 +193,9 @@ $.extend REPLIT,
       if current_page
         # Perform the animation.
         PAGES[current_page].width = $('.page:visible').width()
+        # HACK: Workspace doesn't account for resizers for some reason..
+        if current_page is 'workspace'
+          PAGES[current_page].width += 2 * @RESIZER_WIDTH
         PAGES[current_page].$elem.fadeOut ANIMATION_DURATION, =>
           @$container.animate width: outerWidth, ANIMATION_DURATION, =>
             # We need to have the box actually displayed (if invisible) so the
