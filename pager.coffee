@@ -270,21 +270,30 @@ $ ->
       REPLIT.LoadLanguage REPLIT.current_lang_name
 
   # Bind page buttons.
-  $('#button-examples').click ->
-    if REPLIT.current_lang?
-      $('#examples-editor').toggle REPLIT.split_ratio != REPLIT.EDITOR_HIDDEN
-      $('#examples-console').toggle REPLIT.split_ratio != REPLIT.CONSOLE_HIDDEN
-      REPLIT.OpenPage 'examples'
-    return false
-  $('#button-languages').click ->
-    REPLIT.OpenPage 'languages'
-    return false
-  $('#link-about').click ->
-    REPLIT.OpenPage 'about'
-    return false
-  $('#button-help').click ->
-    REPLIT.OpenPage 'help'
-    return false
+  bindPageButtons = ->
+    $('#button-examples').click ->
+      if REPLIT.current_lang?
+        $('#examples-editor').toggle REPLIT.split_ratio != REPLIT.EDITOR_HIDDEN
+        $('#examples-console').toggle REPLIT.split_ratio != REPLIT.CONSOLE_HIDDEN
+        REPLIT.OpenPage 'examples'
+      return false
+    $('#button-languages').click ->
+      REPLIT.OpenPage 'languages'
+      return false
+    $('#link-about').click ->
+      REPLIT.OpenPage 'about'
+      return false
+    $('#button-help').click ->
+      REPLIT.OpenPage 'help'
+      return false
+  unbindPageButtons = ->
+    buttons = $('#button-examples, #button-languages, #link-about, #button-help')
+    buttons.unbind 'click'
+  bindPageButtons()
+
+  # Disable buttons while a language is being loaded.
+  REPLIT.$this.bind 'language_loading', unbindPageButtons
+  REPLIT.$this.bind 'language_loaded', bindPageButtons
 
   # Bind page closing to Escape.
   $(window).keydown (e) ->
