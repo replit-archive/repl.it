@@ -43,6 +43,7 @@ $.extend REPLIT,
   DEFAULT_CONTENT_PADDING: DEFAULT_CONTENT_PADDING
   ISMOBILE: ISMOBILE
   split_ratio: if ISMOBILE then EDITOR_HIDDEN else DEFAULT_SPLIT 
+  # NOTE: These should be synced with PAGES.workspace.width in pager.coffee.
   min_content_width: 500
   max_content_width: 3000
   content_padding: DEFAULT_CONTENT_PADDING

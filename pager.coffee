@@ -150,21 +150,20 @@ $.extend REPLIT,
 
       # Update widths to those of the new page.
       # We can't take into account mobile sizes, so just assign the whole screen
-      # width. Thats ok, since our mobile layout is fit to width.
+      # width. That's Ok, since our mobile layout fits the whole width.
       @min_content_width = if @ISMOBILE
         document.documentElement.clientWidth - 2 * @RESIZER_WIDTH
       else
         page.min_width
       @max_content_width = page.max_width
-      
+
       # When the workspace is first loaded, don't mess up its default padding.
       if FIRST_LOAD and page_name is 'workspace'
         FIRST_LOAD = false
-        @content_padding = @DEFAULT_CONTENT_PADDING
-      else
-        @content_padding = document.documentElement.clientWidth - page.width
+        page.width = document.documentElement.clientWidth - @DEFAULT_CONTENT_PADDING
+      @content_padding = document.documentElement.clientWidth - page.width
 
-      # Check if the page exists on our stack, if so splice out to be put
+      # Check if the page exists on our stack. If so splice out to be put
       # on top.
       index = @page_stack.indexOf page_name
       if index > -1
