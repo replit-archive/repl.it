@@ -170,7 +170,7 @@
       | |/ /__ _ / _|/ _|___(_)_ _  ___
       | ' </ _` |  _|  _/ -_) | ' \\/ -_)
       |_|\\_\\__,_|_| |_| \\___|_|_||_\\___|
-      Version 0.1.6, Copyright (c) 2010 Jonah Fox
+      Version 0.0.4, Copyright (c) 2010 Jonah Fox
     '''
   Move:
     name: 'Move'
