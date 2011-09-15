@@ -3,6 +3,14 @@ fs = require 'fs'
 {spawn, exec} = require 'child_process'
 coffee = require 'coffee-script'
 
+INCLUDES = ['images', 'lib']
+LIBRARIES = ['lib/jqconsole.js']
+APP_FILES = ['base.coffee', 'dom.coffee', 'repl.coffee', 'pager.coffee',
+             'session.coffee', 'languages.coffee', 'analytics.coffee',
+             'hash.coffee']
+JS_MINIFIER = "uglifyjs -nc --unsafe "
+CSS_MINIFIER = "yuicompressor "
+
 # Compiles a .coffee file to a .js one, synchronously.
 compileCoffee = (filename) ->
   console.log "Compiling #{filename}."
@@ -53,13 +61,11 @@ task 'watch', 'Watch all coffee files and compile them live to javascript', ->
   # jsREPL files.
   console.log 'Running JSREPL Watch'
   jsreplWatch = spawn 'cake', ['watch'], cwd: './jsrepl'
-  jsreplWatch.stdout.on 'data', (d)->
+  jsreplWatch.stdout.on 'data', (d) ->
     console.log '  ' + d.toString().slice(0, -1)
 
   # Our coffee files.
-  coffee_to_watch = ['base.coffee', 'dom.coffee', 'repl.coffee', 'pager.coffee',
-                     'session.coffee', 'languages.coffee', 'analytics.coffee',
-                     'hash.coffee']
+  coffee_to_watch = [].concat APP_FILES
   compileFile = (filename) ->
     try
       compileCoffee filename
@@ -75,3 +81,58 @@ task 'watch', 'Watch all coffee files and compile them live to javascript', ->
         file = "langs/#{lang}/#{examples_file}"
         do (file, lang) -> watchFile file, (filename) ->
           setTimeout (-> pygmentizeExample(lang, file)), 1
+
+task 'bake', 'Build a final folder ready for deployment', ->
+  console.log 'Baking repl.it.'
+
+  gzip = ->
+    console.log 'GZipping.'
+    cmd = 'for file in `find -type f`; do gzip -c -9 $file > $file.gz; done;'
+    exec cmd, cwd: 'build'
+
+  updateHTML = ->
+    console.log 'Updating HTML.'
+    html = fs.readFileSync 'index.html', 'utf8'
+    html = html.replace '{{ISBAKED_PLACEHOLDER}}', 'window.ISBAKED = true;'
+    fs.writeFileSync 'build/index.html', html
+    gzip()
+
+  minifyCSS = ->
+    console.log 'Minifying CSS.'
+    fs.mkdirSync 'build/css', 0755
+    exec "#{CSS_MINIFIER} -o build/css/style.css css/style.css", ->
+      exec "#{CSS_MINIFIER} -o build/css/mobile.css css/mobile.css", ->
+        exec "#{CSS_MINIFIER} -o build/css/reset.css css/reset.css", updateHTML
+
+  buildCore = ->
+    console.log 'Baking core JS.'
+    contents = (fs.readFileSync(lib, 'utf8') for lib in LIBRARIES)
+    for file in APP_FILES
+      compileCoffee file
+      contents.push fs.readFileSync file.replace(/\.coffee$/, '.js'), 'utf8'
+    fs.writeFileSync 'build/repl.it.tmp.js', contents.join ';\n'
+    exec "#{JS_MINIFIER} build/repl.it.tmp.js", (error, minified) ->
+      if error
+        console.log 'Minifying repl.it failed.'
+        process.exit 1
+      fs.writeFileSync 'build/repl.it.js', minified
+      exec 'rm build/repl.it.tmp.js', minifyCSS
+
+  exec 'rm -rf build', ->
+    fs.mkdirSync 'build', 0755
+    console.log 'Baking jsREPL.'
+    subcake = spawn 'cake', ['bake'], cwd: './jsrepl'
+    subcake.stdout.on 'data', (d) ->
+      console.log '  ' + d.toString().slice(0, -1).replace '\n', '\n  '
+    subcake.on 'exit', ->
+      fs.mkdirSync 'build/jsrepl', 0755
+      exec 'cp -r jsrepl/build/* build/jsrepl', ->
+        exec "cp -r #{INCLUDES.join ' '} build", ->
+          console.log 'Highlighting examples.'
+          fs.mkdirSync 'build/langs', 0755
+          for lang in fs.readdirSync 'langs'
+            for examples_file in fs.readdirSync 'langs/' + lang
+              if examples_file.match /\.txt$/
+                file = "langs/#{lang}/#{examples_file}"
+                pygmentizeExample lang, file
+          exec 'cp -r langs/* build/langs', buildCore

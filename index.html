@@ -2,36 +2,47 @@
 <html itemscope itemtype="http://schema.org/Product">
   <head>
     <title>repl.it</title>
+
+    <!-- Style -->
+    <link type="text/css" rel="stylesheet" href="/css/reset.css" />
     <script>
-    (function () {
-      window.ISMOBILE = Boolean(navigator.userAgent.match(/iPhone|iPad|iPod|Android/i));  
-      if (ISMOBILE){
-        document.write('<link type="text/css" rel="stylesheet" href="/css/mobile.css" />');
-      } else {
-        document.write('<link type="text/css" rel="stylesheet" href="/css/style.css" />');
-      }
-    })();
+      window.ISMOBILE = Boolean(navigator.userAgent.match(/iPhone|iPad|iPod|Android/i));
+      document.write('<link type="text/css" rel="stylesheet" href="/css/' + (ISMOBILE ? 'mobile' : 'style') + '.css" />');
     </script>
+
     <!-- Libraries -->
-    <script src="/lib/jquery-1.6.2.js"></script>
-    <script src="/lib/jqconsole.js"></script>
     <script src="/lib/ace/ace.js"></script>
     <script src="/lib/ace/theme-textmate.js"></script>
 
-    <!-- jsREPL -->
-    <script src="/jsrepl/loader.js" id="jsrepl_loader"></script>
-    <script src="/jsrepl/repl.js"></script>
-    <script src="/jsrepl/languages.js"></script>
+    <!-- Application -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script>
+      try{ {{ISBAKED_PLACEHOLDER}} } catch(e) {}
+      if (window.ISBAKED) {
+        // jsREPL
+        document.write('<script src="/jsrepl/jsrepl.js" id="jsrepl_loader"><\/script>');
+        // repl.it
+        document.write('<script src="/repl.it.js"><\/script>');
+      } else {
+        // jsREPL
+        document.write('<script src="/jsrepl/loader.js" id="jsrepl_loader"><\/script>');
+        document.write('<script src="/jsrepl/repl.js"><\/script>');
+        document.write('<script src="/jsrepl/languages.js"><\/script>');
+        // repl.it
+        document.write('<script src="/lib/jqconsole.js"><\/script>');
+        document.write('<script src="/base.js"><\/script>');
+        document.write('<script src="/hash.js"><\/script>');
+        document.write('<script src="/dom.js"><\/script>');
+        document.write('<script src="/repl.js"><\/script>');
+        document.write('<script src="/pager.js"><\/script>');
+        document.write('<script src="/session.js"><\/script>');
+        document.write('<script src="/languages.js"><\/script>');
+        document.write('<script src="/analytics.js"><\/script>');
+      }
+    </script>
 
-    <!-- repl.it -->
-    <script src="/base.js"></script>
-    <script src="/hash.js"></script>
-    <script src="/dom.js"></script>
-    <script src="/repl.js"></script>
-    <script src="/pager.js"></script>
-    <script src="/session.js"></script>
-    <script src="/languages.js"></script>
-    <script src="/analytics.js"></script>
+    <!-- Session -->
+    <script>try{ {{SESSION_PLACEHOLDER}} } catch(e) {}</script>
 
     <!-- Facebook -->
     <meta property="og:title" content="repl.it" />
@@ -46,11 +57,11 @@
     <meta itemprop="name" content="repl.it" />
     <meta itemprop="description" content="Run code in a variety of languages from your browser!" />
     <meta itemprop="image" content="http://repl.it/images/logo-small.png" />
-    
-    <script>try{ {{REPLIT_DATA}} }catch(e){}</script>
-    <link type="text/css" rel="stylesheet" href="/css/reset.css" />
 
+    <!-- Mobiles -->
     <meta name="viewport" content="width=device-width, maximum-scale=1, minimum-scale=1">
+
+    <!-- Icons -->
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/vnd.microsoft.icon" />
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" type="image/png" />
   </head>
@@ -80,7 +91,7 @@
         </div>
       </div>
       <!-- Language selector. -->
-      <!-- NOTE: tabindex needed for it to receive focus -->
+      <!-- NOTE: tabindex needed for it to receive focus. -->
       <div id="content-languages" class="page" tabindex="0">
         <div id="languages-back" class="page-close"></div>
       </div>
@@ -137,6 +148,7 @@
         </div>
         <div id="help-back" class="page-close"></div>
       </div>
+
       <!-- About page. -->
       <div id="content-about" class="page">
         <p>The repl.it project is an attempt to create an online environment for interactively exploring programming languages. It provides a fully-featured terminal emulator and code editor, powered underneath by interpreter engines for more than a dozen languages.</p>
