@@ -2,7 +2,15 @@
 <html itemscope itemtype="http://schema.org/Product">
   <head>
     <title>repl.it</title>
-
+    <script>
+      (function () {
+        var loc = window.location,
+            session_path = loc.hash.split(':')[0].slice(1);
+        if (session_path) {
+          window.location.href = loc.protocol + '//' +  loc.host  + '/' + session_path;
+        }
+      })()
+    </script>
     <!-- Style -->
     <link type="text/css" rel="stylesheet" href="/css/reset.css" />
     <script>
