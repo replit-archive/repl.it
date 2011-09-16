@@ -9,7 +9,7 @@ APP_FILES = ['base.coffee', 'dom.coffee', 'repl.coffee', 'pager.coffee',
              'session.coffee', 'languages.coffee', 'analytics.coffee',
              'hash.coffee']
 JS_MINIFIER = "uglifyjs -nc --unsafe "
-CSS_MINIFIER = "yuicompressor "
+CSS_MINIFIER = "java -jar ./jsrepl/tools/yuicompressor-2.4.6/build/yuicompressor-2.4.6.jar "
 
 # Compiles a .coffee file to a .js one, synchronously.
 compileCoffee = (filename) ->
@@ -87,7 +87,7 @@ task 'bake', 'Build a final folder ready for deployment', ->
 
   gzip = ->
     console.log 'GZipping.'
-    cmd = 'for file in `find -type f`; do gzip -c -9 $file > $file.gz; done;'
+    cmd = 'for file in `find . -type f`; do gzip -c -9 $file > $file.gz; done;'
     exec cmd, cwd: 'build'
 
   updateHTML = ->
