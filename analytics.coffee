@@ -6,7 +6,6 @@ $ = jQuery
 $.extend REPLIT,
   language_start_time: null
   InitAnalytics: ->
-    window._gaq = window._gaq || []
     window._gaq.push ['_setAccount', 'UA-25629695-1']
     window._gaq.push(['_setDomainName', 'none']);
     window._gaq.push(['_setAllowLinker', true]);
@@ -21,6 +20,7 @@ $.extend REPLIT,
     first_script.parentNode.insertBefore ga_script, first_script
 
 $ ->
+  window._gaq = window._gaq || []
   $(window).load REPLIT.InitAnalytics
 
   # Set up language tracking.
