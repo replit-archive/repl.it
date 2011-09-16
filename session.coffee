@@ -3,8 +3,8 @@
 # Works fine on targeted browsers, delayed till after release:
   # TO*DO(amasad): Graceful localStorage degrading to cookies.
   # TO*DO(amasad): Don't depend on pushState and window location for sharing.
-
 $ = jQuery
+PUSHSTATE_SUPPORTED = 'pushState' of history
 
 SHARE_TEMPLATE =
   twitter: ->
@@ -36,14 +36,20 @@ SHARE_TEMPLATE =
 $.extend REPLIT,
   session:
     eval_history: []
+  pushState: (text) ->
+    if PUSHSTATE_SUPPORTED
+      window.history.pushState null, null, "/#{text}"
+    else
+      REPLIT.setHash 0, text
+    
 
 # Resets application to its initial state (handler for language_loaded event).
 reset_state = (e, lang_name) ->
   localStorage.setItem 'lang_name', lang_name
   $('#replay-button').hide()
-  history.pushState null, null, '/'
   @session = {}
   @session.eval_history = []
+  REPLIT.pushState ''
 
 $ ->
   # If there exist a REPLIT_DATA variable then we are in a saved session.
@@ -71,6 +77,7 @@ $ ->
     lang_name = localStorage.getItem('lang_name')
     if lang_name?
       REPLIT.loading_saved_lang = true
+      
       # We have a saved local settings for language to load. Delay this until
       # the Analytics modules has set its hook so it can catch language loading.
       $ ->
@@ -79,7 +86,17 @@ $ ->
           REPLIT.LoadLanguage lang_name
     else
       # This a first visit, show language overlay.
+      $('#languages-back').bind 'click.language_modal', (e) ->
+        e.stopImmediatePropagation()
+        return false
+      $('#content-languages .language-group li').bind 'click.language_modl', (e) ->
+        REPLIT.Modal false
+        
+      REPLIT.$this.bind 'language_loaded.language_modal', (e) ->
+        $('#languages-back').unbind 'click.language_modal'
+      
       REPLIT.OpenPage 'languages'
+      REPLIT.Modal true
 
   # Click handler for the replay button
   $('#replay-button').click (e) ->
@@ -133,7 +150,7 @@ $ ->
   $('#button-save').click (e) ->
     # Get the post data to save.
     post_data =
-      lang_name: REPLIT.current_lang.system_name
+      language: REPLIT.current_lang.system_name
       editor_text: REPLIT.editor.getSession().getValue() if not REPLIT.ISMOBILE
       eval_history: JSON.stringify REPLIT.session.eval_history
 
@@ -141,18 +158,20 @@ $ ->
     post_data.id = REPLIT.session.id if REPLIT.session.id?
     # Do the actual save request.
     $.post '/save', post_data, (data) ->
+      return if data.error?
+      {data} = data
       $savebox = $('#save-box')
-      if isFinite data
+      if data.rid?
         # The data is a number, which means its a revision id, append it to
         # the current location.
-        history.pushState null, null, "/#{location.pathname.split('/')[1]}/#{data}"
+        REPLIT.pushState "#{REPLIT.session.id}/#{data.rid}"
         # Save the rivision id in the session object.
-        REPLIT.session.rid = data
-      else
+        REPLIT.session.rid = data.rid
+      else if data.id?
         # We just saved a regular session, append the urlhash to the window location.
-        history.pushState null, null, data
+        REPLIT.pushState data.id
         # Save the session id (urlhash) in the session object.
-        REPLIT.session.id = data
+        REPLIT.session.id = data.id
 
       # Render social share links.
       $savebox.find('li.twitter a').replaceWith SHARE_TEMPLATE.twitter data
