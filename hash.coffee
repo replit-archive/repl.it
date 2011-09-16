@@ -50,12 +50,12 @@ $(window).bind 'load', ->
       REPLIT.$this.trigger 'hashchange:1', [hash_2]
     return true
       
-  if hashchangeSupported
-    $(window).bind 'hashchange', hash_check
-    $(window).trigger 'hashchange'
-  else if popStateSupported
+  if popStateSupported
     $(window).bind 'popstate', hash_check
     $(window).trigger 'popstate'
+  else if hashchangeSupported
+    $(window).bind 'hashchange', hash_check
+    $(window).trigger 'hashchange'
   else
     lastHash = null
     checkHash = ->
