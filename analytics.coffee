@@ -21,20 +21,22 @@ $.extend REPLIT,
     first_script.parentNode.insertBefore ga_script, first_script
 
 $ ->
-  REPLIT.InitAnalytics()
+  $(window).load REPLIT.InitAnalytics
 
   # Set up language tracking.
   REPLIT.$this.bind 'language_loading', (_, system_name) ->
     REPLIT.language_start_time = Date.now()
     window._gaq.push ['_trackEvent', 'language', 'loading', system_name]
   REPLIT.$this.bind 'language_loaded', (_, system_name) ->
-    time_taken = Date.now() - REPLIT.language_start_time
-    # When loading the language from a session, timing is significantly skewed
-    # because language loading runs in parallel with GUI loading. We log this as
-    # a different event to ensure timing reports are accurate. 
-    event = if REPLIT.loading_saved_lang then 'reloaded' else 'loaded'
-    REPLIT.loading_saved_lang = false
-    window._gaq.push ['_trackEvent', 'language', event, system_name, time_taken]
+    if REPLIT.language_start_time?
+      time_taken = Date.now() - REPLIT.language_start_time
+      # When loading the language from a session, timing is significantly skewed
+      # because language loading runs in parallel with GUI loading. We log this
+      # as a different event to ensure timing reports are accurate. 
+      event = if REPLIT.loading_saved_lang then 'reloaded' else 'loaded'
+      REPLIT.loading_saved_lang = false
+      window._gaq.push ['_trackEvent', 'language',
+                        event, system_name, time_taken]
 
   # Set up button tracking.
   $('#button-languages').click ->
