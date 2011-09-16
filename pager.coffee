@@ -95,7 +95,11 @@ PAGES =
     width: 600
   DEFAULT: 'workspace'
 
+ALLOWED_IN_MODAL = ['help', 'about', 'languages']
+
 $.extend REPLIT,
+  modal: false
+  Modal: (@modal)->
   LoadExamples: (file, container, callback) ->
     $examples_container = $ '#examples-' + container
     $('.example-group').remove()
@@ -125,7 +129,7 @@ $.extend REPLIT,
 
   # Open a page by its name.
   OpenPage: (page_name, callback=$.noop) ->
-    if @changing_page then return
+    if @changing_page or (@modal and page_name not in ALLOWED_IN_MODAL) then return
     @changing_page = true
     page = PAGES[page_name]
     current_page = @page_stack[@page_stack.length - 1]
@@ -170,14 +174,8 @@ $.extend REPLIT,
         @page_stack.splice index, 1
       # Put the page on top of the stack.
       @page_stack.push page_name
-
-      # Update hash.
-      hash = window.location.hash.slice 1
-      if hash.indexOf REPLIT.HASH_SEPARATOR == -1
-        hash = REPLIT.HASH_SEPARATOR + hash
-      [session, old_page_name] = hash.split ':'
       hash_name = if page_name is PAGES.DEFAULT then '' else page_name
-      REPLIT.setHash if session then session + ':' else '' + hash_name
+      REPLIT.setHash 1, hash_name
 
       # Calculate container width.
       outerWidth = page.width
@@ -235,15 +233,7 @@ $ ->
         REPLIT.jqconsole.Focus()
 
   # React to hash changes.
-  initial_hashchange = true
-  REPLIT.$this.bind 'hashchange', (_, hash) ->
-    if initial_hashchange
-      # The first hashchange is handled by the session module.
-      initial_hashchange = false
-      return
-    if hash.indexOf REPLIT.HASH_SEPARATOR == -1
-      hash = REPLIT.HASH_SEPARATOR + hash
-    [_, new_page] = hash.split REPLIT.HASH_SEPARATOR
+  REPLIT.$this.bind 'hashchange:1', (_, new_page) ->
     if not new_page then new_page = PAGES.DEFAULT
     if new_page of PAGES
       current_page = @page_stack[@page_stack.length - 1]
