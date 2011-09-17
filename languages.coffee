@@ -31,7 +31,7 @@
     '''
   LOLCODE:
     name: 'LOLCODE'
-    tagline: 'The BASIC language of lolcats.'
+    tagline: 'The basic language of lolcats.'
     shortcut: 'O'
     about_link: 'http://lolcode.com/specs/1.2'
     engine_link: 'https://github.com/max99x/lol-coffee'
@@ -70,7 +70,7 @@
     '''
   Bloop:
     name: 'Bloop'
-    tagline: 'Nothing but bounded loops'
+    tagline: 'Nothing but bounded loops.'
     shortcut: 'B'
     about_link: 'http://en.wikipedia.org/wiki/BlooP_and_FlooP'
     engine_link: 'https://github.com/replit/jsrepl/blob/master/extern/bloop/bloop.js'
