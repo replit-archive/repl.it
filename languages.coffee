@@ -7,7 +7,7 @@
     tagline: 'Structured programming for beginners.'
     shortcut: 'Q'
     about_link: 'http://en.wikipedia.org/wiki/QBasic'
-    engine_link: 'https://github.com/amasad/jsrepl/tree/master/extern/qb.js'
+    engine_link: 'https://github.com/replit/jsrepl/tree/master/extern/qb.js'
     examples:
       editor: '/langs/qbasic/examples-editor.html'
       console: '/langs/qbasic/examples-console.html'
@@ -20,7 +20,7 @@
     tagline: 'An interactive stack-oriented language.'
     shortcut: 'h'
     about_link: 'http://en.wikipedia.org/wiki/Forth_(programming_language)'
-    engine_link: 'https://github.com/amasad/jsrepl/blob/master/extern/jsforth/jsforth.js'
+    engine_link: 'https://github.com/replit/jsrepl/blob/master/extern/jsforth/jsforth.js'
     examples:
       editor: '/langs/forth/examples-editor.html'
       console: '/langs/forth/examples-console.html'
@@ -73,7 +73,7 @@
     tagline: 'Nothing but bounded loops'
     shortcut: 'B'
     about_link: 'http://en.wikipedia.org/wiki/BlooP_and_FlooP'
-    engine_link: 'https://github.com/amasad/jsrepl/blob/master/extern/bloop/bloop.js'
+    engine_link: 'https://github.com/replit/jsrepl/blob/master/extern/bloop/bloop.js'
     examples:
       editor: '/langs/bloop/examples-editor.html'
       console: '/langs/bloop/examples-console.html'
@@ -133,7 +133,7 @@
     tagline: 'The JavaScript of tomorrow.'
     shortcut: 'n'
     about_link: 'http://code.google.com/p/traceur-compiler/'
-    engine_link: 'https://github.com/amasad/jsrepl/tree/master/extern/traceur'
+    engine_link: 'https://github.com/replit/jsrepl/tree/master/extern/traceur'
     examples:
       editor: '/langs/traceur/examples-editor.html'
       console: '/langs/traceur/examples-console.html'
@@ -146,7 +146,7 @@
     tagline: 'Unfancy JavaScript.'
     shortcut: 'C'
     about_link: 'http://jashkenas.github.com/coffee-script/'
-    engine_link: 'https://github.com/amasad/jsrepl/tree/master/extern/coffee-script'
+    engine_link: 'https://github.com/replit/jsrepl/tree/master/extern/coffee-script'
     examples:
       editor: '/langs/coffee-script/examples-editor.html'
       console: '/langs/coffee-script/examples-console.html'
@@ -202,7 +202,7 @@
     tagline: 'A lightweight multi-paradigm scripting language.'
     shortcut: 'L'
     about_link: 'http://en.wikipedia.org/wiki/Lua_(programming_language)'
-    engine_link: 'https://github.com/amasad/jsrepl/tree/master/extern/lua'
+    engine_link: 'https://github.com/replit/jsrepl/tree/master/extern/lua'
     examples:
       editor: '/langs/lua/examples-editor.html'
       console: '/langs/lua/examples-console.html'
@@ -234,7 +234,7 @@
     tagline: 'A natural dynamic object-oriented language.'
     shortcut: 'R'
     about_link: 'http://en.wikipedia.org/wiki/Ruby_(programming_language)'
-    engine_link: 'https://github.com/amasad/jsrepl/tree/master/extern/ruby'
+    engine_link: 'https://github.com/replit/jsrepl/tree/master/extern/ruby'
     examples:
       editor: '/langs/ruby/examples-editor.html'
       console: '/langs/ruby/examples-console.html'
