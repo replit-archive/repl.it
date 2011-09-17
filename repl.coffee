@@ -11,6 +11,7 @@ $.extend REPLIT,
       OutputCallback: $.proxy @OutputCallback, @
       ResultCallback: $.proxy @ResultCallback, @
       ErrorCallback: $.proxy @ErrorCallback, @
+      LoadProgressCallback: $.proxy @OnProgress, @
     }
 
     # Init console.

@@ -276,14 +276,37 @@ html, body {
   background: #94A2BB;
 }
 
-#throbber {
+#progress {
   position: absolute;
-  left: 44%;
-  top: 44%;
-  background: url(/images/loading.gif);
-  width: 64px;
-  height: 64px;
-  display: none;
+  left: 30%;
+  right: 30%;
+  top: 47%;
+  height: 16px;
+  padding: 3px 8px 4px 3px;
+  background: #0B1014;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  border-top-color: #0D0D0D;
+  border-bottom-color: #1D1D1D;
+  border-right-color: #101010;
+  border-left-color: #101010;
+  border-top-width: 2px;
+  opacity: 0;
+}
+
+#progress-fill {
+  width: 0%;
+  height: 16px;
+  padding-left: 5px;
+  border-radius: 6px;
+  background-image: url(../images/progress-precomposed.png);
+  background-image: url(../images/progress.png), -webkit-gradient(linear, left top, left bottom, from(#fa6e43), to(#f2220c));
+  background-image: url(../images/progress.png), -webkit-linear-gradient(top, #fa6e43, #f2220c);
+  background-image: url(../images/progress.png), -moz-linear-gradient(top, #fa6e43, #f2220c);
+  background-image: url(../images/progress.png), -ms-linear-gradient(top, #fa6e43, #f2220c);
+  background-image: url(../images/progress.png), -o-linear-gradient(top, #fa6e43, #f2220c);
+  background-image: url(../images/progress.png), linear-gradient(top, #fa6e43, #f2220c);
 }
 
 .jqconsole {

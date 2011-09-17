@@ -11,6 +11,8 @@ CONSOLE_HIDDEN = 1
 EDITOR_HIDDEN = 0
 SNAP_THRESHOLD = 0.05
 ANIMATION_DURATION = 700
+MIN_PROGRESS_DURATION = 50
+MAX_PROGRESS_DURATION = 1000
 $ = jQuery
 
 # jQuery plugin to disable text selection (x-browser).
@@ -47,6 +49,7 @@ $.extend REPLIT,
   min_content_width: 500
   max_content_width: 3000
   content_padding: DEFAULT_CONTENT_PADDING
+  last_progress_time: 0
   # Initialize the DOM (Runs before JSRPEL's load)
   InitDOM: ->
     @$doc_elem = $ 'html'
@@ -61,8 +64,9 @@ $.extend REPLIT,
       l: $ '#resize-left'
       c: $ '#resize-center'
       r: $ '#resize-right'
-    # The loading throbber.
-    @$throbber = $ '#throbber'
+    # The loading progress bar.
+    @$progress = $ '#progress'
+    @$progressFill = $ '#progress-fill'
     # An object holding unhider elements.
     @$unhider =
       editor: $ '#unhide-right'
@@ -196,6 +200,52 @@ $.extend REPLIT,
     bindUnhiderClick @$unhider.editor, @$editorContainer
     bindUnhiderClick @$unhider.console, @$consoleContainer
 
+  # Updates the progress bar's width and color.
+  OnProgress: (percentage) ->
+    ratio = percentage / 100.0
+    duration = @last_progress_time - Date.now()
+    @last_progress_time = Date.now()
+    duration = Math.max(duration, MIN_PROGRESS_DURATION)
+    duration = Math.min(duration, MAX_PROGRESS_DURATION)
+    fill = @$progressFill
+    fill.animate width: percentage + '%',
+      duration: Math.abs(duration),
+      easing: 'linear',
+      step: (now, fx) ->
+        ratio = now / 100.0
+        # A hardcoded interpolation equation between:
+        #           red       orange     yellow     green
+        #    top: #fa6e43 -> #fab543 -> #fad643 -> #88f20d
+        # bottom: #f2220c -> #f26c0c -> #f2a40c -> #c7fa44
+        red_top = Math.round(if ratio < 0.75
+          250
+        else
+          250 + (199 - 250) * ((ratio - 0.75) / 0.25))
+        red_bottom = Math.round(if ratio < 0.75
+          242
+        else
+          250 + (136 - 250) * ((ratio - 0.75) / 0.25))
+
+        green_top = Math.round(if ratio < 0.25
+          110 + (181 - 110) * (ratio / 0.25)
+        else
+          181 + (250 - 181) * ((ratio - 0.25) / 0.75))
+        green_bottom = Math.round(34 + (242 - 34) * ratio)
+
+        blue_top = 67
+        blue_bottom = 12
+
+        top = "rgb(#{red_top}, #{green_top}, #{blue_top})"
+        bottom = "rgb(#{red_bottom}, #{green_bottom}, #{blue_bottom})"
+
+        if $.browser.webkit
+          fill.css 'background-image': "url(../images/progress.png), -webkit-gradient(linear, left top, left bottom, from(#{top}), to(#{bottom}))"
+        else if $.browser.mozilla
+          fill.css 'background-image': "url(../images/progress.png), -moz-linear-gradient(top, #{top}, #{bottom})"
+        else if $.browser.opera
+          fill.css 'background-image': "url(../images/progress.png), -o-linear-gradient(top, #{top}, #{bottom})"
+        fill.css 'background-image': "url(../images/progress.png), linear-gradient(top, #{top}, #{bottom})"
+
   # Resize containers on each window resize, split ratio change or
   # content padding change.
   OnResize: ->
@@ -288,7 +338,9 @@ $.extend REPLIT,
 $ ->
   if ISIOS then $('html, body').css 'overflow', 'hidden'
   REPLIT.$this.bind 'language_loading', (_, system_name) ->
-    REPLIT.$throbber.show 'fast'
+    REPLIT.$progress.animate opacity: 1, 'fast'
+    REPLIT.$progressFill.css width: 0
+    REPLIT.last_progress_time = Date.now()
 
     # Update footer links.
     lang = REPLIT.Languages[system_name]
@@ -306,7 +358,8 @@ $ ->
       $links.animate opacity: 1, 'fast'
 
   REPLIT.$this.bind 'language_loaded', ->
-    REPLIT.$throbber.hide 'fast'
+    REPLIT.OnProgress 100
+    REPLIT.$progress.animate opacity: 0, 'fast'
   # When the device orientation change adapt the workspace to the new width.
   check_orientation = ->
     cb = ->
