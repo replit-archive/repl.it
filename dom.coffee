@@ -11,8 +11,9 @@ CONSOLE_HIDDEN = 1
 EDITOR_HIDDEN = 0
 SNAP_THRESHOLD = 0.05
 ANIMATION_DURATION = 700
-MIN_PROGRESS_DURATION = 50
-MAX_PROGRESS_DURATION = 1000
+MIN_PROGRESS_DURATION = 1
+MAX_PROGRESS_DURATION = 1500
+PROGRESS_ANIMATION_DURATION = 2000
 $ = jQuery
 
 # jQuery plugin to disable text selection (x-browser).
@@ -49,7 +50,7 @@ $.extend REPLIT,
   min_content_width: 500
   max_content_width: 3000
   content_padding: DEFAULT_CONTENT_PADDING
-  last_progress_time: 0
+  last_progress_ratio: 0
   # Initialize the DOM (Runs before JSRPEL's load)
   InitDOM: ->
     @$doc_elem = $ 'html'
@@ -203,8 +204,10 @@ $.extend REPLIT,
   # Updates the progress bar's width and color.
   OnProgress: (percentage) ->
     ratio = percentage / 100.0
-    duration = @last_progress_time - Date.now()
-    @last_progress_time = Date.now()
+    # TODO: Find out why this happens.
+    if ratio < @last_progress_ratio then return
+    duration = (ratio - @last_progress_ratio) * PROGRESS_ANIMATION_DURATION
+    @last_progress_ratio = ratio
     duration = Math.max(duration, MIN_PROGRESS_DURATION)
     duration = Math.min(duration, MAX_PROGRESS_DURATION)
     fill = @$progressFill
@@ -340,7 +343,7 @@ $ ->
   REPLIT.$this.bind 'language_loading', (_, system_name) ->
     REPLIT.$progress.animate opacity: 1, 'fast'
     REPLIT.$progressFill.css width: 0
-    REPLIT.last_progress_time = Date.now()
+    REPLIT.last_progress_ratio = 0
 
     # Update footer links.
     lang = REPLIT.Languages[system_name]

@@ -2,6 +2,7 @@
 <html itemscope itemtype="http://schema.org/Product">
   <head>
     <title>repl.it</title>
+    <!-- Session Fallback Redirect -->
     <script>
       (function () {
         var loc = window.location,
@@ -9,10 +10,14 @@
         if (session_path) {
           window.location.href = loc.protocol + '//' +  loc.host  + '/' + session_path;
         }
-      })()
+      })();
     </script>
+
+    <!-- Icons -->
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" type="image/png" />
+
     <!-- Style -->
-    <link type="text/css" rel="stylesheet" href="/css/reset.css" />
     <script>
       window.ISMOBILE = Boolean(navigator.userAgent.match(/iPhone|iPad|iPod|Android/i));
       document.write('<link type="text/css" rel="stylesheet" href="/css/' + (ISMOBILE ? 'mobile' : 'style') + '.css" />');
@@ -24,30 +29,25 @@
 
     <!-- Application -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-    <script>
-      try{ {{ISBAKED_PLACEHOLDER}} } catch(e) {}
-      if (window.ISBAKED) {
-        // jsREPL
-        document.write('<script src="/jsrepl/jsrepl.js" id="jsrepl_loader"><\/script>');
-        // repl.it
-        document.write('<script src="/repl.it.js"><\/script>');
-      } else {
-        // jsREPL
-        document.write('<script src="/jsrepl/loader.js" id="jsrepl_loader"><\/script>');
-        document.write('<script src="/jsrepl/repl.js"><\/script>');
-        document.write('<script src="/jsrepl/languages.js"><\/script>');
-        // repl.it
-        document.write('<script src="/lib/jqconsole.js"><\/script>');
-        document.write('<script src="/base.js"><\/script>');
-        document.write('<script src="/hash.js"><\/script>');
-        document.write('<script src="/dom.js"><\/script>');
-        document.write('<script src="/repl.js"><\/script>');
-        document.write('<script src="/pager.js"><\/script>');
-        document.write('<script src="/session.js"><\/script>');
-        document.write('<script src="/languages.js"><\/script>');
-        document.write('<script src="/analytics.js"><\/script>');
-      }
-    </script>
+    <!--BAKED
+        <script src="/jsrepl/jsrepl.js" id="jsrepl_loader"></script>
+        <script src="/repl.it.js"></script>
+    UNBAKED-->
+        <!-- jsREPL -->
+        <script src="/jsrepl/loader.js" id="jsrepl_loader"></script>
+        <script src="/jsrepl/repl.js"></script>
+        <script src="/jsrepl/languages.js"></script>
+        <!-- repl.it -->
+        <script src="/lib/jqconsole.js"></script>
+        <script src="/base.js"></script>
+        <script src="/hash.js"></script>
+        <script src="/dom.js"></script>
+        <script src="/repl.js"></script>
+        <script src="/pager.js"></script>
+        <script src="/session.js"></script>
+        <script src="/languages.js"></script>
+        <script src="/analytics.js"></script>
+    <!--/UNBAKED-->
 
     <!-- Session -->
     <script>try{ {{SESSION_PLACEHOLDER}} } catch(e) {}</script>
@@ -68,10 +68,6 @@
 
     <!-- Mobiles -->
     <meta name="viewport" content="width=device-width, maximum-scale=1, minimum-scale=1">
-
-    <!-- Icons -->
-    <link rel="shortcut icon" href="/images/favicon.ico" type="image/vnd.microsoft.icon" />
-    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" type="image/png" />
   </head>
   <body>
     <div id="header">
