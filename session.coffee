@@ -1,8 +1,6 @@
 # Extension module.
 # Encapsulates for all session/state loading saving logic.
-# Works fine on targeted browsers, delayed till after release:
-  # TO*DO(amasad): Graceful localStorage degrading to cookies.
-  # TO*DO(amasad): Don't depend on pushState and window location for sharing.
+# TODO(amasad): Graceful localStorage degradation to cookies.
 $ = jQuery
 PUSHSTATE_SUPPORTED = 'pushState' of history
 
@@ -25,7 +23,7 @@ SHARE_TEMPLATE =
       <a href="javascript:var d=document,f='http://www.facebook.com/share',l=d.location,e=encodeURIComponent,p='.php?src=bm&v=4&i=1315186262&u='+e(l.href)+'&t='+e(d.title);1;try{if (!/^(.*\.)?facebook\.[^.]*$/.test(l.host))throw(0);share_internal_bookmarklet(p)}catch(z) {a=function() {if (!window.open(f+'r'+p,'sharer','toolbar=0,status=0,resizable=1,width=626,height=436'))l.href=f+p};if (/Firefox/.test(navigator.userAgent))setTimeout(a,0);else{a()}}void(0)"></a>
     """
 
-  #unofficial!
+  # Unofficial!
   gplus: ->
     text = 'Check out my REPL session - ' + window.location.href
     text = encodeURI text
@@ -41,7 +39,6 @@ $.extend REPLIT,
       window.history.pushState null, null, "/#{text}"
     else
       REPLIT.setHash 0, text
-    
 
 # Resets application to its initial state (handler for language_loaded event).
 reset_state = (e, lang_name) ->
@@ -52,7 +49,7 @@ reset_state = (e, lang_name) ->
   REPLIT.pushState ''
 
 $ ->
-  # If there exist a REPLIT_DATA variable then we are in a saved session.
+  # If there exists a REPLIT_DATA variable, then we are in a saved session.
   if REPLIT_DATA?
     # Load the language specified by the incoming session data.
     REPLIT.OpenPage 'workspace', ->
@@ -65,8 +62,8 @@ $ ->
         REPLIT.session.saved_eval_history = REPLIT_DATA.eval_history
         # Show the replay button.
         $('#replay-button').show()
-        # Delete the incoming session data from the server since we have extracted
-        # everything we neeed.
+        # Delete the incoming session data from the server since we have
+        # extracted everything we neeed.
         delete window['REPLIT_DATA']
         # On each language load after this one reset the state.
         REPLIT.$this.bind 'language_loaded', reset_state
@@ -77,7 +74,7 @@ $ ->
     lang_name = localStorage.getItem('lang_name')
     if lang_name?
       REPLIT.loading_saved_lang = true
-      
+
       # We have a saved local settings for language to load. Delay this until
       # the Analytics modules has set its hook so it can catch language loading.
       $ ->
@@ -85,22 +82,22 @@ $ ->
         REPLIT.OpenPage 'workspace', ->
           REPLIT.LoadLanguage lang_name
     else
-      # This a first visit, show language overlay.
+      # This is the first visit; show language overlay.
       $('#languages-back').bind 'click.language_modal', (e) ->
         e.stopImmediatePropagation()
         return false
-      $('#content-languages .language-group li').bind 'click.language_modl', (e) ->
+      $('#content-languages .language-group li').bind 'click.language_modal', (e) ->
         REPLIT.Modal false
-        
+
       REPLIT.$this.bind 'language_loaded.language_modal', (e) ->
         $('#languages-back').unbind 'click.language_modal'
-      
+
       REPLIT.OpenPage 'languages'
       REPLIT.Modal true
 
-  # Click handler for the replay button
+  # Click handler for the replay button.
   $('#replay-button').click (e) ->
-    # Get the history comming from the server
+    # Get the history comming from the server.
     history = REPLIT.session.saved_eval_history
     locked = false
     locked_queue = []
@@ -113,8 +110,8 @@ $ ->
         if history[index]?
           # Set the prompt text to the command in question.
           REPLIT.jqconsole.SetPromptText history[index]
-          # Remove multiline handler from jqconsole to ensure it doesnt' continue
-          # to the next line.
+          # Remove multiline handler from jqconsole to ensure it doesn't
+          # continue to the next line.
           _multiline = REPLIT.jqconsole.multiline_callback
           REPLIT.jqconsole.multiline_callback = undefined
           # Simulate an enter button on jqconsole.
@@ -122,39 +119,41 @@ $ ->
           # Reassign the multiline handler.
           REPLIT.jqconsole.multiline_callback = _multiline
         else
-          # There is no more commands, unbind the handler.
+          # There is no more commands; unbind the handler.
           REPLIT.$this.unbind 'result', handler
           REPLIT.$this.unbind 'error', handler
-          # We are done from the eval history comming from the server, delete it.
+          # We are done with the eval history from the server; delete it.
           delete REPLIT.session['saved_eval_history']
       else
         locked_queue.push handler
-   
+
     input_lock = ->
       locked = true
-    
+
     input_unlock = ->
       locked = false
       fn = locked_queue.shift()
       setTimeout fn, 100 if fn?
-      
+
     REPLIT.$this.bind 'result', handler
     REPLIT.$this.bind 'error', handler
     REPLIT.$this.bind 'input', input_unlock
     REPLIT.$this.bind 'input_request', input_lock
     # Initiate the first handler to start executing history commands.
     handler()
-    # This button has to be click atmost once, now hide it.
+    # This button can only be clicked once. Now hide it.
     $(this).hide()
 
   $('#button-save').click (e) ->
+    # Can't save if we haven't selected a language yet.
+    if not REPLIT.current_lang? then return
     # Get the post data to save.
     post_data =
       language: REPLIT.current_lang.system_name
       editor_text: REPLIT.editor.getSession().getValue() if not REPLIT.ISMOBILE
       eval_history: JSON.stringify REPLIT.session.eval_history
 
-    # If we are already replin on a saved session get its id.
+    # If we are already REPLing on a saved session, get its id.
     post_data.id = REPLIT.session.id if REPLIT.session.id?
     # Do the actual save request.
     $.post '/save', post_data, (data) ->
@@ -162,13 +161,13 @@ $ ->
       {data} = data
       $savebox = $('#save-box')
       if data.rid?
-        # The data is a number, which means its a revision id, append it to
+        # The data is a number, which means it's a revision id, append it to
         # the current location.
         REPLIT.pushState "#{REPLIT.session.id}/#{data.rid}"
         # Save the rivision id in the session object.
         REPLIT.session.rid = data.rid
       else if data.id?
-        # We just saved a regular session, append the urlhash to the window location.
+        # We have just saved a regular session; append the URL hash.
         REPLIT.pushState data.id
         # Save the session id (urlhash) in the session object.
         REPLIT.session.id = data.id
