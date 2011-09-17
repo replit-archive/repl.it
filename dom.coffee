@@ -12,6 +12,7 @@ ANIMATION_DURATION = 700
 MIN_PROGRESS_DURATION = 1
 MAX_PROGRESS_DURATION = 1500
 PROGRESS_ANIMATION_DURATION = 2000
+SOCIAL_BUTTONS_DELAY = 30000
 $ = jQuery
 
 # jQuery plugin to disable text selection (x-browser).
@@ -373,6 +374,4 @@ $ ->
   $(window).bind 'orientationchange', check_orientation
   if REPLIT.ISMOBILE then check_orientation()
   REPLIT.InitDOM()
-  $(window).bind 'load', ->
-    cb = -> REPLIT.InjectSocial()
-    setTimeout cb, 0
+  $(window).bind 'load', -> setTimeout REPLIT.InjectSocial, SOCIAL_BUTTONS_DELAY
