@@ -1,7 +1,5 @@
 # Core module.
 # Responsible for DOM initializations, and most interactions.
-ISMOBILE = window.ISMOBILE
-ISIOS =  Boolean navigator.userAgent.match /iPhone|iPad|iPod/i
 DEFAULT_CONTENT_PADDING = 200
 FOOTER_HEIGHT = 30
 HEADER_HEIGHT = 61
@@ -44,8 +42,7 @@ $.extend REPLIT,
   CONSOLE_HIDDEN: CONSOLE_HIDDEN
   EDITOR_HIDDEN: EDITOR_HIDDEN
   DEFAULT_CONTENT_PADDING: DEFAULT_CONTENT_PADDING
-  ISMOBILE: ISMOBILE
-  split_ratio: if ISMOBILE then EDITOR_HIDDEN else DEFAULT_SPLIT 
+  split_ratio: if REPLIT.ISMOBILE then EDITOR_HIDDEN else DEFAULT_SPLIT 
   # NOTE: These should be synced with PAGES.workspace.width in pager.coffee.
   min_content_width: 500
   max_content_width: 3000
@@ -242,12 +239,12 @@ $.extend REPLIT,
         bottom = "rgb(#{red_bottom}, #{green_bottom}, #{blue_bottom})"
 
         if $.browser.webkit
-          fill.css 'background-image': "url(../images/progress.png), -webkit-gradient(linear, left top, left bottom, from(#{top}), to(#{bottom}))"
+          fill.css 'background-image': "url('/images/progress.png'), -webkit-gradient(linear, left top, left bottom, from(#{top}), to(#{bottom}))"
         else if $.browser.mozilla
-          fill.css 'background-image': "url(../images/progress.png), -moz-linear-gradient(top, #{top}, #{bottom})"
+          fill.css 'background-image': "url('/images/progress.png'), -moz-linear-gradient(top, #{top}, #{bottom})"
         else if $.browser.opera
-          fill.css 'background-image': "url(../images/progress.png), -o-linear-gradient(top, #{top}, #{bottom})"
-        fill.css 'background-image': "url(../images/progress.png), linear-gradient(top, #{top}, #{bottom})"
+          fill.css 'background-image': "url('/images/progress.png'), -o-linear-gradient(top, #{top}, #{bottom})"
+        fill.css 'background-image': "url('/images/progress.png'), linear-gradient(top, #{top}, #{bottom})"
 
   # Resize containers on each window resize, split ratio change or
   # content padding change.
@@ -269,7 +266,7 @@ $.extend REPLIT,
     # Resize container and current page.
     @$container.css
       width: width
-    if ISMOBILE and not $('.page:visible').is '#content-workspace'
+    if @ISMOBILE and not $('.page:visible').is '#content-workspace'
       @$container.css 'height', 'auto'
     else
       @$container.css 'height', height
@@ -319,7 +316,7 @@ $.extend REPLIT,
     @$editor.css 'height', @$editorContainer.innerHeight() - editor_vpadding
 
     # Call to Ace editor resize.
-    @editor.resize() if not ISMOBILE
+    @editor.resize() if not @ISMOBILE
 
   InjectSocial: ->
     $rootDOM = $('#social-buttons-container')
@@ -339,7 +336,7 @@ $.extend REPLIT,
     $.getScript 'https://apis.google.com/js/plusone.js'
 
 $ ->
-  if ISIOS then $('html, body').css 'overflow', 'hidden'
+  if REPLIT.ISIOS then $('html, body').css 'overflow', 'hidden'
   REPLIT.$this.bind 'language_loading', (_, system_name) ->
     REPLIT.$progress.animate opacity: 1, 'fast'
     REPLIT.$progressFill.css width: 0
@@ -374,7 +371,7 @@ $ ->
     # Android takes time to know its own width!
     setTimeout cb, 300
   $(window).bind 'orientationchange', check_orientation
-  if ISMOBILE then check_orientation()
+  if REPLIT.ISMOBILE then check_orientation()
   REPLIT.InitDOM()
   $(window).bind 'load', ->
     cb = -> REPLIT.InjectSocial()

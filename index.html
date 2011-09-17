@@ -17,15 +17,8 @@
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/vnd.microsoft.icon" />
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" type="image/png" />
 
-    <!-- Style -->
-    <script>
-      window.ISMOBILE = Boolean(navigator.userAgent.match(/iPhone|iPad|iPod|Android/i));
-      document.write('<link type="text/css" rel="stylesheet" href="/css/' + (ISMOBILE ? 'mobile' : 'style') + '.css" />');
-    </script>
-
-    <!-- Libraries -->
-    <script src="/lib/ace/ace.js"></script>
-    <script src="/lib/ace/theme-textmate.js"></script>
+    <!-- Scripts -->
+    <link type="text/css" rel="stylesheet" href="/css/style.css" />
 
     <!-- Application -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
@@ -40,6 +33,7 @@
         <!-- repl.it -->
         <script src="/lib/jqconsole.js"></script>
         <script src="/base.js"></script>
+        <script src="/browser-check.js"></script>
         <script src="/hash.js"></script>
         <script src="/dom.js"></script>
         <script src="/repl.js"></script>
@@ -48,6 +42,8 @@
         <script src="/languages.js"></script>
         <script src="/analytics.js"></script>
     <!--/UNBAKED-->
+    <script src="/lib/ace/ace.js"></script>
+    <script src="/lib/ace/theme-textmate.js"></script>
 
     <!-- Session -->
     <script>try{ {{SESSION_PLACEHOLDER}} } catch(e) {}</script>
@@ -168,6 +164,22 @@
 
       <div id="resize-right"></div>
     </div>
+    <!-- Browser fallback page. -->
+    <div id="content-fallback">
+      <div id="fallback-header">Browser Version Not Supported</div>
+      <div id="fallback-content">
+        Due to repl.it's reliance on advanced JavaScript techniques, older browsers might have problems running it correctly. Please download the latest version of your favourite browser.
+        <br />
+        <a href="http://www.google.com/chrome" id="browser-chrome">Chrome 13+</a>
+        <a href="http://www.mozilla.org/firefox/" id="browser-firefox">Firefox 3.6+</a>
+        <a href="http://www.opera.com/download/" id="browser-opera">Opera 11.51+</a>
+        <br />
+        <a href="http://windows.microsoft.com/en-US/internet-explorer/downloads/ie" id="browser-ie">IE 9+</a>
+        <a href="http://www.apple.com/safari/download/" id="browser-safari">Safari 5+</a>
+        <div id="fallback-ignore">Let me try anyway!</div>
+      </div>
+    </div>
+    <!-- Session save box. -->
     <div id="save-box">
       <div id="save-box-handle"></div>
       <label for="save-box-link">Share on:</label>

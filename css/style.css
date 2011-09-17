@@ -336,13 +336,13 @@ html, body {
   height: 16px;
   padding-left: 5px;
   border-radius: 6px;
-  background-image: url(../images/progress-precomposed.png);
-  background-image: url(../images/progress.png), -webkit-gradient(linear, left top, left bottom, from(#fa6e43), to(#f2220c));
-  background-image: url(../images/progress.png), -webkit-linear-gradient(top, #fa6e43, #f2220c);
-  background-image: url(../images/progress.png), -moz-linear-gradient(top, #fa6e43, #f2220c);
-  background-image: url(../images/progress.png), -ms-linear-gradient(top, #fa6e43, #f2220c);
-  background-image: url(../images/progress.png), -o-linear-gradient(top, #fa6e43, #f2220c);
-  background-image: url(../images/progress.png), linear-gradient(top, #fa6e43, #f2220c);
+  background-image: url('../images/progress-precomposed.png');
+  background-image: url('../images/progress.png'), -webkit-gradient(linear, left top, left bottom, from(#fa6e43), to(#f2220c));
+  background-image: url('../images/progress.png'), -webkit-linear-gradient(top, #fa6e43, #f2220c);
+  background-image: url('../images/progress.png'), -moz-linear-gradient(top, #fa6e43, #f2220c);
+  background-image: url('../images/progress.png'), -ms-linear-gradient(top, #fa6e43, #f2220c);
+  background-image: url('../images/progress.png'), -o-linear-gradient(top, #fa6e43, #f2220c);
+  background-image: url('../images/progress.png'), linear-gradient(top, #fa6e43, #f2220c);
 }
 
 .jqconsole {
@@ -897,6 +897,70 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 
 #content-about a:hover, #content-about a:focus, #content-about a:active {
   text-decoration: underline;
+}
+
+/* Language Selector */
+
+#content-fallback {
+  color: #666;
+  display: none;
+  z-index: 100;
+  position: absolute;
+  top: 61px;
+  left: 0;
+  width: 100%;
+  background: white;
+  height: 100%;
+}
+
+#fallback-header {
+  text-align: center;
+  font-size: 24pt;
+  width: 500px !important;
+  margin: 22pt auto;
+}
+
+#fallback-content {
+  text-align: center;
+  width: 500px !important;
+  margin: 22pt auto;
+}
+
+#fallback-content a, #fallback-content a:link, #fallback-content a:visited {
+  width: 100px;
+  height: 20px;
+  padding-top: 100px;
+  display: inline-block;
+  text-align: center;
+  margin: 10pt;
+  color: #666;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+#browser-firefox {
+  background: url('../images/browsers.png') 0px 0px no-repeat;
+}
+
+#browser-chrome {
+  background: url('../images/browsers.png') -100px 0px no-repeat;
+}
+
+#browser-safari {
+  background: url('../images/browsers.png') -200px 0px no-repeat;
+}
+
+#browser-ie {
+  background: url('../images/browsers.png') -300px 0px no-repeat;
+}
+
+#browser-opera {
+  background: url('../images/browsers.png') -400px 0px no-repeat;
+}
+
+#fallback-ignore, #fallback-ignore:active {
+  margin-top: 22px;
+  cursor: pointer;
 }
 
 /* Save */
