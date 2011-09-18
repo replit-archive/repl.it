@@ -5,7 +5,7 @@ coffee = require 'coffee-script'
 
 INCLUDES = ['images', 'lib']
 LIBRARIES = ['lib/jqconsole.js']
-APP_FILES = ['browser-check.coffee', 'base.coffee', 'hash.coffee', 'dom.coffee',
+APP_FILES = ['base.coffee', 'browser-check.coffee', 'hash.coffee', 'dom.coffee',
              'repl.coffee', 'pager.coffee', 'session.coffee',
              'languages.coffee', 'analytics.coffee']
 JS_MINIFIER = "uglifyjs -nc --unsafe "
