@@ -899,7 +899,7 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
   text-decoration: underline;
 }
 
-/* Language Selector */
+/* Browsers Fallback */
 
 #content-fallback {
   color: #666;

@@ -321,7 +321,6 @@ html, body {
 /* Console */
 
 #console {
-  background: green;
   background: #0E1628;
   width: 591px;
   position: absolute;
@@ -346,14 +345,37 @@ html, body {
   background: #94A2BB;
 }
 
-#throbber {
+#progress {
   position: absolute;
-  left: 44%;
-  top: 44%;
-  background: url(/images/loading.gif);
-  width: 64px;
-  height: 64px;
-  display: none;
+  left: 30%;
+  right: 30%;
+  top: 47%;
+  height: 16px;
+  padding: 3px 8px 4px 3px;
+  background: #0B1014;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  border-top-color: #0D0D0D;
+  border-bottom-color: #1D1D1D;
+  border-right-color: #101010;
+  border-left-color: #101010;
+  border-top-width: 2px;
+  opacity: 0;
+}
+
+#progress-fill {
+  width: 0%;
+  height: 16px;
+  padding-left: 5px;
+  border-radius: 6px;
+  background-image: url('../images/progress-precomposed.png');
+  background-image: url('../images/progress.png'), -webkit-gradient(linear, left top, left bottom, from(#fa6e43), to(#f2220c));
+  background-image: url('../images/progress.png'), -webkit-linear-gradient(top, #fa6e43, #f2220c);
+  background-image: url('../images/progress.png'), -moz-linear-gradient(top, #fa6e43, #f2220c);
+  background-image: url('../images/progress.png'), -ms-linear-gradient(top, #fa6e43, #f2220c);
+  background-image: url('../images/progress.png'), -o-linear-gradient(top, #fa6e43, #f2220c);
+  background-image: url('../images/progress.png'), linear-gradient(top, #fa6e43, #f2220c);
 }
 
 .jqconsole {
@@ -409,8 +431,9 @@ html, body {
 
 .jqconsole-cursor {
   background: #666;
-  line-height: 100%;
+  line-height: 115%;
   position: relative !important;
+  margin-right: -8px;
 }
 
 .jqconsole-blurred .jqconsole-cursor {
@@ -674,7 +697,7 @@ code .nf { color: #06287e } /* Name.Function */
 code .nl { color: #002070; font-weight: bold } /* Name.Label */
 code .nn { color: #0e84b5; font-weight: bold } /* Name.Namespace */
 code .nt { color: #062873; font-weight: bold } /* Name.Tag */
-code .nv { color: #bb60d5 } /* Name.Variable */
+code .nv { color: #954141 } /* Name.Variable */
 code .ow { color: #007020; font-weight: bold } /* Operator.Word */
 code .w { color: #bbbbbb } /* Text.Whitespace */
 code .mf { color: #40a070 } /* Literal.Number.Float */
@@ -693,12 +716,12 @@ code .sr { color: #235388 } /* Literal.String.Regex */
 code .s1 { color: #4070a0 } /* Literal.String.Single */
 code .ss { color: #517918 } /* Literal.String.Symbol */
 code .bp { color: #007020 } /* Name.Builtin.Pseudo */
-code .vc { color: #bb60d5 } /* Name.Variable.Class */
-code .vg { color: #bb60d5 } /* Name.Variable.Global */
-code .vi { color: #bb60d5 } /* Name.Variable.Instance */
+code .vc { color: #954141 } /* Name.Variable.Class */
+code .vg { color: #954141 } /* Name.Variable.Global */
+code .vi { color: #954141 } /* Name.Variable.Instance */
 code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 
-* Help */
+/* Help */
 
 #content-help {
   color: #555;
@@ -783,4 +806,68 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
   color: #999;
   padding: 0px 3px;
   text-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
+}
+
+/* Browsers Fallback */
+
+#content-fallback {
+  color: #666;
+  display: none;
+  z-index: 100;
+  position: absolute;
+  top: 61px;
+  left: 0;
+  width: 100%;
+  background: white;
+  height: 100%;
+}
+
+#fallback-header {
+  text-align: center;
+  font-size: 24pt;
+  width: 500px !important;
+  margin: 22pt auto;
+}
+
+#fallback-content {
+  text-align: center;
+  width: 500px !important;
+  margin: 22pt auto;
+}
+
+#fallback-content a, #fallback-content a:link, #fallback-content a:visited {
+  width: 100px;
+  height: 20px;
+  padding-top: 100px;
+  display: inline-block;
+  text-align: center;
+  margin: 10pt;
+  color: #666;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+#browser-firefox {
+  background: url('../images/browsers.png') 0px 0px no-repeat;
+}
+
+#browser-chrome {
+  background: url('../images/browsers.png') -100px 0px no-repeat;
+}
+
+#browser-safari {
+  background: url('../images/browsers.png') -200px 0px no-repeat;
+}
+
+#browser-ie {
+  background: url('../images/browsers.png') -300px 0px no-repeat;
+}
+
+#browser-opera {
+  background: url('../images/browsers.png') -400px 0px no-repeat;
+}
+
+#fallback-ignore, #fallback-ignore:active {
+  margin-top: 22px;
+  cursor: pointer;
 }
