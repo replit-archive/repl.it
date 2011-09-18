@@ -104,9 +104,10 @@ $.extend REPLIT,
   #   @arg output: The string to output. May contain control characters.
   #   @arg cls: An optional class for styling the output.
   OutputCallback: (output, cls) ->
-    @jqconsole.Write output, cls
-    @$this.trigger 'output', [output]
-    return undefined
+    if output
+      @jqconsole.Write output, cls
+      @$this.trigger 'output', [output]
+      return undefined
   # Receives a request for a string input from a language engine. Passes back
   # the user's response asynchronously.
   #   @arg callback: The function called with the string containing the user's
