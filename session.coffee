@@ -57,8 +57,8 @@ $ ->
         # Set the editor text.
         REPLIT.editor.getSession().setValue REPLIT_DATA.editor_text if not @ISMOBILE
         # Get the session data.
-        REPLIT.session.id = REPLIT_DATA.id
-        REPLIT.session.rid = REPLIT_DATA.rid
+        REPLIT.session.id = REPLIT_DATA.session_id
+        REPLIT.session.rid = REPLIT_DATA.revision_id
         REPLIT.session.saved_eval_history = REPLIT_DATA.eval_history
         # Show the replay button.
         $('#replay-button').show()
@@ -157,25 +157,22 @@ $ ->
     post_data.id = REPLIT.session.id if REPLIT.session.id?
     # Do the actual save request.
     $.post '/save', post_data, (data) ->
-      return if data.error?
-      {data} = data
+      console.log data
+      {session_id, revision_id} = data
       $savebox = $('#save-box')
-      if data.rid?
-        # The data is a number, which means it's a revision id, append it to
-        # the current location.
-        REPLIT.pushState "#{REPLIT.session.id}/#{data.rid}"
-        # Save the rivision id in the session object.
-        REPLIT.session.rid = data.rid
-      else if data.id?
-        # We have just saved a regular session; append the URL hash.
-        REPLIT.pushState data.id
-        # Save the session id (urlhash) in the session object.
-        REPLIT.session.id = data.id
+      # Update URL.
+      if revision_id > 0
+        REPLIT.pushState session_id + '/' + revision_id
+      else
+        REPLIT.pushState session_id
+      # Update IDs.
+      REPLIT.session.id = session_id
+      REPLIT.session.rid = revision_id
 
       # Render social share links.
-      $savebox.find('li.twitter a').replaceWith SHARE_TEMPLATE.twitter data
-      $savebox.find('li.facebook a').replaceWith SHARE_TEMPLATE.facebook data
-      $savebox.find('li.gplus a').replaceWith SHARE_TEMPLATE.gplus data
+      $savebox.find('li.twitter a').replaceWith SHARE_TEMPLATE.twitter()
+      $savebox.find('li.facebook a').replaceWith SHARE_TEMPLATE.facebook()
+      $savebox.find('li.gplus a').replaceWith SHARE_TEMPLATE.gplus()
       $savebox.find('input').val window.location.href
       $savebox.slideDown()
       $savebox.click (e) ->
