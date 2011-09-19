@@ -56,7 +56,7 @@ $ ->
     REPLIT.OpenPage 'workspace', ->
       REPLIT.LoadLanguage REPLIT_DATA.language, ->
         # Set the editor text.
-        REPLIT.editor.getSession().setValue REPLIT_DATA.editor_text if not @ISMOBILE
+        REPLIT.editor.getSession().setValue REPLIT_DATA.editor_text if not REPLIT.ISMOBILE
         # Get the session data.
         REPLIT.session.id = REPLIT_DATA.session_id
         REPLIT.session.rid = REPLIT_DATA.revision_id
