@@ -3,7 +3,7 @@
 # TODO(amasad): Graceful localStorage degradation to cookies.
 $ = jQuery
 PUSHSTATE_SUPPORTED = 'pushState' of history
-
+WAIT_BETWEEN_SAVES = 2000
 SHARE_TEMPLATE =
   twitter: ->
     text = 'Check out my REPL session - '
@@ -145,7 +145,7 @@ $ ->
     # This button can only be clicked once. Now hide it.
     $(this).hide()
 
-  $('#button-save').click (e) ->
+  saveSession = (e) ->
     # Can't save if we haven't selected a language yet.
     if not REPLIT.current_lang? then return
     # Get the post data to save.
@@ -158,7 +158,6 @@ $ ->
     post_data.id = REPLIT.session.id if REPLIT.session.id?
     # Do the actual save request.
     $.post '/save', post_data, (data) ->
-      console.log data
       {session_id, revision_id} = data
       $savebox = $('#save-box')
       # Update URL.
@@ -181,6 +180,14 @@ $ ->
       $('body').bind 'click.closesave', ->
         $savebox.slideUp()
         $('body').unbind('click.closesave')
+
+      # Disable share button for a little while.
+      unbindSaveButton()
+      setTimeout bindSaveButton, WAIT_BETWEEN_SAVES
+
+  bindSaveButton = -> $('#button-save').click saveSession
+  unbindSaveButton = -> $('#button-save').unbind 'click'
+  bindSaveButton()
 
   $('#save-box input').click -> $(this).select()
   # When any command is evaled, save it in the eval_history array of the session
