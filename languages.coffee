@@ -34,7 +34,7 @@
     tagline: 'The basic language of lolcats.'
     shortcut: 'O'
     about_link: 'http://lolcode.com/specs/1.2'
-    engine_link: 'https://github.com/max99x/lol-coffee'
+    engine_link: 'https://github.com/replit/lol-coffee'
     examples:
       editor: '/langs/lolcode/examples-editor.html'
       console: '/langs/lolcode/examples-console.html'
@@ -47,7 +47,7 @@
     tagline: 'A pure Turing machine controller.'
     shortcut: 'f'
     about_link: 'http://en.wikipedia.org/wiki/Brainfuck'
-    engine_link: 'https://github.com/amasad/bfjs'
+    engine_link: 'https://github.com/replit/bfjs'
     examples:
       editor: '/langs/brainfuck/examples-editor.html'
       console: '/langs/brainfuck/examples-console.html'
@@ -60,7 +60,7 @@
     tagline: 'Programming with an extra dose of smile.'
     shortcut: 'E'
     about_link: 'http://www.teuton.org/~stranger/code/emoticon/manual.php'
-    engine_link: 'https://github.com/amasad/emoticoffee'
+    engine_link: 'https://github.com/replit/emoticoffee'
     examples:
       editor: '/langs/emoticon/examples-editor.html'
       console: '/langs/emoticon/examples-console.html'
@@ -87,7 +87,7 @@
     tagline: 'Functional purity given form.'
     shortcut: 'U'
     about_link: 'http://en.wikipedia.org/wiki/Unlambda'
-    engine_link: 'https://github.com/max99x/unlambda-coffee'
+    engine_link: 'https://github.com/replit/unlambda-coffee'
     examples:
       editor: '/langs/unlambda/examples-editor.html'
       console: '/langs/unlambda/examples-console.html'
@@ -132,8 +132,8 @@
     name: 'Javascript.next'
     tagline: 'The JavaScript of tomorrow.'
     shortcut: 'n'
-    about_link: 'http://code.google.com/p/traceur-compiler/'
-    engine_link: 'https://github.com/replit/jsrepl/tree/master/extern/traceur'
+    about_link: 'http://wiki.ecmascript.org/doku.php?id=harmony:harmony'
+    engine_link: 'http://code.google.com/p/traceur-compiler/'
     examples:
       editor: '/langs/traceur/examples-editor.html'
       console: '/langs/traceur/examples-console.html'
@@ -146,7 +146,7 @@
     tagline: 'Unfancy JavaScript.'
     shortcut: 'C'
     about_link: 'http://jashkenas.github.com/coffee-script/'
-    engine_link: 'https://github.com/replit/jsrepl/tree/master/extern/coffee-script'
+    engine_link: 'https://github.com/jashkenas/coffee-script/'
     examples:
       editor: '/langs/coffee-script/examples-editor.html'
       console: '/langs/coffee-script/examples-console.html'
@@ -177,6 +177,7 @@
     tagline: 'The easy way to program the web.'
     shortcut: 'M'
     about_link: 'http://movelang.org/'
+    engine_link: 'https://github.com/rsms/move'
     examples:
       editor: '/langs/move/examples-editor.html'
       console: '/langs/move/examples-console.html'
@@ -218,7 +219,7 @@
     tagline: 'A dynamic language emphasizing readability.'
     shortcut: 'P'
     about_link: 'http://en.wikipedia.org/wiki/Python_(programming_language)'
-    engine_link: 'https://github.com/max99x/empythoned'
+    engine_link: 'https://github.com/replit/empythoned'
     examples:
       editor: '/langs/python/examples-editor.html'
       console: '/langs/python/examples-console.html'
@@ -234,7 +235,7 @@
     tagline: 'A natural dynamic object-oriented language.'
     shortcut: 'R'
     about_link: 'http://en.wikipedia.org/wiki/Ruby_(programming_language)'
-    engine_link: 'https://github.com/replit/jsrepl/tree/master/extern/ruby'
+    engine_link: 'https://github.com/replit/emscripted-ruby'
     examples:
       editor: '/langs/ruby/examples-editor.html'
       console: '/langs/ruby/examples-console.html'
