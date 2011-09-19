@@ -52,6 +52,7 @@ $ ->
   # If there exists a REPLIT_DATA variable, then we are in a saved session.
   if REPLIT_DATA?
     # Load the language specified by the incoming session data.
+    REPLIT.current_lang_name = REPLIT_DATA.language
     REPLIT.OpenPage 'workspace', ->
       REPLIT.LoadLanguage REPLIT_DATA.language, ->
         # Set the editor text.
