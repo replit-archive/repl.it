@@ -1,3 +1,0 @@
-[submodule "jsrepl"]
-	path = jsrepl
-	url = git@github.com:amasad/jsrepl.git
