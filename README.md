@@ -1,9 +1,11 @@
-# repl.it
+repl.it
+=======
 
 An online environment for interactively exploring programming languages, based
 on [jsREPL](https://github.com/replit/jsrepl).
 
-### Current Languages
+Current Languages
+-----------------
 
 * JavaScript Variants
   * JavaScript
@@ -29,13 +31,15 @@ on [jsREPL](https://github.com/replit/jsrepl).
   * Python
   * Ruby (beta)
 
-### Getting the code
+Getting the code
+----------------
 
     git clone git://github.com/replit/repl.it.git
     cd repl.it
     git submodule update --init --recursive
 
-### Dependancies
+Dependancies
+------------
 
 #### [node.js](http://nodejs.org/)  
 
@@ -66,7 +70,8 @@ on [jsREPL](https://github.com/replit/jsrepl).
   
     pip install Pygments
 
-### Running repl.it
+Running repl.it
+---------------
 
 repl.it comes bundled with a static node HTTP file server and a CoffeeScript file watcher & (re)-compiler:
 
@@ -74,7 +79,8 @@ repl.it comes bundled with a static node HTTP file server and a CoffeeScript fil
     
 repl.it can then be opened at http://localhost:8888/index.html.
 
-### License
+License
+-------
 
 repl.it is available under the MIT license. External libraries used in repl.it
 may use other licenses. Please check each library for its specific license.
