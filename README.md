@@ -54,8 +54,12 @@ Dependancies
     echo 'export NODE_PATH=$HOME/local/node:$HOME/local/node/lib/node_modules' >> ~/.profile
     source ~/.profile
 
-#### [CoffeeScript](http://jashkenas.github.com/coffee-script/)
+#### [npm](http://npmjs.org/)
 
+    curl http://npmjs.org/install.sh | sh
+   
+#### [CoffeeScript](http://jashkenas.github.com/coffee-script/)
+  
   Using npm:
   
     npm install -g coffee-script
