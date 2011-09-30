@@ -68,6 +68,7 @@ var httpCb = function (req, res) {
 
 var watcher = spawn('cake', ['watch']);
 watcher.stdout.pipe(process.stdout);
+watcher.stderr.pipe(process.stderr);
 
 var server_started = false,
     start_timer;
