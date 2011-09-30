@@ -273,6 +273,9 @@ $ ->
     $('#button-languages').click ->
       REPLIT.OpenPage 'languages'
       return false
+    $('#logo').click ->
+      REPLIT.OpenPage 'languages'
+      return false
     $('#link-about').click ->
       REPLIT.OpenPage 'about'
       return false
