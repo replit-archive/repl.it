@@ -966,7 +966,7 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 /* Save */
 
 #save-box {
-  height: 40px;
+  height: 59px;
   width: 181px;
   border: 1px #ccc solid;
   position: absolute;
@@ -996,10 +996,10 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
   top: -2px;
 }
 
-#save-box ul {
+#save-box .share-list {
   display: inline;
 }
-#save-box li {
+#save-box .share-list li {
   float: right;
   margin-left: 10px;
   cursor: pointer;
@@ -1017,12 +1017,12 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
   background: url('/images/sprite.png') -17px -785px no-repeat;
 }
 
-#save-box li {
+#save-box .share-list li {
   width: 16px;
   height: 16px;
 }
 
-#save-box li a {
+#save-box .share-list li a {
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -1033,4 +1033,13 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
   padding: 2px;
   width: 180px;
   color: #666;
+}
+
+#save-box .downloads li {
+  margin-left: 9px;
+  margin-top: -4px;
+}
+
+#save-box .downloads li a {
+  font-size: 75%;
 }
