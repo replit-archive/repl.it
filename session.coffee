@@ -174,6 +174,7 @@ $ ->
       $savebox.find('li.facebook a').replaceWith SHARE_TEMPLATE.facebook()
       $savebox.find('li.gplus a').replaceWith SHARE_TEMPLATE.gplus()
       $savebox.find('input').val window.location.href
+      $savebox.find('.downloads a.editor').attr 'href', "/download/editor/#{session_id}/#{revision_id}/"
       $savebox.slideDown()
       $savebox.click (e) ->
         return e.stopPropagation()
