@@ -74,7 +74,7 @@ $.extend REPLIT,
     # Show the run button on hover.
     @$run = $ '#editor-run'
     @$editorContainer.mouseleave =>
-      @$run.fadeOut 'fast'
+      @$run.fadeIn 'fast'
     @$editorContainer.mousemove =>
       if @$run.is ':hidden' then @$run.fadeIn 'fast'
     @$editorContainer.keydown =>
