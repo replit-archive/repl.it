@@ -966,7 +966,7 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 /* Save */
 
 #save-box {
-  height: 59px;
+  height: 70px;
   width: 181px;
   border: 1px #ccc solid;
   position: absolute;
