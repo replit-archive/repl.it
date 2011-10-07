@@ -18,29 +18,29 @@
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" type="image/png" />
 
     <!-- Scripts -->
-    <link type="text/css" rel="stylesheet" href="/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="/css/style.css?{{CACHE_BUSTER}}" />
 
     <!-- Application -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <!--BAKED
-        <script src="/jsrepl/jsrepl.js" id="jsrepl_loader"></script>
-        <script src="/repl.it.js"></script>
+        <script src="/jsrepl/jsrepl.js?{{CACHE_BUSTER}}" id="jsrepl_loader"></script>
+        <script src="/repl.it.js?{{CACHE_BUSTER}}"></script>
     UNBAKED-->
         <!-- jsREPL -->
-        <script src="/jsrepl/loader.js" id="jsrepl_loader"></script>
-        <script src="/jsrepl/repl.js"></script>
-        <script src="/jsrepl/languages.js"></script>
+        <script src="/jsrepl/loader.js?{{CACHE_BUSTER}}" id="jsrepl_loader"></script>
+        <script src="/jsrepl/repl.js?{{CACHE_BUSTER}}"></script>
+        <script src="/jsrepl/languages.js?{{CACHE_BUSTER}}"></script>
         <!-- repl.it -->
-        <script src="/lib/jqconsole.js"></script>
-        <script src="/base.js"></script>
-        <script src="/browser-check.js"></script>
-        <script src="/hash.js"></script>
-        <script src="/dom.js"></script>
-        <script src="/repl.js"></script>
-        <script src="/pager.js"></script>
-        <script src="/session.js"></script>
-        <script src="/languages.js"></script>
-        <script src="/analytics.js"></script>
+        <script src="/lib/jqconsole.js?{{CACHE_BUSTER}}"></script>
+        <script src="/base.js?{{CACHE_BUSTER}}"></script>
+        <script src="/browser-check.js?{{CACHE_BUSTER}}"></script>
+        <script src="/hash.js?{{CACHE_BUSTER}}"></script>
+        <script src="/dom.js?{{CACHE_BUSTER}}"></script>
+        <script src="/repl.js?{{CACHE_BUSTER}}"></script>
+        <script src="/pager.js?{{CACHE_BUSTER}}"></script>
+        <script src="/session.js?{{CACHE_BUSTER}}"></script>
+        <script src="/languages.js?{{CACHE_BUSTER}}"></script>
+        <script src="/analytics.js?{{CACHE_BUSTER}}"></script>
     <!--/UNBAKED-->
     <script src="/lib/ace/ace.js"></script>
     <script src="/lib/ace/theme-textmate.js"></script>
@@ -184,12 +184,18 @@
     <div id="save-box">
       <div id="save-box-handle"></div>
       <label for="save-box-link">Share on:</label>
-      <ul>
+      <ul class="share-list">
         <li class="share-social facebook"><a href="#"></a></li>
         <li class="share-social twitter"><a href="#"></a></li>
         <li class="share-social gplus"><a href="#"></a></li>
       </ul>
       <input id="save-box-link" type="text" value="" />
+      <label>Download:</label>
+      <ul class="downloads">
+        <li><a class="editor" href="#" target="_blank">Editor file</a></li>
+        <!--<li><a href="#">Console dump</a></li> -->
+      </ul>
+        
     </div>
     <div id="footer">
       <div id="social">
