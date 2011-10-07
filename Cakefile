@@ -100,6 +100,7 @@ task 'bake', 'Build a final folder ready for deployment', ->
     console.log 'Updating HTML.'
     html = fs.readFileSync 'index.html', 'utf8'
     html = html.replace /<!--BAKED\b([^]*?)\bUNBAKED-->[^]*?<!--\/UNBAKED-->/g, '$1'
+    html = html.replace /{{CACHE_BUSTER}}/g, Date.now()
     fs.writeFileSync 'build/index.html', html
     gzip()
 
