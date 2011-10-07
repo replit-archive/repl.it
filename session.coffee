@@ -36,7 +36,11 @@ $.extend REPLIT,
     eval_history: []
   pushState: (text) ->
     if PUSHSTATE_SUPPORTED
+      # We only want to clear state #0 (Session path), restore the page hash
+      # after clearing the session path.
+      {hash} = window.location
       window.history.pushState null, null, "/#{text}"
+      window.location.hash = hash
     else
       REPLIT.setHash 0, text
 
