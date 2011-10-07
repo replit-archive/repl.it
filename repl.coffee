@@ -1,7 +1,6 @@
 # Core module.
 # Holds the core application logic and all interactions with JSREPL.
 # Emits events so other modules can hook into.
-
 $ = jQuery
 
 $.extend REPLIT,
@@ -49,11 +48,14 @@ $.extend REPLIT,
       session.setUndoManager new UndoManager
       ace_mode = @Languages[lang_name].ace_mode
       if ace_mode?
-        $.getScript ace_mode.script, =>
+        # jQuery deferred object for getting ace mode.
+        ace_mode_ajax = $.getScript ace_mode.script, =>
           mode = require(ace_mode.module).Mode
           session.setMode new mode
           @editor.setSession session
       else
+        # No ace mode found create a resolved deferred.
+        ace_mode_ajax = jQuery.Deferred().resolve()
         textMode = require("ace/mode/text").Mode
         session.setMode new textMode
         @editor.setSession session
@@ -79,10 +81,12 @@ $.extend REPLIT,
 
     # Load the language engine from jsREPL.
     @jsrepl.LoadLanguage lang_name, =>
-      @StartPrompt()
-      @$this.trigger 'language_loaded', [lang_name]
-      @jqconsole.Write @Languages[lang_name].header + '\n'
-      callback()
+      # Continue only when the ace mode retrieval is done.
+      $.when(ace_mode_ajax).then =>
+        @StartPrompt()
+        @$this.trigger 'language_loaded', [lang_name]
+        @jqconsole.Write @Languages[lang_name].header + '\n'
+        callback()
 
   # Receives the result of a command evaluation.
   #   @arg result: The user-readable string form of the result of an evaluation.
