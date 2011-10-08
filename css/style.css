@@ -966,7 +966,7 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 /* Save */
 
 #save-box {
-  height: 70px;
+  height: 85px;
   width: 181px;
   border: 1px #ccc solid;
   position: absolute;
@@ -1036,10 +1036,11 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 }
 
 #save-box .downloads li {
-  margin-left: 9px;
   margin-top: -4px;
 }
 
 #save-box .downloads li a {
+  color: #0E157F;
+  text-decoration: none;
   font-size: 75%;
 }
