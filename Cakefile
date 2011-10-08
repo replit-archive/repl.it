@@ -4,7 +4,7 @@ fs = require 'fs'
 coffee = require 'coffee-script'
 
 INCLUDES = ['images', 'lib']
-LIBRARIES = ['lib/jqconsole.js']
+LIBRARIES = ['lib/jqconsole-2.5.min.js']
 APP_FILES = ['base.coffee', 'browser-check.coffee', 'hash.coffee', 'dom.coffee',
              'repl.coffee', 'pager.coffee', 'session.coffee',
              'languages.coffee', 'analytics.coffee']
