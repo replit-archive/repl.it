@@ -96,6 +96,7 @@ $.extend REPLIT,
   #   @arg result: The user-readable string form of the result of an evaluation.
   ResultCallback: (result) ->
     if result
+      result = result + '\n' if result[-1] isnt '\n'
       @jqconsole.Write '=> ' + result, 'result'
     @StartPrompt()
     @$this.trigger 'result', [result]
@@ -104,6 +105,7 @@ $.extend REPLIT,
   ErrorCallback: (error) ->
     if typeof error == 'object'
       error = error.message
+    error = error + '\n' if error[-1] isnt '\n'
     @jqconsole.Write String(error), 'error'
     @StartPrompt()
     @$this.trigger 'error', [error]
