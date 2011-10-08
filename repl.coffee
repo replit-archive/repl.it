@@ -72,12 +72,16 @@ $.extend REPLIT,
       @StartPrompt()
     @jqconsole.RegisterShortcut 'L', =>
       @OpenPage 'languages'
-    @jqconsole.RegisterShortcut 'E', =>
+    @jqconsole.RegisterShortcut 'G', =>
       @OpenPage 'examples'
     @jqconsole.RegisterShortcut 'H', =>
       @OpenPage 'help'
     @jqconsole.RegisterShortcut 'S', =>
       $('#button-save').click()
+    @jqconsole.RegisterShortcut 'A', =>
+      @jqconsole.MoveToStart();
+    @jqconsole.RegisterShortcut 'E', =>
+      @jqconsole.MoveToEnd();
 
     # Load the language engine from jsREPL.
     @jsrepl.LoadLanguage lang_name, =>
@@ -136,7 +140,7 @@ $.extend REPLIT,
   # Shows a command prompt in the console and waits for input.
   StartPrompt: ->
     line_checker = $.proxy(@jsrepl.CheckLineEnd, @jsrepl)
-    @jqconsole.Prompt true, $.proxy(@Evaluate, @), line_checker
+    @jqconsole.Prompt true, $.proxy(@Evaluate, @), line_checker, true
 
 $ ->
   REPLIT.Init()
