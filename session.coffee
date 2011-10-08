@@ -157,7 +157,8 @@ $ ->
       language: REPLIT.current_lang.system_name
       editor_text: REPLIT.editor.getSession().getValue() if not REPLIT.ISMOBILE
       eval_history: JSON.stringify REPLIT.session.eval_history
-
+      console_dump: REPLIT.jqconsole.Dump();
+      
     # If we are already REPLing on a saved session, get its id.
     post_data.id = REPLIT.session.id if REPLIT.session.id?
     # Do the actual save request.
@@ -179,6 +180,7 @@ $ ->
       $savebox.find('li.gplus a').replaceWith SHARE_TEMPLATE.gplus()
       $savebox.find('input').val window.location.href
       $savebox.find('.downloads a.editor').attr 'href', "/download/editor/#{session_id}/#{revision_id}/"
+      $savebox.find('.downloads a.repl').attr 'href', "/download/repl/#{session_id}/#{revision_id}/"
       $savebox.slideDown()
       $savebox.click (e) ->
         return e.stopPropagation()
