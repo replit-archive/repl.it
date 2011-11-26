@@ -36,7 +36,7 @@ $.extend REPLIT,
   # Load a given language by name.
   LoadLanguage: (lang_name, callback=$.noop) ->
     @$this.trigger 'language_loading', [lang_name]
-    @current_lang = JSREPL::Languages::[lang_name]
+    @current_lang = @jsrepl.GetLangConfig lang_name.toLowerCase()
     # Hold the name for saving and such.
     @current_lang.system_name = lang_name
 
@@ -84,7 +84,7 @@ $.extend REPLIT,
       @jqconsole.MoveToEnd();
 
     # Load the language engine from jsREPL.
-    @jsrepl.LoadLanguage lang_name, =>
+    @jsrepl.LoadLanguage lang_name.toLowerCase(), =>
       # Continue only when the ace mode retrieval is done.
       $.when(ace_mode_ajax).then =>
         @StartPrompt()
