@@ -31,14 +31,14 @@ Current Languages
   * Python
   * Ruby (beta)
 
-Getting the code
+Getting the Code
 ----------------
 
     git clone git://github.com/replit/repl.it.git
     cd repl.it
     git submodule update --init --recursive
 
-Dependancies
+Dependencies
 ------------
 
 #### [node.js](http://nodejs.org/)  
@@ -86,8 +86,11 @@ repl.it can then be opened at http://localhost:8888/index.html.
 Documentation
 -------------
 
-There is some documentation in the [wiki page](https://github.com/replit/repl.it/wiki) and we will be adding some more soon.  
-Until then if you need any help try going to the #repl.it IRC channel at irc.freenode.net.
+There is some documentation on the [wiki page](https://github.com/replit/repl.it/wiki)
+and we will be adding some more soon.  
+Until then if you need any help try going to the #repl.it IRC channel at
+irc.freenode.net or messaging [@max99x](https://github.com/max99x) or
+[@amasad](https://github.com/amasad).
 
 
 License
