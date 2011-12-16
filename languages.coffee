@@ -246,3 +246,16 @@
       Ruby 1.8.7 (2008-05-31 patchlevel 0) [x86-linux]
       [GCC 4.2.1 (LLVM, Emscripten 1.5, Emscripted-Ruby)]
     '''
+  Roy:
+    name: 'Roy'
+    tagline: 'Small functional language that compiles to JavaScript.'
+    shortcut: 'y'
+    about_link: 'http://roy.brianmckenna.org/'
+    engine_link: 'https://github.com/pufuwozu/roy'
+    examples:
+      editor: '/langs/roy/examples-editor.html'
+      console: '/langs/roy/examples-console.html'
+    header:'''
+      Roy 0.1.3
+      Copyright (C) 2011 Brian McKenna
+    '''

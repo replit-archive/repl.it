@@ -50,7 +50,7 @@ LANG_TEMPLATE =
         languages: ['Emoticon', 'Brainfuck', 'LOLCODE', 'Unlambda', 'Bloop']
       Web:
         category: 'Web'
-        languages: ['JavaScript', 'Traceur', 'Move', 'Kaffeine', 'CoffeeScript']
+        languages: ['JavaScript', 'Traceur', 'Move', 'Kaffeine', 'CoffeeScript', 'Roy']
 
     for _, category of template_data
       for lang_name, index in category.languages
