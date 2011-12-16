@@ -1044,3 +1044,40 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
   text-decoration: none;
   font-size: 75%;
 }
+
+#buttons div:hover .tooltip{
+  display:block;
+}
+.tooltip {
+  font-weight: normal;
+  display: none;
+  position: absolute;
+  top: 23px;
+  left:-15px;
+  text-align: center;
+  margin-left: -104px;
+  padding: 6px;
+  margin: 1em 0 3em;
+  color: white;
+  line-height: 1.3em;
+  background-color: #444;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  z-index:1000;
+}
+.tooltip:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -10px;
+  margin-left: -10px;
+  left: 50%;
+  width: 0;
+  border-width: 0 10px 10px;
+  border-style: solid;
+  border-color: #444 transparent;
+}
+#button-help .tooltip, #button-save .tooltip{
+  left: 0;
+}
