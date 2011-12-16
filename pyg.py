@@ -143,6 +143,22 @@ class ForthLexer(FactorLexer):
   aliases = ['forth']
   filenames = ['*.4th']
 
+class RoyLexer(RegexLexer):
+  name = 'Roy'
+  aliases = ['roy']
+  filenames = ['*.roy']
+
+  tokens = {
+    'root': [
+      (r'//.*\n', Comment.Single),
+      (r'\b(true|false|let|fn|if|then|else|data|type|match|case|do|return|macro|with)\b', Keyword),
+      (r'-?\d+', Literal.Number),
+      (r'\"[^"]*\"', Literal.String),
+      (r'<-|->|=|==|!=|\*|\+\+|\\', Operator),
+      (r'.', Text)
+    ]
+  }
+  
 def getLexer(lexer_name):
   lexers = [value for name, value in globals().items()
             if name.endswith('Lexer') and hasattr(value, 'aliases')]
