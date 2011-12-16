@@ -722,7 +722,7 @@ html, body {
 code .c { color: #60a0b0; font-style: italic } /* Comment */
 code .err { border: 1px solid #FF0000 } /* Error */
 code .k { color: #007020; font-weight: bold } /* Keyword */
-code .o { color: #666666 } /* Operator */
+code .o { color: brown } /* Operator */
 code .cm { color: #60a0b0; font-style: italic } /* Comment.Multiline */
 code .cp { color: #007020 } /* Comment.Preproc */
 code .c1 { color: #60a0b0; font-style: italic } /* Comment.Single */
