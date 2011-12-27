@@ -194,6 +194,9 @@
     examples:
       editor: '/langs/scheme/examples-editor.html'
       console: '/langs/scheme/examples-console.html'
+    ace_mode:
+      script: '/lib/ace/mode-scheme.js'
+      module: 'ace/mode/scheme'
     header: '''
       BiwaScheme Interpreter version 0.5.7
       Copyright (C) 2007-2010 Yutaka HARA and the BiwaScheme team
