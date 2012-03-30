@@ -12,7 +12,7 @@ $.extend REPLIT,
       error: $.proxy @ErrorCallback, @
       progress: $.proxy @OnProgress, @
       timeout:
-        time: 1000
+        time: 15000,
         callback: =>
           a = confirm 'The program is taking too long to finish. Do you want to stop it?'
           @LoadLanguage @current_lang.system_name if a
