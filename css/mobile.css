@@ -871,3 +871,7 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
   margin-top: 22px;
   cursor: pointer;
 }
+
+.tooltip {
+  display:none;
+}
