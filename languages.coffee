@@ -154,7 +154,7 @@
       script: '/lib/ace/mode-coffee.js'
       module: 'ace/mode/coffee'
     header: '''
-      CoffeeScript v1.0.1
+      CoffeeScript v1.3.1
       Copyright (c) 2011, Jeremy Ashkenas
     '''
   Kaffeine:
