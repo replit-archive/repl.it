@@ -43,17 +43,6 @@ Dependencies
 
 #### [node.js](http://nodejs.org/)  
 
-    git clone git://github.com/joyent/node.git
-    cd node
-    git checkout v0.4.12
-    mkdir ~/local
-    ./configure --prefix=$HOME/local/node
-    make
-    make install
-    echo 'export PATH=$HOME/local/node/bin:$PATH' >> ~/.profile
-    echo 'export NODE_PATH=$HOME/local/node:$HOME/local/node/lib/node_modules' >> ~/.profile
-    source ~/.profile
-
 #### [npm](http://npmjs.org/)
 
     curl http://npmjs.org/install.sh | sh
