@@ -106,7 +106,7 @@ task 'bake', 'Build a final folder ready for deployment', ->
 
   minifyCSS = ->
     console.log 'Minifying CSS.'
-    fs.mkdirSync 'build/css', 0755
+    fs.mkdirSync 'build/css', 0o755
     exec "#{CSS_MINIFIER} -o build/css/style.css css/style.css", ->
       exec "#{CSS_MINIFIER} -o build/css/mobile.css css/mobile.css", ->
         exec "#{CSS_MINIFIER} -o build/css/reset.css css/reset.css", updateHTML
@@ -126,17 +126,17 @@ task 'bake', 'Build a final folder ready for deployment', ->
       exec 'rm build/repl.it.tmp.js', minifyCSS
 
   exec 'rm -rf build', ->
-    fs.mkdirSync 'build', 0755
+    fs.mkdirSync 'build', 0o755
     console.log 'Baking jsREPL.'
     subcake = spawn 'cake', ['bake'], cwd: './jsrepl'
     subcake.stdout.on 'data', (d) ->
       console.log '  ' + d.toString().slice(0, -1).replace '\n', '\n  '
     subcake.on 'exit', ->
-      fs.mkdirSync 'build/jsrepl', 0755
+      fs.mkdirSync 'build/jsrepl', 0o755
       exec 'cp -r jsrepl/build/* build/jsrepl', ->
         exec "cp -r #{INCLUDES.join ' '} build", ->
           console.log 'Highlighting examples.'
-          fs.mkdirSync 'build/langs', 0755
+          fs.mkdirSync 'build/langs', 0o755
           for lang in fs.readdirSync 'langs'
             for examples_file in fs.readdirSync 'langs/' + lang
               if examples_file.match /\.txt$/
