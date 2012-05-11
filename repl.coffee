@@ -37,6 +37,17 @@ $.extend REPLIT,
           @jqconsole.AbortPrompt()
           @Evaluate REPLIT.editor.getSession().getValue()
 
+      @editor.commands.addCommand
+        name: 'run'
+        bindKey:
+          win: 'Ctrl-Return'
+          mac: 'Command-Return'
+          sebder: 'editor'
+        exec: => 
+          @$run.click()
+          # Allow async eval to happen then reclaim focus to editor.
+          setTimeout (=> @editor.focus()), 0
+
     @current_lang = null
     @current_lang_name = null
     @inited = true
