@@ -79,6 +79,8 @@ $.extend REPLIT,
       if @$run.is ':hidden' then @$run.fadeIn 'fast'
     @$editorContainer.keydown =>
       @$run.fadeOut 'fast'
+      # Remove tooltips when typing or otherwise they'll stay forever.
+      $('.tooltip').remove()
 
     # Initialaize the column resizers.
     @InitSideResizers()
@@ -375,3 +377,6 @@ $ ->
   if REPLIT.ISMOBILE then check_orientation()
   REPLIT.InitDOM()
   $(window).bind 'load', -> setTimeout REPLIT.InjectSocial, SOCIAL_BUTTONS_DELAY
+  $('#buttons').tooltip
+    selector: '.button'
+    placement: 'bottom'

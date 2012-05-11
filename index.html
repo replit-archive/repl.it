@@ -42,7 +42,7 @@
         <script src="/analytics.js?{{CACHE_BUSTER}}"></script>
     <!--/UNBAKED-->
     <script src="/lib/ace/ace.js"></script>
-
+    <script src="/lib/bootstrap-tooltip.js"></script>
     <!-- Session -->
     <script>try{ {{SESSION_PLACEHOLDER}} } catch(e) {}</script>
 
@@ -64,11 +64,12 @@
     <meta name="viewport" content="width=device-width, maximum-scale=1, minimum-scale=1">
   </head>
   <body>
+    <div class="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner">SHIF SJKF JAFKDA KFAS</div></div>
     <div id="header">
       <a id="logo" href="/"><img src="/images/logo-small.png" width="173" height="60" /></a>
       <div id="buttons">
         <!-- Warning: inline elements, any white space would break the layout --> 
-        <div id="button-languages" class="button left"><div class="tooltip">Languages</div></div><div id="button-examples" class="button middle"><div class="tooltip">Examples</div></div><div id="button-save" class="button middle"><div class="tooltip">Save</div></div><div id="button-help" class="button right"><div class="tooltip">Help</div></div>
+        <div id="button-languages" class="button left" title="Languages"></div><div id="button-examples" class="button middle" title="Examples"></div><div id="button-save" class="button middle" title="Save"></div><div id="button-help" class="button right" title="Help"></div>
       </div>
       <div id="title"></div>
     </div>

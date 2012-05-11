@@ -153,3 +153,13 @@ $.extend REPLIT,
 
 $ ->
   REPLIT.Init()
+  $('.ace_gutter').tooltip
+    selector: '.ace_warning, .ace_error'
+    animation: off
+    placement: (tooltip, elem) ->
+      if $(elem).is '.ace_error'
+        $(tooltip).addClass 'error'
+      else
+        $(tooltip).addClass 'warning'
+      'bottom'
+

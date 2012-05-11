@@ -1048,7 +1048,7 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 #buttons div:hover .tooltip{
   display:block;
 }
-.tooltip {
+/*.tooltip {
   font-weight: normal;
   display: none;
   position: absolute;
@@ -1077,7 +1077,71 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
   border-width: 0 10px 10px;
   border-style: solid;
   border-color: #444 transparent;
-}
+}*/
 #button-help .tooltip, #button-save .tooltip{
   left: 0;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 1020;
+  display: block;
+  padding: 5px;
+  font-size: 13px;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  visibility: visible;
+}
+
+.tooltip.in {
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+}
+
+.tooltip.bottom {
+  margin-top: 0;
+}
+
+.tooltip.bottom .tooltip-arrow {
+  top: 0;
+  left: 50%;
+  margin-left: -5px;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #000000;
+  border-left: 5px solid transparent;
+}
+
+.tooltip-inner {
+  max-width: 200px;
+  padding: 3px 8px;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  background-color: #000000;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+.tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+.tooltip.warning .tooltip-arrow {
+  border-bottom: 5px solid orange;
+  left: 46%;
+}
+.tooltip.warning .tooltip-inner  {
+  color: black;
+  background: #FDBB30;
+}
+
+.tooltip.error .tooltip-arrow {
+  border-bottom: 5px solid #FBE3E4;
+  left: 46%;
+}
+.tooltip.error .tooltip-inner  {
+  color: darkRed;
+  background: #FBE3E4;
 }
