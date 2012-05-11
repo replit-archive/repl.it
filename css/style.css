@@ -201,8 +201,8 @@ html, body {
   height: 100%;
 }
 
-.ace_gutter {
-  max-width: 2.25em !important;
+.ace_gutter-layer {
+  min-width: 40px!important;
 }
 
 /* Resizers */
