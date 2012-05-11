@@ -12,10 +12,12 @@ $.extend REPLIT,
       error: $.proxy @ErrorCallback, @
       progress: $.proxy @OnProgress, @
       timeout:
-        time: 15000,
+        time: 12000,
         callback: =>
-          a = confirm 'The program is taking too long to finish. Do you want to stop it?'
-          @LoadLanguage @current_lang.system_name if a
+          if a = confirm 'The program is taking too long to finish. Do you want to stop it?'
+            code = @editor.getSession().getValue()
+            @LoadLanguage @current_lang.system_name , =>
+              @editor.getSession().setValue code
           return a
     }
 
