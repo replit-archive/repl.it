@@ -4,7 +4,8 @@ fs = require 'fs'
 coffee = require 'coffee-script'
 
 INCLUDES = ['images', 'lib']
-LIBRARIES = ['lib/jqconsole-2.6.min.js']
+LIBRARIES = ['lib/jqconsole-2.6.min.js', 'lib/bootstrap-tooltip.js']
+CSS = ['style.css', 'mobile.css', 'print.css']
 APP_FILES = ['base.coffee', 'browser-check.coffee', 'hash.coffee', 'dom.coffee',
              'repl.coffee', 'pager.coffee', 'session.coffee',
              'languages.coffee', 'analytics.coffee']
@@ -107,9 +108,10 @@ task 'bake', 'Build a final folder ready for deployment', ->
   minifyCSS = ->
     console.log 'Minifying CSS.'
     fs.mkdirSync 'build/css', 0o755
-    exec "#{CSS_MINIFIER} -o build/css/style.css css/style.css", ->
-      exec "#{CSS_MINIFIER} -o build/css/mobile.css css/mobile.css", ->
-        exec "#{CSS_MINIFIER} -o build/css/reset.css css/reset.css", updateHTML
+    minify = (i) ->
+      return updateHTML() if not CSS[i]?
+      exec "#{CSS_MINIFIER} -o build/css/#{CSS[i]} css/#{CSS[i]}", -> minify i + 1
+    minify 0
 
   buildCore = ->
     console.log 'Baking core JS.'
