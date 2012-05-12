@@ -1,0 +1,11 @@
+#header, #footer {
+  display: none;
+}
+
+#console, .jqconsole, #editor {
+  position: static!important;
+}
+
+#main, body, html {
+  height: auto!important;
+}
