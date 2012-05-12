@@ -71,6 +71,7 @@ $.extend REPLIT,
         ace_mode_ajax = $.getScript ace_mode.script, =>
           mode = require(ace_mode.module).Mode
           session.setMode new mode
+          session.setUseWrapMode true
           @editor.setSession session
       else
         # No ace mode found create a resolved deferred.
