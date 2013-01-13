@@ -2,13 +2,18 @@
 <html itemscope itemtype="http://schema.org/Product">
   <head>
     <title>repl.it</title>
-    <!-- Session Fallback Redirect -->
     <script>
+      // Redirect old hash url to new.
       (function () {
         var loc = window.location,
-            session_path = loc.hash.split(':')[0].slice(1);
-        if (session_path) {
-          window.location.href = loc.protocol + '//' +  loc.host  + '/' + session_path;
+            parts = loc.hash.split(':'),
+            session_path = parts[0].slice(1),
+            page = parts[1];
+        if (page || session_path) {
+          var loc = loc.protocol + '//' +  loc.host  + '/';
+          if (session_path) loc += session_path + '/';
+          if (page) loc += page;
+          window.location.href = loc;
         }
       })();
     </script>
