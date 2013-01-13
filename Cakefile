@@ -4,7 +4,7 @@ fs = require 'fs'
 coffee = require 'coffee-script'
 
 INCLUDES = ['images', 'lib']
-LIBRARIES = ['lib/jqconsole-2.6.min.js', 'lib/bootstrap-tooltip.js']
+LIBRARIES = ['lib/jqconsole-2.7.4.min.js', 'lib/bootstrap-tooltip.js']
 CSS = ['style.css', 'mobile.css', 'print.css']
 APP_FILES = ['base.coffee', 'browser-check.coffee', 'hash.coffee', 'dom.coffee',
              'repl.coffee', 'pager.coffee', 'session.coffee',
