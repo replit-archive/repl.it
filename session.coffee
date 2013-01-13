@@ -39,7 +39,7 @@ reset_state = (e, lang_name) ->
   $('#replay-button').hide()
   @session = {}
   @session.eval_history = []
-  # Remove base name and reset path.
+  Router.change_base '/'
 
 $ ->
   # If there exists a REPLIT_DATA variable, then we are in a saved session.
@@ -155,9 +155,9 @@ $ ->
       $savebox = $('#save-box')
       # Update URL.
       if revision_id > 0
-        Router.navigate "/#{session_id}/#{revision_id}"
+        Router.change_base "/#{session_id}/#{revision_id}"
       else
-        Router.navigate "/#{session_id}"
+        Router.change_base "/#{session_id}"
       # Update IDs.
       REPLIT.session.id = session_id
       REPLIT.session.rid = revision_id
