@@ -34,15 +34,16 @@
         <!-- repl.it -->
         <script src="/lib/jqconsole-2.7.4.min.js"></script>
         <script src="/lib/bootstrap-tooltip.js"></script>
+        <script src="/lib/page.js"></script>
         <script src="/base.js?{{CACHE_BUSTER}}"></script>
         <script src="/browser-check.js?{{CACHE_BUSTER}}"></script>
-        <script src="/hash.js?{{CACHE_BUSTER}}"></script>
         <script src="/dom.js?{{CACHE_BUSTER}}"></script>
         <script src="/repl.js?{{CACHE_BUSTER}}"></script>
         <script src="/pager.js?{{CACHE_BUSTER}}"></script>
         <script src="/session.js?{{CACHE_BUSTER}}"></script>
         <script src="/languages.js?{{CACHE_BUSTER}}"></script>
         <script src="/analytics.js?{{CACHE_BUSTER}}"></script>
+        <script src="/router.js?{{CACHE_BUSTER}}"></script>
 
     <!--/UNBAKED-->
     <script src="/lib/ace/ace.js"></script>
@@ -68,10 +69,10 @@
   </head>
   <body>
     <div id="header">
-      <a id="logo" href="/"><img src="/images/logo-small.png" width="173" height="60" /></a>
+      <a id="logo" href="/languages"><img src="/images/logo-small.png" width="173" height="60" /></a>
       <div id="buttons">
         <!-- Warning: inline elements, any white space would break the layout --> 
-        <div id="button-languages" class="button left" title="Languages"></div><div id="button-examples" class="button middle" title="Examples"></div><div id="button-save" class="button middle" title="Save"></div><div id="button-help" class="button right" title="Help"></div>
+       <a href="/languages"><div id="button-languages" class="button left" title="Languages"></div></a><a href="/examples"><div id="button-examples" class="button middle" title="Examples"></div></a><div id="button-save" class="button middle" title="Save"></div><a href="/help"><div id="button-help" class="button right" title="Help"></div></a>
       </div>
       <div id="title"></div>
     </div>
@@ -202,7 +203,7 @@
     </div>
     <div id="footer">
       <div id="links">
-        <a href="#" id="link-about">about us</a>
+        <a href="/about" id="link-about">about us</a>
         <a href="https://github.com/replit" id="link-source-code" target="_blank">source code</a>
         <a href="/" id="language-about-link" target="_blank"> </a>
         <a href="/" id="language-engine-link" target="_blank"> </a>

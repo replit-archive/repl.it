@@ -29,10 +29,16 @@ function textResponse(res, code, txt) {
 }
 
 var waiting = {};
-
 var httpCb = function (req, res) {
-  var uri = url.parse(req.url).pathname,
-      filename = path.join(process.cwd(), uri);
+  var uri = url.parse(req.url).pathname;
+  if (uri.split('/')[1] in {
+      languages: 1
+    , help: 1
+    , about: 1
+    , examples: 1
+    , workspace: 1
+    }) { uri = '/index.html'; }
+  var filename = path.join(process.cwd(), uri);;
       
   var m;
   if (m = uri.match(/(?:\/jsrepl)?\/emscripten\/input\/(\d+)/)) {
@@ -81,9 +87,10 @@ var httpCb = function (req, res) {
     }
   }
   // END HACK
-  
+
   path.exists(filename, function (exists) {
     if (!exists) {
+
       textResponse(res, 404, "Page Not Found!\n");
       return;
     }
@@ -96,7 +103,7 @@ var httpCb = function (req, res) {
         return;
       }
       var ext = path.extname(filename).slice(1);
-      res.writeHead(200, {'Content-Type': CONTENT_TYPES[ext] || 'text/plain'});
+      res.writeHead(200, {'Content-Type': CONTENT_TYPES[ext] || 'text/plain', 'max-age': '0'});
       res.write(file, 'binary');
       res.end();
     });

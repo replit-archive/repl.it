@@ -550,6 +550,11 @@ html, body {
   border-radius: 20px;
 }
 
+.language-group li a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .language-group li:hover {
   color: #111;
   text-shadow: 0 2px 0px rgba(240, 240, 240, 0.5);

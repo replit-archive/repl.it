@@ -326,7 +326,7 @@ $ ->
     REPLIT.last_progress_ratio = 0
 
     # Update footer links.
-    lang = REPLIT.Languages[system_name]
+    lang = REPLIT.Languages[system_name.toLowerCase()]
     $about = $ '#language-about-link'
     $engine = $ '#language-engine-link'
     $links = $ '#language-engine-link, #language-about-link'
