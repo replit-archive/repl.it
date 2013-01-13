@@ -222,10 +222,12 @@ $.extend REPLIT,
   # Back to the original environment width.
   CloseLastPage: ->
     if @changing_page then return
-    if @page_stack.length <= 1 then return
-    closed_page = @page_stack[@page_stack.length - 1]
-    Router.navigate PAGES[@page_stack[@page_stack.length - 2]].path
-    @page_stack.splice @page_stack.indexOf(closed_page), 1
+    if @page_stack.length <= 1
+      Router.navigate '/'
+    else
+      closed_page = @page_stack[@page_stack.length - 1]
+      Router.navigate PAGES[@page_stack[@page_stack.length - 2]].path
+      @page_stack.splice @page_stack.indexOf(closed_page), 1
 
 $ ->
   # Render language selector.

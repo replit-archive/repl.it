@@ -8,7 +8,7 @@ $ ->
       $('#examples-console').toggle REPLIT.split_ratio != REPLIT.CONSOLE_HIDDEN
       REPLIT.OpenPage 'examples'
     else
-      page '/'
+      Router.navigate '/'
 
   page '/about', ->
     REPLIT.OpenPage 'about'
@@ -20,6 +20,8 @@ $ ->
     REPLIT.OpenPage 'languages'
 
   page '/languages/:lang', (context) ->
+    # So we don't try to load from localStorage.
+    REPLIT.url_language = true
     if lang = context.params.lang
       old_lang = REPLIT.current_lang_name
       REPLIT.current_lang_name = lang
@@ -41,9 +43,10 @@ $ ->
       base = "/#{name}" 
       base += "/#{num}" if num
       Router.change_base base, false
-      page "/#{page_name}" if page_name
-      
-      
+      if page_name
+        page "/#{page_name}" 
+      else
+        REPLIT.OpenPage 'workspace'
 
   page()
 

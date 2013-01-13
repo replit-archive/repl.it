@@ -46,22 +46,21 @@ $ ->
   if REPLIT_DATA?
     # Load the language specified by the incoming session data.
     REPLIT.current_lang_name = REPLIT_DATA.language
-    REPLIT.OpenPage 'workspace', ->
-      REPLIT.LoadLanguage REPLIT_DATA.language, ->
-        # Set the editor text.
-        REPLIT.editor.getSession().setValue REPLIT_DATA.editor_text if not REPLIT.ISMOBILE
-        # Get the session data.
-        REPLIT.session.id = REPLIT_DATA.session_id
-        REPLIT.session.rid = REPLIT_DATA.revision_id
-        REPLIT.session.saved_eval_history = REPLIT_DATA.eval_history
-        # Show the replay button.
-        $('#replay-button').show()
-        # Delete the incoming session data from the server since we have
-        # extracted everything we neeed.
-        delete window['REPLIT_DATA']
-        # On each language load after this one reset the state.
-        REPLIT.$this.bind 'language_loaded', reset_state
-  else
+    REPLIT.LoadLanguage REPLIT_DATA.language, ->
+      # Set the editor text.
+      REPLIT.editor.getSession().setValue REPLIT_DATA.editor_text if not REPLIT.ISMOBILE
+      # Get the session data.
+      REPLIT.session.id = REPLIT_DATA.session_id
+      REPLIT.session.rid = REPLIT_DATA.revision_id
+      REPLIT.session.saved_eval_history = REPLIT_DATA.eval_history
+      # Show the replay button.
+      $('#replay-button').show()
+      # Delete the incoming session data from the server since we have
+      # extracted everything we neeed.
+      delete window['REPLIT_DATA']
+      # On each language load after this one reset the state.
+      REPLIT.$this.bind 'language_loaded', reset_state
+  else if not REPLIT.url_language
     # We are not in a saved session.
     # Safely bind the reset state function.
     REPLIT.$this.bind 'language_loaded', reset_state
@@ -84,8 +83,7 @@ $ ->
 
       REPLIT.$this.bind 'language_loaded.language_modal', (e) ->
         $('#languages-back').unbind 'click.language_modal'
-
-      REPLIT.OpenPage 'languages'
+      Router.navigate '/languages'
       REPLIT.Modal true
 
   # Click handler for the replay button.
