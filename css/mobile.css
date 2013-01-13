@@ -187,37 +187,6 @@ html, body {
   z-index: 9999;
 }
 
-#social {
-  height: 24px;
-  width: 100%;
-  float: left;
-  padding-top: 6px;
-  text-align: center;
-  padding-left: 7%;
-}
-
-#social-buttons-container {
-  height: 20px;
-  line-height: 20px;
-  width: 100%;
-  margin: auto;
-}
-
-.social_button {
-  display: inline-block !important;
-  float: left !important;
-}
-
-/* Make the FB comment box appear above the footer. */
-.social_button span.fb_edge_comment_widget {
-  top: -139px !important;
-}
-
-/* Hide the twitter share in case loading it fails. */
-.twitter-share-button {
-  display: none;
-}
-
 #links {
   display:none;
 }

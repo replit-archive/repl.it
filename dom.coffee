@@ -12,7 +12,6 @@ ANIMATION_DURATION = 700
 MIN_PROGRESS_DURATION = 1
 MAX_PROGRESS_DURATION = 1500
 PROGRESS_ANIMATION_DURATION = 2000
-SOCIAL_BUTTONS_DELAY = 20000
 $ = jQuery
 
 # jQuery plugin to disable text selection (x-browser).
@@ -319,23 +318,6 @@ $.extend REPLIT,
     # Call to Ace editor resize.
     @editor.resize() if not @ISMOBILE
 
-  InjectSocial: ->
-    $rootDOM = $('#social-buttons-container')
-
-    $.getScript 'http://connect.facebook.net/en_US/all.js#appId=111098168994577&amp;xfbml=1', ->
-      FB.init
-        appId: '111098168994577'
-        xfbxml: true
-        status: true
-        cookie: true
-
-      FB.XFBML.parse $rootDOM.get(0)
-
-    $.getScript 'http://platform.twitter.com/widgets.js', ->
-      $rootDOM.find('.twitter-share-button').show()
-
-    $.getScript 'https://apis.google.com/js/plusone.js'
-
 $ ->
   if REPLIT.ISIOS then $('html, body').css 'overflow', 'hidden'
   REPLIT.$this.bind 'language_loading', (_, system_name) ->
@@ -374,7 +356,6 @@ $ ->
   $(window).bind 'orientationchange', check_orientation
   if REPLIT.ISMOBILE then check_orientation()
   REPLIT.InitDOM()
-  $(window).bind 'load', -> setTimeout REPLIT.InjectSocial, SOCIAL_BUTTONS_DELAY
   $('#buttons').tooltip
     selector: '.button'
     placement: 'bottom'
