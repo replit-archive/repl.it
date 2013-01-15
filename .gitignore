@@ -6,8 +6,8 @@ base.js
 browser-check.js
 build/
 dom.js
-hash.js
 languages.js
 pager.js
 repl.js
 session.js
+router.js
