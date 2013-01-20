@@ -153,7 +153,7 @@ task 'langs-html', ->
     """
 
     <div class="language-group">
-      <div class="language-group-header">#{category}</div>
+      <h3 class="language-group-header">#{category}</h3>
       <ul>
         #{(language_entry(language) for language in languages).join('')}
       </ul>
