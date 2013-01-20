@@ -597,7 +597,7 @@ html, body {
   border-radius: 20px;
 }
 
-.language-group li a {
+.language-group a {
   text-decoration: none;
   color: inherit;
 }

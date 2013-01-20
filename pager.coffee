@@ -24,12 +24,12 @@ LANG_TEMPLATE =
     {name, shortcut, system_name, tagline} = data
     shortcut_index = name.indexOf(shortcut)
     """
-      <li>
-        <a href="/languages/#{system_name}">
+      <a href="/languages/#{system_name}">
+        <li>
           <b>#{name[0...shortcut_index]}<em>#{shortcut}</em>#{name[shortcut_index + 1...]}:</b>&nbsp;
             #{tagline}
-        </a>
-      </li>
+        </li>
+      </a>
     """
 
   render: ->
@@ -67,7 +67,7 @@ LANG_TEMPLATE =
 PAGES =
   workspace:
     id: 'content-workspace'
-    title: '$'
+    title: false
     min_width: 500
     width: 1000
     max_width: 3000
