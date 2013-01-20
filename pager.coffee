@@ -210,7 +210,7 @@ $ ->
   $('#content-languages').keypress (e) ->
     if e.shiftKey or e.ctrlKey or e.metaKey then return
     letter = String.fromCharCode(e.which).toLowerCase()
-    $('#content-languages li').each ->
+    $('#content-languages li a').each ->
       if $('em', $ @).text().toLowerCase() == letter
-        $(@).click()
+        @click()
         return false
