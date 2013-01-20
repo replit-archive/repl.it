@@ -17,28 +17,24 @@ PAGES =
     path: '/'
   languages:
     id: 'content-languages'
-    title: 'Select a Language'
     min_width: 1080
     width: 1080
     max_width: 1400
     path: '/languages'
   examples:
     id: 'content-examples'
-    title: '$ Examples'
     min_width: 1000
     width: 1000
     max_width: 1400
     path: '/examples'
   help:
     id: 'content-help'
-    title: 'Help'
     min_width: 1000
     width: 1000
     max_width: 1400
     path: '/help'
   about:
     id: 'content-about'
-    title: 'About Us'
     min_width: 600
     max_width: 600
     width: 600
@@ -101,8 +97,8 @@ $.extend REPLIT,
       else
         ''
       if page.title != false
+        new_title = page.$elem.find('.content-title').hide().text()
         $title = $ '#title'
-        new_title = page.title.replace /\$/g, lang_name
         if current_page
           $title.fadeOut ANIMATION_DURATION, ->
             $title.text new_title

@@ -79,7 +79,7 @@
         <!-- Warning: inline elements, any white space would break the layout --> 
        <a href="/languages"><div id="button-languages" class="button left" title="Languages"></div></a><a href="/examples"><div id="button-examples" class="button middle" title="Examples"></div></a><div id="button-save" class="button middle" title="Save"></div><a href="/help"><div id="button-help" class="button right" title="Help"></div></a>
       </div>
-      <div id="title"></div>
+      <h1 id="title">Online Interpreter</h2>
     </div>
     <div id="main">
       <div id="resize-left"></div>
@@ -101,6 +101,7 @@
       <!-- Language selector. -->
       <!-- NOTE: tabindex needed for it to receive focus. -->
       <div id="content-languages" class="page" tabindex="0">
+        <h2 class="content-title">Select a Language</h2>
         <div id="languages-back" class="page-close"></div>
         <div class="language-group">
           <div class="language-group-header">Classic</div>
@@ -217,6 +218,7 @@
       </div>
       <!-- Examples page. -->
       <div id="content-examples" class="page">
+        <h2 class="content-title">Example Code</h2>
         <div id="examples-editor"></div>
         <div id="examples-separator"></div>
         <div id="examples-console"></div>
@@ -224,6 +226,7 @@
       </div>
       <!-- Help page. -->
       <div id="content-help" class="page">
+        <h2 class="content-title">Help</h2>
         <div id="help-faq">
           <div class="help-header">Frequently Asked Questions</div>
           <div class="faq-question">What is repl.it?</div>
@@ -242,7 +245,7 @@
           <div class="faq-answer">Yes! You can explore the code and contribute to various parts of repl.it through <a href="https://github.com/replit">our GitHub repositories</a>.</div>
 
           <div class="faq-question">Can I use repl.it on my phone or tablet?</div>
-          <div class="faq-answer">Yes! As a web application, repl.it can be used on any device that has a modern web browser. Currently, we have full support for Android devices, and partial support for iOS (Ruby and Python are still not supported on iOS).</div>
+          <div class="faq-answer">Yes! As a web application, repl.it can be used on any device that has a modern web browser. Currently, we have full support for Android devices, and partial support for iOS.</div>
 
           <div class="faq-question">How does repl.it work?</div>
           <div class="faq-answer">All code processed by repl.it runs entirely on your computer, with no server-side evaluation. It uses language interpreters written in JavaScript to execute your code and keep track of state. Some of the interpreters (like BiwaScheme) are originally implemented in JavaScript, while others (like Python) were compiled from their original lower-level implementations using <a href="http://emscripten.org/">Emscripten</a>.</div>
@@ -273,6 +276,7 @@
 
       <!-- About page. -->
       <div id="content-about" class="page">
+        <h2 class="content-title">About Us</h2>
         <p>The repl.it project is an attempt to create an online environment for interactively exploring programming languages. It provides a fully-featured terminal emulator and code editor, powered by interpreter engines for more than 15 languages.</p>
         <p>All our interpreters are written in (or compiled to) JavaScript, and run completely on the user's device, regardless or whether it's a desktop, laptop or phone.</p>
         <p>The repl.it code is open source and is available on <a href="https://github.com/replit">GitHub</a>.</p>
