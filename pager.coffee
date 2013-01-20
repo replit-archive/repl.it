@@ -10,7 +10,6 @@ FIRST_LOAD = true
 PAGES =
   workspace:
     id: 'content-workspace'
-    title: false
     min_width: 500
     width: 1000
     max_width: 3000
@@ -96,15 +95,11 @@ $.extend REPLIT,
         @Languages[@current_lang_name.toLowerCase()].name
       else
         ''
-      if page.title != false
+      if page_name != 'workspace'
         new_title = page.$elem.find('.content-title').hide().text()
-        $title = $ '#title'
-        if current_page
-          $title.fadeOut ANIMATION_DURATION, ->
-            $title.text new_title
-            $title.fadeIn ANIMATION_DURATION
-        else
-          $title.text new_title
+        REPLIT.changeTitle new_title
+      else
+        REPLIT.changeTitle REPLIT.current_lang_name
 
       # Update widths to those of the new page.
       # We can't take into account mobile sizes, so just assign the whole screen

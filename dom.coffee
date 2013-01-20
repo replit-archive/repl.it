@@ -12,6 +12,8 @@ ANIMATION_DURATION = 700
 MIN_PROGRESS_DURATION = 1
 MAX_PROGRESS_DURATION = 1500
 PROGRESS_ANIMATION_DURATION = 2000
+TITLE_ANIMATION_DURATION = 300
+DEFAULT_TITLE = 'Online Interpreter'
 $ = jQuery
 
 # jQuery plugin to disable text selection (x-browser).
@@ -318,6 +320,19 @@ $.extend REPLIT,
     # Call to Ace editor resize.
     @editor.resize() if not @ISMOBILE
 
+  changeTitle: (title) ->
+    $title = $ '#title'
+    curr_title = $title.text().trim()
+    return if not title or curr_title == title
+    document.title = "repl.it - #{title}"
+    if curr_title != '' and curr_title != DEFAULT_TITLE
+      $title.fadeOut TITLE_ANIMATION_DURATION, ->
+        $title.text title
+        $title.fadeIn TITLE_ANIMATION_DURATION
+    else
+      console.log title
+      $title.text title
+
 $ ->
   if REPLIT.ISIOS then $('html, body').css 'overflow', 'hidden'
   REPLIT.$this.bind 'language_loading', (_, system_name) ->
@@ -330,6 +345,7 @@ $ ->
     $about = $ '#language-about-link'
     $engine = $ '#language-engine-link'
     $links = $ '#language-engine-link, #language-about-link'
+    REPLIT.changeTitle system_name
 
     $links.animate opacity: 0, 'fast', ->
       $about.text 'about ' + system_name.toLowerCase()
@@ -343,7 +359,7 @@ $ ->
   REPLIT.$this.bind 'language_loaded', (e, lang_name) ->
     REPLIT.OnProgress 100
     REPLIT.$progress.animate opacity: 0, 'fast'
-    $('#title').text lang_name
+    REPLIT.changeTitle lang_name
 
   # When the device orientation change adapt the workspace to the new width.
   check_orientation = ->
