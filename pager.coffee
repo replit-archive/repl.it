@@ -157,14 +157,15 @@ $.extend REPLIT,
         @Languages[@current_lang_name.toLowerCase()].name
       else
         ''
-      $title = $ '#title'
-      new_title = page.title.replace /\$/g, lang_name
-      if current_page
-        $title.fadeOut ANIMATION_DURATION, ->
+      if page.title != false
+        $title = $ '#title'
+        new_title = page.title.replace /\$/g, lang_name
+        if current_page
+          $title.fadeOut ANIMATION_DURATION, ->
+            $title.text new_title
+            $title.fadeIn ANIMATION_DURATION
+        else
           $title.text new_title
-          $title.fadeIn ANIMATION_DURATION
-      else
-        $title.text new_title
 
       # Update widths to those of the new page.
       # We can't take into account mobile sizes, so just assign the whole screen

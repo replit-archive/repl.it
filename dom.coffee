@@ -340,9 +340,11 @@ $ ->
 
       $links.animate opacity: 1, 'fast'
 
-  REPLIT.$this.bind 'language_loaded', ->
+  REPLIT.$this.bind 'language_loaded', (e, lang_name) ->
     REPLIT.OnProgress 100
     REPLIT.$progress.animate opacity: 0, 'fast'
+    $('#title').text lang_name
+
   # When the device orientation change adapt the workspace to the new width.
   check_orientation = ->
     cb = ->
