@@ -851,9 +851,8 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
   text-align: justify;
 }
 
-#content-about p:first-child {
+#content-about {
   padding-top: 40px;
-  margin-top: 0;
 }
 
 #content-about img {
