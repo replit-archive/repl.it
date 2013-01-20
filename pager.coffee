@@ -7,63 +7,6 @@ ANIMATION_DURATION = 300
 KEY_ESCAPE = 27
 FIRST_LOAD = true
 
-LANG_TEMPLATE =
-  language_group: (data) ->
-    {category, languages} = data
-    """
-    <div class="language-group">
-      <div class="language-group-header">#{category}</div>
-        <ul>
-          #{(@language_entry(language) for language in languages).join('')}
-        </ul>
-      </div>
-    </div>
-  """
-
-  language_entry: (data) ->
-    {name, shortcut, system_name, tagline} = data
-    shortcut_index = name.indexOf(shortcut)
-    """
-      <a href="/languages/#{system_name}">
-        <li>
-          <b>#{name[0...shortcut_index]}<em>#{shortcut}</em>#{name[shortcut_index + 1...]}:</b>&nbsp;
-            #{tagline}
-        </li>
-      </a>
-    """
-
-  render: ->
-    html = []
-    categories_order = [
-      'Classic'
-      'Practical'
-      'Esoteric'
-      'Web'
-    ]
-    template_data =
-      Classic:
-        category: 'Classic'
-        languages: ['QBasic', 'Forth']
-      Practical:
-        category: 'Practical'
-        languages: ['Ruby', 'Python', 'Lua', 'Scheme']
-      Esoteric:
-        category: 'Esoteric'
-        languages: ['Emoticon', 'Brainfuck', 'LOLCODE', 'Unlambda', 'Bloop']
-      Web:
-        category: 'Web'
-        languages: ['JavaScript', 'Traceur', 'Move', 'Kaffeine', 'CoffeeScript', 'Roy']
-
-    for _, category of template_data
-      for lang_name, index in category.languages
-        lang = REPLIT.Languages[lang_name.toLowerCase()]
-        lang.system_name = lang_name
-        category.languages[index] = lang
-    for category in categories_order
-      html.push @language_group template_data[category]
-
-    return html.join ''
-
 PAGES =
   workspace:
     id: 'content-workspace'
@@ -232,7 +175,6 @@ $.extend REPLIT,
 
 $ ->
   # Render language selector.
-  $('#content-languages').append LANG_TEMPLATE.render()
 
   # Load Examples
   REPLIT.$this.bind 'language_loading', (_, system_name) ->

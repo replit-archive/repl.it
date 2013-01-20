@@ -1,5 +1,7 @@
 # Core module.
 # Defines the supported languages.
+if not @REPLIT?
+  @REPLIT = exports
 
 @REPLIT.Languages =
   qbasic:
@@ -109,22 +111,26 @@
       module: 'ace/mode/javascript'
     header: """
       Native #{
-        if $.browser.webkit
-          if navigator.userAgent.match /Android/ then 'Android'
-          else if navigator.userAgent.match /Chrome/ then 'Chrome'
-          else 'WebKit'
-        else if $.browser.opera then 'Opera'
-        else if $.browser.msie then 'Internet Explorer'
-        else if $.browser.mozilla then 'Mozilla Firefox'
-        else 'Browser'
+        if $?
+          if $.browser.webkit
+            if navigator.userAgent.match /Android/ then 'Android'
+            else if navigator.userAgent.match /Chrome/ then 'Chrome'
+            else 'WebKit'
+          else if $.browser.opera then 'Opera'
+          else if $.browser.msie then 'Internet Explorer'
+          else if $.browser.mozilla then 'Mozilla Firefox'
+          else 'Browser'
+        else 'Unknown'
       } JavaScript.
-      Copyright (c) 2011 #{
+      Copyright (c) 2013 #{
         navigator?.vendor?.replace(/\.$/, '') or (
-          if $.browser.webkit then 'Apple Inc'
-          else if $.browser.opera then 'Opera Software ASA'
-          else if $.browser.msie then 'Microsoft'
-          else if $.browser.mozilla then 'Mozilla Foundation'
-          else 'Browser Vendor'
+          if $?
+            if $.browser.webkit then 'Apple Inc'
+            else if $.browser.opera then 'Opera Software ASA'
+            else if $.browser.msie then 'Microsoft'
+            else if $.browser.mozilla then 'Mozilla Foundation'
+            else 'Browser Vendor'
+          else ''
         )
       }
     """

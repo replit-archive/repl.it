@@ -590,19 +590,18 @@ html, body {
   margin-right: 8%;
 }
 
-.language-group li {
+
+.language-group li a {
+  display: list-item;
+  text-decoration: none;
+  color: inherit;
   padding-left: 16px;
   cursor: pointer;
   border: 1px transparent solid;
   border-radius: 20px;
 }
 
-.language-group a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.language-group li:hover {
+.language-group li a:hover {
   color: #111;
   text-shadow: 0 2px 0px rgba(240, 240, 240, 0.5);
   background: #ddd;
