@@ -792,7 +792,7 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
   padding-top: 30px;
 }
 
-#help-header {
+.help-header {
   text-align: center;
   text-shadow: 0px 1px 0px rgba(200, 200, 200, 0.75);
   font-size: 120%;
