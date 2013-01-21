@@ -103,6 +103,7 @@ task 'bake', 'Build a final folder ready for deployment', ->
     html = html.replace /<!--BAKED\b([^]*?)\bUNBAKED-->[^]*?<!--\/UNBAKED-->/g, '$1'
     html = html.replace /{{CACHE_BUSTER}}/g, Date.now()
     fs.writeFileSync 'build/index.html', html
+    fs.writeFileSync 'build/google06a583d0d6c0899b.html', fs.readFileSync 'google06a583d0d6c0899b.html', 'utf8'
     gzip()
 
   minifyCSS = ->
