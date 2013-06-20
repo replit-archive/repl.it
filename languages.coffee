@@ -31,6 +31,9 @@ if not @REPLIT?
       http://www.forthfreak.net/jsforth.html
       This program is published under the GPL.
     '''
+    ace_mode:
+      script: '/lib/ace/mode-forth.js'
+      module: 'ace/mode/forth'
   lolcode:
     name: 'LOLCODE'
     tagline: 'The basic language of lolcats.'
