@@ -9,7 +9,7 @@ CSS = ['style.css', 'mobile.css', 'print.css', 'ansi.css']
 APP_FILES = ['base.coffee', 'browser-check.coffee', 'dom.coffee',
              'repl.coffee', 'pager.coffee', 'router.coffee', 'session.coffee',
              'languages.coffee', 'analytics.coffee']
-JS_MINIFIER = "uglifyjs -nc --unsafe "
+JS_MINIFIER = "uglifyjs "
 CSS_MINIFIER = "java -jar ./jsrepl/tools/yuicompressor-2.4.6/build/yuicompressor-2.4.6.jar "
 
 # Compiles a .coffee file to a .js one, synchronously.
@@ -40,24 +40,18 @@ pygmentizeExample = (language, filename) ->
       highlighted = (i.join '\n' + separator for i in highlighted)
       result = highlighted.join(separator + '\n') + separator
       fs.writeFileSync html_filename, result
-      
-  exec 'which python2', (err, py_path) ->
-    if err
-      PYTHON = 'python'
-    else
-      PYTHON = py_path
-    
-    for [example_name, example], index in examples
-      do (example_name, example, index) ->
-        example = example.replace /^\s+|\s+$/g, ''
-        child = exec "#{PYTHON} pyg.py #{language}", (error, result) ->
-          if error
-            console.log "Highlighting #{filename} failed:\n#{error.message}."
-          else
-            highlighted[index] = [example_name, result]
-            writeResult()
-        child.stdin.write example
-        child.stdin.end()
+
+  for [example_name, example], index in examples
+    do (example_name, example, index) ->
+      example = example.replace /^\s+|\s+$/g, ''
+      child = exec "python pyg.py #{language}", (error, result) ->
+        if error
+          console.log "Highlighting #{filename} failed:\n#{error.message}."
+        else
+          highlighted[index] = [example_name, result]
+          writeResult()
+      child.stdin.write example
+      child.stdin.end()
 
 watchFile = (filename, callback) ->
   callback filename
