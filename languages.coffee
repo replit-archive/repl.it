@@ -210,6 +210,16 @@ if not @REPLIT?
       BiwaScheme Interpreter version 0.5.7
       Copyright (C) 2007-2010 Yutaka HARA and the BiwaScheme team
     '''
+  apl:
+    name: 'APL'
+    tagline: 'An array-oriented language using funny characters'
+    shortcut: 'A'
+    about_link: 'https://en.wikipedia.org/wiki/APL_(programming_language)'
+    engine_link: 'https://github.com/ngn/apl'
+    examples:
+      editor: '/langs/apl/examples-editor.html'
+      console: '/langs/apl/examples-console.html'
+    header: 'ngn/apl'
   lua:
     name: 'Lua'
     tagline: 'A lightweight multi-paradigm scripting language.'

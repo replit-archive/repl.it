@@ -158,7 +158,18 @@ class RoyLexer(RegexLexer):
       (r'.', Text)
     ]
   }
-  
+
+class APLLexer(RegexLexer):
+  name = 'APL'
+  aliases = ['apl']
+  filenames = ['*.apl']
+
+  tokens = {
+    'root': [
+      (r'.+', Text)
+    ]
+  }
+
 def getLexer(lexer_name):
   lexers = [value for name, value in globals().items()
             if name.endswith('Lexer') and hasattr(value, 'aliases')]
@@ -171,10 +182,10 @@ def main():
   if len(sys.argv) == 2:
     lexer = getLexer(sys.argv[1])
     if lexer:
-      result = highlight(sys.stdin.read(), lexer, HtmlFormatter())
+      result = highlight(sys.stdin.read().decode('utf8'), lexer, HtmlFormatter())
       result = result.replace('<div class="highlight"><pre>', '')
       result = result.replace('</pre></div>', '')
-      print result.strip()
+      print result.strip().encode('utf8')
     else:
       print 'Unknown language:', sys.argv[1]
   else:
