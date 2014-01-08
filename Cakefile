@@ -150,7 +150,7 @@ task 'langs-html', ->
     <div class="language-group">
       <h3 class="language-group-header">#{category}</h3>
       <ul>
-        #{(language_entry(language) for language in languages).join('')}
+      #{(language_entry(language) for language in languages).join('')}
       </ul>
     </div>
 
@@ -161,10 +161,10 @@ task 'langs-html', ->
     shortcut_index = name.indexOf(shortcut)
     """
 
-    <li>
-      <a href="/languages/#{system_name}"><b>#{name[0...shortcut_index]}<em>#{shortcut}</em>#{name[shortcut_index + 1...]}:</b>&nbsp;
-        #{tagline}</a>
-    </li>
+        <li>
+          <a href="/languages/#{system_name}"><b>#{name[0...shortcut_index]}<em>#{shortcut}</em>#{name[shortcut_index + 1...]}:</b>&nbsp;
+            #{tagline}</a>
+        </li>
     
     """
 
@@ -179,7 +179,7 @@ task 'langs-html', ->
     template_data =
       Classic:
         category: 'Classic'
-        languages: ['QBasic', 'Forth']
+        languages: ['QBasic', 'Forth', 'APL']
       Practical:
         category: 'Practical'
         languages: ['Ruby', 'Python', 'Lua', 'Scheme']
