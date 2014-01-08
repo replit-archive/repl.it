@@ -72,16 +72,6 @@ repl.it comes bundled with a static node HTTP file server and a CoffeeScript fil
     
 repl.it can then be opened at http://localhost:8888/index.html.
 
-Documentation
--------------
-
-There is some documentation on the [wiki page](https://github.com/replit/repl.it/wiki)
-and we will be adding some more soon.  
-Until then if you need any help try going to the #repl.it IRC channel at
-irc.freenode.net or messaging [@max99x](https://github.com/max99x) or
-[@amasad](https://github.com/amasad).
-
-
 License
 -------
 
