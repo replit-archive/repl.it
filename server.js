@@ -88,7 +88,7 @@ var httpCb = function (req, res) {
   }
   // END HACK
 
-  path.exists(filename, function (exists) {
+  fs.exists(filename, function (exists) {
     if (!exists) {
 
       textResponse(res, 404, "Page Not Found!\n");
