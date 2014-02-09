@@ -43,10 +43,19 @@ $.extend REPLIT,
           win: 'Ctrl-Return'
           mac: 'Command-Return'
           sebder: 'editor'
-        exec: => 
+        exec: =>
           @$run.click()
           # Allow async eval to happen then reclaim focus to editor.
           setTimeout (=> @editor.focus()), 0
+
+      @editor.commands.addCommand
+        name: 'save'
+        bindKey:
+          win: 'Ctrl-S'
+          mac: 'Command-S'
+          sebder: 'editor'
+        exec: =>
+          $('#button-save').click()
 
     @current_lang = null
     @current_lang_name = null
