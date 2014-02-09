@@ -312,8 +312,6 @@ $.extend REPLIT,
     editor_hpadding = @$editor.innerWidth() - @$editor.width()
     editor_vpadding = @$editor.innerHeight() - @$editor.height()
     # Resize the console/editor widgets.
-    @$console.css 'width', @$consoleContainer.width() - console_hpadding
-    @$console.css 'height', @$consoleContainer.height() - console_vpadding
     @$editor.css 'width', @$editorContainer.innerWidth() - editor_hpadding
     @$editor.css 'height', @$editorContainer.innerHeight() - editor_vpadding
 
