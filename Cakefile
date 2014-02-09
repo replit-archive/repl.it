@@ -6,9 +6,9 @@ coffee = require 'coffee-script'
 INCLUDES = ['images', 'lib']
 LIBRARIES = ['lib/jqconsole-2.7.4.min.js', 'lib/bootstrap-tooltip.js', 'lib/page.js']
 CSS = ['style.css', 'mobile.css', 'print.css', 'ansi.css']
-APP_FILES = ['base.coffee', 'browser-check.coffee', 'dom.coffee',
-             'repl.coffee', 'pager.coffee', 'router.coffee', 'session.coffee',
-             'languages.coffee', 'analytics.coffee']
+APP_FILES = ['src/base.coffee', 'src/browser-check.coffee', 'src/dom.coffee',
+             'src/repl.coffee', 'src/pager.coffee', 'src/router.coffee', 'src/session.coffee',
+             'src/languages.coffee', 'src/analytics.coffee']
 JS_MINIFIER = "uglifyjs "
 CSS_MINIFIER = "java -jar ./jsrepl/tools/yuicompressor-2.4.6/build/yuicompressor-2.4.6.jar "
 
