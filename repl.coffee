@@ -102,6 +102,8 @@ $.extend REPLIT,
       @jqconsole.MoveToStart();
     @jqconsole.RegisterShortcut 'E', =>
       @jqconsole.MoveToEnd();
+    @jqconsole.RegisterShortcut 'K', =>
+      @jqconsole.Clear();
 
     # Load the language engine from jsREPL.
     @jsrepl.loadLanguage lang_name.toLowerCase(), =>
