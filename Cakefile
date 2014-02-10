@@ -4,7 +4,7 @@ fs = require 'fs'
 coffee = require 'coffee-script'
 
 INCLUDES = ['images', 'lib']
-LIBRARIES = ['lib/jqconsole-2.7.4.min.js', 'lib/bootstrap-tooltip.js', 'lib/page.js']
+LIBRARIES = ['lib/jqconsole-2.10.0.min.js', 'lib/bootstrap-tooltip.js', 'lib/page.js']
 CSS = ['style.css', 'mobile.css', 'print.css', 'ansi.css']
 APP_FILES = ['src/base.coffee', 'src/browser-check.coffee', 'src/dom.coffee',
              'src/repl.coffee', 'src/pager.coffee', 'src/router.coffee', 'src/session.coffee',
@@ -160,12 +160,10 @@ task 'langs-html', ->
     {name, shortcut, system_name, tagline} = data
     shortcut_index = name.indexOf(shortcut)
     """
-
         <li>
           <a href="/languages/#{system_name}"><b>#{name[0...shortcut_index]}<em>#{shortcut}</em>#{name[shortcut_index + 1...]}:</b>&nbsp;
             #{tagline}</a>
         </li>
-    
     """
 
   render = ->
