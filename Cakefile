@@ -142,7 +142,7 @@ task 'bake', 'Build a final folder ready for deployment', ->
           exec 'cp -r langs/* build/langs', buildCore
 
 task 'langs-html', ->
-  {Languages} = require './languages.coffee'
+  {Languages} = require './src/languages.coffee'
   language_group = (data) ->
     {category, languages} = data
     """

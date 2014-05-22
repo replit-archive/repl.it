@@ -341,13 +341,13 @@ $ ->
     $about = $ '#language-about-link'
     $engine = $ '#language-engine-link'
     $links = $ '#language-engine-link, #language-about-link'
-    REPLIT.changeTitle system_name
+    REPLIT.changeTitle lang.name
 
     $links.animate opacity: 0, 'fast', ->
-      $about.text 'about ' + system_name.toLowerCase()
+      $about.text 'about ' + lang.name
       $about.attr href: lang.about_link
 
-      $engine.text system_name.toLowerCase() + ' engine'
+      $engine.text lang.name + ' engine'
       $engine.attr href: lang.engine_link
 
       $links.animate opacity: 1, 'fast'

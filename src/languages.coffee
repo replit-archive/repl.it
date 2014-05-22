@@ -48,16 +48,16 @@ if not @REPLIT?
       Copyright (c) 2011 Max Shawabkeh
     '''
   brainfuck:
-    name: 'Brainfuck'
+    name: 'BrainF***'
     tagline: 'A pure Turing machine controller.'
-    shortcut: 'f'
+    shortcut: 'F'
     about_link: 'http://en.wikipedia.org/wiki/Brainfuck'
     engine_link: 'https://github.com/replit/bfjs'
     examples:
       editor: '/langs/brainfuck/examples-editor.html'
       console: '/langs/brainfuck/examples-console.html'
     header: '''
-      Brainfuck, bfjs
+      BrainF***, bfjs
       Copyright (c) 2011 Amjad Masad
     '''
   emoticon:
