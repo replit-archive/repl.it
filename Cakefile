@@ -5,7 +5,7 @@ coffee = require 'coffee-script'
 
 INCLUDES = ['images', 'lib']
 LIBRARIES = ['lib/jqconsole-2.10.0.min.js', 'lib/bootstrap-tooltip.js', 'lib/page.js']
-CSS = ['style.css', 'mobile.css', 'print.css', 'ansi.css']
+CSS = ['style.css', 'print.css', 'ansi.css']
 APP_FILES = ['src/base.coffee', 'src/browser-check.coffee', 'src/dom.coffee',
              'src/repl.coffee', 'src/pager.coffee', 'src/router.coffee', 'src/session.coffee',
              'src/languages.coffee', 'src/analytics.coffee']

@@ -74,20 +74,6 @@ var httpCb = function (req, res) {
     return;
   }
 
-  // HACK: Mobile browsers get special treatment!
-  if (req.headers['user-agent'] &&
-      req.headers['user-agent'].match(/iPhone|iPad|iPod|Android/i)) {
-    if (uri === '/css/style.css') {
-      // Automatically switch styles.
-      uri = '/css/mobile.css';
-    } else if (uri.indexOf('/lib/ace/') === 0) {
-      // Ace has no content for mobile.
-      textResponse(res, 204);
-      return;
-    }
-  }
-  // END HACK
-
   fs.exists(filename, function (exists) {
     if (!exists) {
 

@@ -268,10 +268,8 @@ $.extend REPLIT,
     # Resize container and current page.
     @$container.css
       width: width
-    if @ISMOBILE and not $('.page:visible').is '#content-workspace'
-      @$container.css 'height', 'auto'
-    else
-      @$container.css 'height', height
+      height: height
+
     $('.page:visible').css
       width: innerWidth
 

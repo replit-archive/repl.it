@@ -35,11 +35,11 @@ abbr,  acronym {
 /* General */
 
 html, body {
-  height: 100%;
+  min-height: 100%;
   margin: 0;
   padding: 0;
   font-family: Arial, Verdana, san-serif;
-  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 /* Header */
@@ -58,8 +58,24 @@ html, body {
 }
 
 #logo {
-  left: 25px;
   position: absolute;
+  left: 25px;
+  height: 60px;
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  #logo {
+    margin-top: 15px;
+    margin-left: 0;
+    height: 30px;
+  }
+
+  #logo img {
+    width: 85px;
+    height: 30px;
+  }
 }
 
 #title {
@@ -71,6 +87,14 @@ html, body {
   text-shadow: 0px 1px 2px rgba(20, 20, 20, 0.3);
 }
 
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  #title {
+    display: none!important;
+  }
+}
+
 /* Button Icons */
 /* normal: #8c8c8c, hover: #7f7f7f, active: #727272 */
 
@@ -78,6 +102,16 @@ html, body {
   position: absolute;
   right: 25px;
   top: 17px;
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  #buttons {
+    float: right;
+    margin-top: 15px;
+    position: static;
+  }
 }
 
 #button-languages {
@@ -178,10 +212,33 @@ html, body {
   top: 10px;
   width: 48px;
   cursor: pointer;
+  z-index: 10;
 }
 
 .page-close:hover {
   background-position: -1px -736px;
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  .content-title {
+    text-align: center;
+    text-shadow: 0px 1px 0px rgba(200, 200, 200, 0.75);
+    font-size: 18px;
+    color: #777;
+    margin-bottom: 20px;
+    display: block!important;
+    position: absolute;
+    top: 15px;
+    width: 100%;
+    z-index: 1;
+    font-weight: 600;
+  }
+
+  .page:not(#content-workspace) > *:nth-child(3) {
+    margin-top: 30px;
+  }
 }
 
 /* Editor */
@@ -283,6 +340,14 @@ html, body {
   z-index: 9;
   display: none;
   cursor:pointer;
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  #unhide-left, #unhide-right {
+    display: none!important ;
+  }
 }
 
 /* Console */
@@ -446,7 +511,7 @@ html, body {
 #links {
   height: 30px;
   line-height: 30px;
-  width: 50%;
+  min-width: 50%;
   float: right;
 }
 
@@ -461,6 +526,16 @@ html, body {
   -moz-transition: color .200s, text-shadow .200s;
   -o-transition: color .200s, text-shadow .200s;
   transition: color .200s, text-shadow .200s;
+}
+
+@media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 480px) {
+  #links a, #links a:visited {
+    font-size: 12px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
 }
 
 #links a:hover, #links a:active, #links a:focus {
@@ -604,6 +679,37 @@ html, body {
   font-weight: bold;
 }
 
+@media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 480px) {
+  #content-languages {
+    font-size:11px;
+  }
+
+  .language-group {
+    width: 100%;
+    padding-top: 6%;
+    padding-bottom: 4%;
+  }
+
+  .language-group-header {
+    margin-left: 2%;
+    border-bottom: 1px #999 solid;
+    display: block;
+    margin-right: 2%;
+    padding-bottom: 5px;
+    background: url('/images/sprite.png') -18px -3px no-repeat;
+  }
+
+  .language-group ul {
+    padding-top: 5px;
+    line-height: 32px;
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+}
+
+
 /* Examples Preview */
 
 #content-examples {
@@ -681,6 +787,38 @@ html, body {
   color: #111;
   text-shadow: 0 2px 0px rgba(240, 240, 240, 0.5);
   background-color: #ddd;
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  #examples-editor, #examples-console {
+    width: auto;
+    float: none;
+  }
+
+  #examples-separator {
+    display: none;
+  }
+
+  .example-group-header, .example-group code {
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+
+  .example-group code {
+    padding-left: 10px;
+    padding-bottom: 20px;
+    word-wrap:break-word;
+  }
+
+  #examples-editor, #examples-console {
+    padding-top: 40px;
+  }
+
+  .example-1, .example-2, .example-3 {
+    height: auto;
+  }
 }
 
 /* Syntax Higlighthing (from pygments) */
@@ -832,6 +970,18 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
   text-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
 }
 
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  #help-faq {
+    width: 100%;
+  }
+
+  #help-shortcuts {
+    display: none;
+  }
+}
+
 /* About Us */
 
 #content-about {
@@ -839,12 +989,23 @@ code .il { color: #40a070 } /* Literal.Number.Integer.Long */
 }
 
 #content-about p {
-  margin: 1em 2em;
+  margin: 1em 3em;
   text-align: justify;
 }
 
-#content-about {
-  padding-top: 40px;
+#content-about p:nth-child(3) {
+  margin-top: 2em;
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  #content-about p {
+    text-align: initial;
+  }
+  #content-about p:nth-child(3) {
+    margin-top: 50px!important;
+  }
 }
 
 #content-about img {
