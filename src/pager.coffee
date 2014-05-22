@@ -99,7 +99,7 @@ $.extend REPLIT,
         new_title = page.$elem.find('.content-title').hide().text()
         REPLIT.changeTitle new_title
       else
-        REPLIT.changeTitle REPLIT.current_lang_name
+        REPLIT.changeTitle lang_name
 
       # Update widths to those of the new page.
       # We can't take into account mobile sizes, so just assign the whole screen

@@ -326,7 +326,6 @@ $.extend REPLIT,
         $title.text title
         $title.fadeIn TITLE_ANIMATION_DURATION
     else
-      console.log title
       $title.text title
 
 $ ->
@@ -341,7 +340,6 @@ $ ->
     $about = $ '#language-about-link'
     $engine = $ '#language-engine-link'
     $links = $ '#language-engine-link, #language-about-link'
-    REPLIT.changeTitle lang.name
 
     $links.animate opacity: 0, 'fast', ->
       $about.text 'about ' + lang.name
@@ -355,7 +353,7 @@ $ ->
   REPLIT.$this.bind 'language_loaded', (e, lang_name) ->
     REPLIT.OnProgress 100
     REPLIT.$progress.animate opacity: 0, 'fast'
-    REPLIT.changeTitle lang_name
+
 
   # When the device orientation change adapt the workspace to the new width.
   check_orientation = ->
