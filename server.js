@@ -32,6 +32,31 @@ function genRandomString() {
   return Math.random().toString(36).replace(/[^a-z]+/g, '').substring(0,5);
 }
 
+function restoreFakeSession(pieceName, res) {
+  fs.readFile('index.html', String, function (err, file) {
+    if (err) {
+      textResponse(res, 500, err + '\n');
+      return;
+    }
+
+    var savedData = inMemorySaved[pieceName]
+    var sessionReturnData = {session_id: pieceName,
+                             revision_id: "1",
+                             eval_history: JSON.parse(savedData.eval_history),
+                             editor_text: savedData.editor_text,
+                             language: savedData.language,
+                             console_dump: savedData.console_dump };
+
+    file = String(file).replace('SESSION_PLACEHOLDER', 'REPLIT_DATA='+JSON.stringify(sessionReturnData));
+
+    res.writeHead(200, {'Content-Type': CONTENT_TYPES['html'], 'max-age': '0'});
+    res.write(file);
+
+    res.end();
+  });
+}
+
+
 var waiting = {};
 var inMemorySaved = {};
 
