@@ -44,6 +44,10 @@ var httpCb = function (req, res) {
     , examples: 1
     , workspace: 1
     }) { uri = '/index.html'; }
+  if(inMemorySaved[uri.split('/')[1]]) {
+    uri = '/index.html';
+  }
+
   var filename = path.join(process.cwd(), uri);;
       
   var m;
