@@ -28,16 +28,52 @@ function textResponse(res, code, txt) {
   res.end(txt);
 }
 
+function genRandomString() {
+  return Math.random().toString(36).replace(/[^a-z]+/g, '').substring(0,5);
+}
+
+function restoreFakeSession(pieceName, res) {
+  fs.readFile('index.html', String, function (err, file) {
+    if (err) {
+      textResponse(res, 500, err + '\n');
+      return;
+    }
+
+    var savedData = inMemorySaved[pieceName]
+    var sessionReturnData = {session_id: pieceName,
+                             revision_id: "1",
+                             eval_history: JSON.parse(savedData.eval_history),
+                             editor_text: savedData.editor_text,
+                             language: savedData.language,
+                             console_dump: savedData.console_dump };
+
+    file = String(file).replace('SESSION_PLACEHOLDER', 'REPLIT_DATA='+JSON.stringify(sessionReturnData));
+
+    res.writeHead(200, {'Content-Type': CONTENT_TYPES['html'], 'max-age': '0'});
+    res.write(file);
+
+    res.end();
+  });
+}
+
+
 var waiting = {};
+var inMemorySaved = {};
+
 var httpCb = function (req, res) {
   var uri = url.parse(req.url).pathname;
-  if (uri.split('/')[1] in {
+  var uriFirstPiece = uri.split('/')[1]
+  if (uriFirstPiece in {
       languages: 1
     , help: 1
     , about: 1
     , examples: 1
     , workspace: 1
     }) { uri = '/index.html'; }
+
+  if(inMemorySaved[uriFirstPiece]) {
+    restoreFakeSession(uriFirstPiece, res);
+  }
   var filename = path.join(process.cwd(), uri);;
       
   var m;
@@ -73,6 +109,24 @@ var httpCb = function (req, res) {
     }
     return;
   }
+
+  if(m = uri.match(/save/)) {
+    var thisRandom = genRandomString();
+    var dataParts = [];
+    req.on('data', function(data){
+      dataParts.push(data);
+    });
+    req.on('end', function(){
+      inMemorySaved[thisRandom] = queryString.parse(dataParts.join(''));
+      res.writeHead(200, {'Content-Type': CONTENT_TYPES.json, 'max-age': '0'});
+      var responseString = JSON.stringify({ session_id: String(thisRandom),
+                                            // not attempting to support multiple revisions
+                                            revision_id: '1'
+                                          });
+      res.end(responseString);
+    });
+    return;
+  };
 
   fs.exists(filename, function (exists) {
     if (!exists) {

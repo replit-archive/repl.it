@@ -51,6 +51,7 @@ Dependencies
   
   Using npm:
   
+    npm install coffee-script
     npm install -g coffee-script
 
 #### [Pygments](http://pygments.org/)
