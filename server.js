@@ -28,6 +28,10 @@ function textResponse(res, code, txt) {
   res.end(txt);
 }
 
+function genRandomString() {
+  return Math.random().toString(36).replace(/[^a-z]+/g, '').substring(0,5);
+}
+
 var waiting = {};
 var httpCb = function (req, res) {
   var uri = url.parse(req.url).pathname;
@@ -73,6 +77,26 @@ var httpCb = function (req, res) {
     }
     return;
   }
+
+
+  var inMemorySaved = {}
+  if(m = uri.match(/save/)){
+    var thisRandom = genRandomString();
+    var dataParts = [];
+    req.on('data', function(data){
+      dataParts.push(data);
+    });
+    req.on('end', function(){
+      inMemorySaved[thisRandom] = queryString.parse(dataParts.join(''));
+      res.writeHead(200, {'Content-Type': CONTENT_TYPES.json, 'max-age': '0'});
+      var responseString = JSON.stringify({ session_id: String(thisRandom),
+                                            // not attempting to support multiple revisions
+                                            revision_id: '1'
+                                          });
+      res.end(responseString);
+    });
+    return;
+  };
 
   fs.exists(filename, function (exists) {
     if (!exists) {
