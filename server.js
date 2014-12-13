@@ -33,6 +33,8 @@ function genRandomString() {
 }
 
 var waiting = {};
+var inMemorySaved = {};
+
 var httpCb = function (req, res) {
   var uri = url.parse(req.url).pathname;
   if (uri.split('/')[1] in {
@@ -78,9 +80,7 @@ var httpCb = function (req, res) {
     return;
   }
 
-
-  var inMemorySaved = {}
-  if(m = uri.match(/save/)){
+  if(m = uri.match(/save/)) {
     var thisRandom = genRandomString();
     var dataParts = [];
     req.on('data', function(data){
