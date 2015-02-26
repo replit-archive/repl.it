@@ -1,3 +1,9 @@
+- - -
+
+**_Deprecation notice_: This project is no longer actively maintained because we're moving language sandboxes to the server for a faster, complete, and up-to-date implementations. <a href="http://repl.it/api">You can use our API</a>.**
+
+- - -
+
 repl.it
 =======
 
