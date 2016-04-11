@@ -82,5 +82,5 @@ repl.it can then be opened at http://localhost:8888/index.html.
 License
 -------
 
-repl.it is available under the MIT license. External libraries used in repl.it
+repl.it source code is available under the MIT license. However, the repl.it logos and assets represent only Repl.it and should not be used to represent your products. External libraries used in repl.it
 may use other licenses. Please check each library for its specific license.
